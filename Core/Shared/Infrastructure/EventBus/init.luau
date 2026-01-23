@@ -26,8 +26,8 @@ end
 ---@param connectData table<string, function>
 function EventBus:connectToEvents(connectData)
 	for eventName, callback in connectData do
-		local function _callback(data)
-			if data.eventName == eventName then
+		local function _callback(_eventName, data)
+			if _eventName == eventName then
 				callback(data)
 			end
 		end

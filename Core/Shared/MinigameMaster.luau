@@ -18,9 +18,9 @@ function Master.new(globalDIContainer, layers)
 	self.globalDIContainer = globalDIContainer
 
 	self.shared = layers.Shared and layers.Shared.new() or nil
-	self.infrastructure = layers.Infrastructure and layers.Infrastructure.new() or nil
-	self.application = layers.Application and layers.Application.new() or nil
-	self.presentation = layers.Presentation and layers.Presentation.new() or nil
+	self.infrastructure = layers.Infrastructure and layers.Infrastructure.new(self.diContainer) or nil
+	self.application = layers.Application and layers.Application.new(self.diContainer) or nil
+	self.presentation = layers.Presentation and layers.Presentation.new(self.diContainer) or nil
 
 	return self
 end
@@ -48,12 +48,12 @@ function Master:init()
 	-- 	end)
 	-- end
 
-	-- self.infrastructure:init()
-	-- self.application:init()
+	self.infrastructure:init()
+	self.application:init()
 
-	-- if self.presentation then
-	-- 	self.presentation:init()
-	-- end
+	if self.presentation then
+		self.presentation:init()
+	end
 	print(self)
 end
 

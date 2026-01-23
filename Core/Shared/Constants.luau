@@ -5,12 +5,22 @@ local MINIGAMES = {
 	RACING = "Racing",
 	DUNGEON_CLEARING = "DungeonClearing",
 }
+
+---@alias cameraMode "Default" | "Following"
+
 ---@class SharedConstants
 local Constants = {
 	INIT_SERVER = "INIT_SERVER",
 
 	CLIENT_EVENTS = {
-		SET_MODE = "SET_MODE",
+		MOUSE_MOVEMENT = "MOUSE_MOVEMENT",
+		SET_CAMERA_MODE = "SET_CAMERA_MODE",
+		ON_CHARACTER_ADDED = "ON_CHARACTER_ADDED",
+	},
+
+	CAMERA_MODES = {
+		DEFAULT = "Default",
+		FOLLOWING = "Following",
 	},
 
 	SERVER_EVENTS = {},
@@ -22,6 +32,10 @@ local Constants = {
 		[MINIGAMES.FOOD_EATING] = { minPlayers = 1, maxPlayers = 4 },
 		[MINIGAMES.RACING] = { minPlayers = 2, maxPlayers = 6 },
 		[MINIGAMES.DUNGEON_CLEARING] = { minPlayers = 1, maxPlayers = 4 },
+	},
+
+	PLAYER_ATTRIBUTES = {
+		CAMERA_MODE = "CameraMode",
 	},
 }
 

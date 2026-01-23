@@ -57,6 +57,12 @@ function Master:init()
 	if self.presentation then
 		self.presentation:init()
 	end
+
+	self.minigameLoader:loadMinigame("CrossbowShooting")
+	-- self.minigameLoader:loadMinigame("ItemSearch")
+	-- self.minigameLoader:loadMinigame("Racing")
+	-- self.minigameLoader:loadMinigame("FoodEating")
+	-- self.minigameLoader:loadMinigame("DungeonCleaning")
 end
 
 function Master:startSession()

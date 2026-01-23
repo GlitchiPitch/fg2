@@ -30,11 +30,6 @@ end
 function Client:init()
 	Master.init(self)
 
-	self.minigameLoader:loadMinigame("CrossbowShooting")
-	self.minigameLoader:loadMinigame("ItemSearch")
-	self.minigameLoader:loadMinigame("Racing")
-	self.minigameLoader:loadMinigame("FoodEating")
-	self.minigameLoader:loadMinigame("DungeonCleaning")
 end
 
 local client = Client.new()

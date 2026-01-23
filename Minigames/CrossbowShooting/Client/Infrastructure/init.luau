@@ -6,6 +6,7 @@ Infrastructure.__index = Infrastructure
 ---@return CrossbowShootingClientInfrastructure
 function Infrastructure.new(diContainer)
 	local self = setmetatable({}, Infrastructure)
+    self.diContainer = diContainer
 	return self
 end
 

@@ -16,7 +16,7 @@
 ### Minigame Development
 
 * \[x] **Minigame Integration**: Connect minigames to core systems and implement game selection (MinigameLoader service implemented)
-* \[ ] **CrossbowShooting**: Implement shooting mechanics, targets, and scoring
+* \[~] **CrossbowShooting**: Implement shooting mechanics, targets, and scoring (BalistasService added, basic structure in place)
 * \[ ] **Racing**: Add track generation, vehicle controls, and lap timing
 * \[ ] **ItemSearch**: Create item spawning, search logic, and time limits
 * \[ ] **FoodEating**: Implement food consumption mechanics and objectives
@@ -93,7 +93,14 @@
 * Improved separation of concerns between core systems and minigame management
 * Cleaner initialization flow with centralized coordination
 
-### v1.2.0 - Minigame Mechanics
+### v1.2.0 - Initial Minigame Mechanics ✅
+
+* Added InputService for user input handling
+* Implemented BalistasService for CrossbowShooting balista management
+* Added shared constants for CrossbowShooting minigame
+* Enhanced event system with mouse movement handling
+
+### v1.3.0 - Complete Minigame Mechanics
 
 * Minigame selection and loading system
 * Individual minigame mechanics implementation

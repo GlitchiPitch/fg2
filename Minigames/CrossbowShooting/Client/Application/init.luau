@@ -6,6 +6,7 @@ Application.__index = Application
 ---@return CrossbowShootingClientApp
 function Application.new(diContainer)
 	local self = setmetatable({}, Application)
+    self.diContainer = diContainer
 	return self
 end
 

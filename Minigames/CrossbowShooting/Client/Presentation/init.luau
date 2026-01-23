@@ -6,6 +6,7 @@ Presentation.__index = Presentation
 ---@return CrossbowShootingPresentation
 function Presentation.new(diContainer)
 	local self = setmetatable({}, Presentation)
+    self.diContainer = diContainer
 	return self
 end
 

@@ -26,11 +26,17 @@ function PlayerService:init()
 	Players.PlayerRemoving:Connect(function(player)
 		self:onPlayerRemoving({ player = player })
 	end)
+
+	for _, player in Players:GetPlayers() do
+		self:onPlayerAdded({ player = player })
+	end
 end
 
 ---@param data table
 function PlayerService:onPlayerAdded(data)
-	error("Not implemented")
+	data.player.CharacterAdded:Connect(function(character)
+		self:onCharacterAdded({ character = character })
+	end)
 end
 
 ---@param data table

@@ -1,5 +1,10 @@
 {
-    "[lua]": {
+    "stylua.targetReleaseVersion": "latest",
+    "[luau]": {
         "editor.defaultFormatter": "JohnnyMorganz.stylua"
     },
+    "workbench.tree.indent": 20,
+    "workbench.tree.renderIndentGuides": "always",
+    "workbench.list.smoothScrolling": true,
+    "explorer.compactFolders": false,
 }

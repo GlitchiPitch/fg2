@@ -5,18 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## \[1.1.1] - 2026-01-23
+## \[1.2.0] - 2026-01-23
+
+### Added
+
+* **InputService**: New client service for handling user input and mouse movement events
+* **BalistasService**: Server-side service for managing balistas in CrossbowShooting minigame
+* **CrossbowShooting Constants**: Shared constants module for the CrossbowShooting minigame
 
 ### Changed
 
 * **MinigameLoader Service**: Introduced centralized minigame loading and session management
 * **Core Architecture**: Refactored Master, Client, and Server classes to use MinigameLoader instead of direct minigame instantiation
 * **Minigame Integration**: Updated all minigame initialization to use the new loading system
+* **Event System**: Enhanced EventBus integration with input handling
 
 ### Infrastructure
 
 * **Service Architecture**: Improved separation of concerns between core systems and minigame management
 * **Code Organization**: Cleaner initialization flow with centralized minigame coordination
+* **Input Processing**: Added mouse movement event handling and game state integration
+
+## \[1.1.1] - 2026-01-23
 
 ## \[1.1.0] - 2026-01-23
 

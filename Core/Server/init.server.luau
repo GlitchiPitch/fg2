@@ -27,7 +27,6 @@ end
 
 function Server:init()
 	Master.init(self)
-
 	ReplicatedStorage:SetAttribute(self.shared.constants.INIT_SERVER, true)
 end
 

@@ -4,18 +4,72 @@
     "$className": "DataModel",
     "ReplicatedStorage": {
       "Shared": {
-        "$path": "Shared"
+        "$path": "Core/Shared"
+      },
+      "Minigames": {
+        "$className": "Folder",
+        "CrossbowShooting": {
+          "$path": "Minigames/CrossbowShooting/Shared"
+        },
+        "ItemSearch": {
+          "$path": "Minigames/ItemSearch/Shared"
+        },
+        "Racing": {
+          "$path": "Minigames/Racing/Shared"
+        },
+        "FoodEating": {
+          "$path": "Minigames/FoodEating/Shared"
+        },
+        "DungeonCleaning": {
+          "$path": "Minigames/DungeonCleaning/Shared"
+        }
       }
     },
     "ServerScriptService": {
       "Server": {
-        "$path": "Server"
+        "$path": "Core/Server"
+      },
+      "Minigames": {
+        "$className": "Folder",
+        "CrossbowShooting": {
+          "$path": "Minigames/CrossbowShooting/Server"
+        },
+        "ItemSearch": {
+          "$path": "Minigames/ItemSearch/Server"
+        },
+        "Racing": {
+          "$path": "Minigames/Racing/Server"
+        },
+        "FoodEating": {
+          "$path": "Minigames/FoodEating/Server"
+        },
+        "DungeonCleaning": {
+          "$path": "Minigames/DungeonCleaning/Server"
+        }
       }
     },
     "StarterPlayer": {
       "StarterPlayerScripts": {
         "Client": {
-          "$path": "Client"
+          "$path": "Core/Client"
+        },
+        "Minigames": {
+          "$className": "Folder",
+          "CrossbowShooting": {
+            "$path": "Minigames/CrossbowShooting/Client"
+          },
+          "ItemSearch": {
+            "$path": "Minigames/ItemSearch/Client"
+          },
+          "Racing": {
+            "$path": "Minigames/Racing/Client"
+          },
+          "FoodEating": {
+            "$path": "Minigames/FoodEating/Client"
+          },
+          "DungeonCleaning": {
+            "$path": "Minigames/DungeonCleaning/Client"
+          }
         }
       }
     }

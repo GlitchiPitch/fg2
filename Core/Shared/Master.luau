@@ -15,6 +15,7 @@ function Master.new(Infrastructure, Application, Presentation)
     self.infrastructure = Infrastructure.new(self.diContainer)
     self.application = Application.new(self.diContainer)
     self.presentation = Presentation and Presentation.new(self.diContainer) or nil
+
 	return self
 end
 

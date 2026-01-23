@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-01-23
+
+### Added
+- **Core Module**: Reorganized main game code into Core/ directory for better modularity
+- **Minigame System**: Added 5 new minigames with independent architecture:
+  - CrossbowShooting: Target shooting mechanics
+  - DungeonCleaning: Area cleanup objectives
+  - FoodEating: Consumption-based gameplay
+  - ItemSearch: Object finding challenges
+  - Racing: Competitive racing tracks
+- **MinigameMaster**: New shared component for minigame management and coordination
+
+### Changed
+- **Project Structure**: Moved Client/, Server/, Shared/ directories into Core/ module
+- **Version Management**: Relocated GameVersion.model.json to Core/Server/ directory
+
+### Infrastructure
+- **Modular Architecture**: Implemented scalable minigame architecture with shared core systems
+- **Build Configuration**: Updated default.project.json and sourcemap.json for new structure
+
 ## [1.0.0] - 2026-01-23
 
 ### Added

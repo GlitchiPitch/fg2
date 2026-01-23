@@ -1,5 +1,6 @@
 ---@class MinigameMaster
 local Master = {}
+Master.__index = Master
 
 ---@class MinigameLayers
 ---@field Shared table
@@ -54,6 +55,14 @@ function Master:init()
 	-- 	self.presentation:init()
 	-- end
 	print(self)
+end
+
+function Master:startSession()
+	error("startSession not implemented")
+end
+
+function Master:endSession()
+	error("endSession not implemented")
 end
 
 return Master

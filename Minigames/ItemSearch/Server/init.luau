@@ -2,7 +2,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local MinigameMaster = require(ReplicatedStorage.Shared.MinigameMaster)
 
 ---@class ItemSearchServer : MinigameMaster
-local Server = {}
+local Server = setmetatable({}, MinigameMaster)
 Server.__index = Server
 
 ---@return ItemSearchServer
@@ -21,6 +21,20 @@ end
 
 function Server:init()
 	MinigameMaster.init(self)
+end
+
+function Server:startSession()
+	warn("startSession")
+	return {
+        map = "ItemSearch"
+    }
+end
+
+function Server:endSession()
+	warn("endSession")
+	return {
+        map = "ItemSearch"
+    }
 end
 
 return Server

@@ -2,7 +2,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local MinigameMaster = require(ReplicatedStorage.Shared.MinigameMaster)
 
 ---@class CrossbowShootingClient : MinigameMaster
-local Client = {}
+local Client = setmetatable({}, MinigameMaster)
 Client.__index = Client
 
 ---@param globalDIContainer DIContainer

@@ -2,7 +2,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local MinigameMaster = require(ReplicatedStorage.Shared.MinigameMaster)
 
 ---@class CrossbowShootingServer : MinigameMaster
-local Server = {}
+local Server = setmetatable({}, MinigameMaster)
 Server.__index = Server
 
 ---@return CrossbowShootingServer
@@ -21,6 +21,21 @@ end
 
 function Server:init()
 	MinigameMaster.init(self)
+    warn(self)
+end
+
+function Server:startSession()
+	warn("startSession")
+	return {
+        map = "CrossbowShooting"
+    }
+end
+
+function Server:endSession()
+	warn("endSession")
+	return {
+        map = "CrossbowShooting"
+    }
 end
 
 return Server

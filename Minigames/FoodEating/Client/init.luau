@@ -2,7 +2,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local MinigameMaster = require(ReplicatedStorage.Shared.MinigameMaster)
 
 ---@class FoodEatingClient : MinigameMaster
-local Client = {}	
+local Client = setmetatable({}, MinigameMaster)
 Client.__index = Client
 
 ---@return FoodEatingClient

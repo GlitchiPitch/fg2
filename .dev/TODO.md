@@ -15,7 +15,7 @@
 
 ### Minigame Development
 
-* \[ ] **Minigame Integration**: Connect minigames to core systems and implement game selection
+* \[x] **Minigame Integration**: Connect minigames to core systems and implement game selection (MinigameLoader service implemented)
 * \[ ] **CrossbowShooting**: Implement shooting mechanics, targets, and scoring
 * \[ ] **Racing**: Add track generation, vehicle controls, and lap timing
 * \[ ] **ItemSearch**: Create item spawning, search logic, and time limits
@@ -86,7 +86,14 @@
 * MinigameMaster component for game management
 * Scalable architecture for adding new minigames
 
-### v1.2.0 - Minigame Integration
+### v1.1.1 - MinigameLoader Service ✅
+
+* Centralized minigame loading and session management
+* Refactored core classes to use MinigameLoader service
+* Improved separation of concerns between core systems and minigame management
+* Cleaner initialization flow with centralized coordination
+
+### v1.2.0 - Minigame Mechanics
 
 * Minigame selection and loading system
 * Individual minigame mechanics implementation

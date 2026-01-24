@@ -1,4 +1,6 @@
 local UserInputService = game:GetService("UserInputService")
+local ContextActionService = game:GetService("ContextActionService")
+
 ---@class InputService
 ---@field diContainer DIContainer
 ---@field eventBus EventBus

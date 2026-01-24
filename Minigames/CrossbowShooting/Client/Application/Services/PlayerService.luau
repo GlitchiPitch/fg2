@@ -41,6 +41,8 @@ function PlayerService:onPlayerJoinedBalista()
 			v.Transparency = 1
 		end
 	end
+
+    self.eventBus:fire(self.constants.CLIENT_EVENTS.PLAYER_JOINED_BALISTA)
 end
 
 function PlayerService:onPlayerLeftBalista()
@@ -49,6 +51,8 @@ function PlayerService:onPlayerLeftBalista()
 			v.Transparency = if v.Name == "HumanoidRootPart" then 1 else 0
 		end
 	end
+
+    self.eventBus:fire(self.constants.CLIENT_EVENTS.PLAYER_LEFT_BALISTA)
 end
 
 return PlayerService

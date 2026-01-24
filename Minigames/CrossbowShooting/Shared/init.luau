@@ -1,7 +1,9 @@
 local Constants = require(script.Constants)
+local Assets = require(script.Assets)
 
 ---@class CrossbowShootingShared
 ---@field constants CrossbowShootingConstants
+---@field assets CrossbowShootingSharedAssets
 ---@field eventBus EventBus
 ---@field coreEventBus EventBus
 ---@field coreConstants SharedConstants
@@ -16,7 +18,7 @@ function Shared.new(globalDIContainer)
 	self.globalDIContainer = globalDIContainer
 	self.diContainer = globalDIContainer.new()
 	self.constants = Constants
-
+	self.assets = Assets
 	return self
 end
 

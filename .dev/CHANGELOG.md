@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-01-24
+
+### Added
+
+* **Shooting Mechanics**: Implemented projectile shooting system for CrossbowShooting minigame
+* **Parabolic Trajectory**: Added physics-based projectile motion with gravity and velocity calculations
+* **CrossbowShooting InputService**: Client-side service for handling mouse click shooting input
+* **Shoot Event Handling**: Server-side shoot event processing with balista owner validation
+* **Assets Module**: Created shared Assets module for CrossbowShooting minigame resources
+* **Client Events**: Added CLIENT_EVENTS constants for player joined/left balista notifications
+
+### Changed
+
+* **BalistasService**: Enhanced with shooting mechanics, projectile spawning, and parabolic trajectory physics
+* **CrossbowShooting PlayerService**: Added event bus firing for player joined/left balista events
+* **CrossbowShooting Services**: Integrated InputService into client services initialization
+* **Constants**: Added SHOOT remote event and CLIENT_EVENTS definitions
+* **Shared Module**: Added Assets module integration for shared resource access
+* **Core InputService**: Added ContextActionService import for action binding support
+
+### Infrastructure
+
+* **Projectile Physics**: Implemented frame-by-frame physics simulation with gravity and velocity updates
+* **Event System**: Enhanced event flow between client and server for shooting actions
+* **Balista Owner Tracking**: Improved balista ownership management for shooting validation
+
 ## \[1.3.0] - 2026-01-24
 
 ### Added

@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## \[1.3.0] - 2026-01-24
+
+### Added
+
+* **Camera Following Mode**: Implemented smooth camera following system with mouse-controlled rotation
+* **Camera CFrame Synchronization**: Added client-server camera CFrame synchronization for balista alignment
+* **CrossbowShooting PlayerService**: Client and server services for managing player state during balista interactions
+* **Player Visibility Management**: Automatic character transparency when players join balistas
+* **Camera Mode Attributes**: Player attribute system for camera mode state management
+
+### Changed
+
+* **CameraController**: Enhanced with following camera mode, smooth angle interpolation, and CFrame synchronization
+* **BalistasService**: Integrated with camera system for real-time balista orientation based on player camera
+* **Core PlayerService (Client)**: Added camera mode change handling and improved attribute synchronization
+* **Core PlayerService (Server)**: Added camera CFrame reception and camera mode setting functionality
+* **Constants**: Added camera mode constants and remote event definitions for camera synchronization
+
+### Infrastructure
+
+* **Camera System**: Complete camera mode switching system with Default and Following modes
+* **Event Integration**: Enhanced event system for camera state changes and synchronization
+* **Balista Integration**: Seamless integration between balista seats and camera system
+
 ## \[1.2.0] - 2026-01-23
 
 ### Added

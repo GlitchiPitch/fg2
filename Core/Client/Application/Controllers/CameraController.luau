@@ -16,7 +16,9 @@ local UserInputService = game:GetService("UserInputService")
 ---@field headOffset CFrame
 ---@field smoothness number
 ---@field sensitivity number
----@field _head Part?
+---@field _humanoidRootPart Part?
+---@field remoteEventService RemoteEventService
+---@field _deltaTime number
 local CameraController = {}
 CameraController.__index = CameraController
 
@@ -27,10 +29,11 @@ function CameraController.new(diContainer)
 	self.diContainer = diContainer
 	self.camera = workspace.CurrentCamera
 	self._freemouse = true
-	self.headOffset = CFrame.new(-5, 0.7, 20) -- how far your camera is from your head
+	self.headOffset = CFrame.new(-1, 2, 20) -- how far your camera is from your head
 	self.smoothness = 0.1
 	self.sensitivity = 0.6
-	self._head = nil
+	self._humanoidRootPart = nil
+	self._deltaTime = 0
 
 	self.angleX, self.targetAngleX = 0, 0
 	self.angleY, self.targetAngleY = 0, 0
@@ -45,10 +48,11 @@ function CameraController:init()
 	---@type ClientApp
 	local app = self.diContainer:resolve("Application")
 	self.playerService = app.services.playerService
+	
 	self.mouse = self.playerService.player:GetMouse()
 	self.constants = shared.constants
 	self.eventBus = shared.eventBus
-
+	self.remoteEventService = shared.remoteEventService
 	self.eventBus:connectToEvents({
 		[shared.constants.CLIENT_EVENTS.SET_CAMERA_MODE] = function(data)
 			self:setCameraMode(data)
@@ -61,16 +65,16 @@ function CameraController:init()
 		end,
 	})
 
-	self:setCameraMode({ mode = self.constants.CAMERA_MODES.FOLLOWING })
+	
 end
 
-function CameraController:update()
-	if not self._head then
+function CameraController:update(deltaTime)
+	if not self._humanoidRootPart then
 		return
 	end
 
 	if self.cameraMode == self.constants.CAMERA_MODES.FOLLOWING then
-		self:_followingCamera()
+		self:_followingCamera(deltaTime)
 	end
 end
 
@@ -85,16 +89,19 @@ end
 
 ---@param input InputObject
 function CameraController:_mouseMovement(input)
-	-- local delta = Vector2.new(input.Delta.X / self.sensitivity, input.Delta.Y / self.sensitivity) * self.smoothness
-	local delta = Vector2.new(input.Delta.X, input.Delta.Y) * self.sensitivity
+	local delta = Vector2.new(input.Delta.X / self.sensitivity, input.Delta.Y / self.sensitivity) * self.smoothness
+	-- local delta = Vector2.new(input.Delta.X, input.Delta.Y) * self.sensitivity
 	local X = self.targetAngleX - delta.Y
 	self.targetAngleX = (X >= 80 and 80) or (X <= -80 and -80) or X
 	self.targetAngleY = (self.targetAngleY - delta.X) % 360
+
+	
 end
 
 ---@param character Model
 function CameraController:_onCharacterAdded(character)
-	self._head = character:WaitForChild("Head")
+	self._humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+	self:setCameraMode({ mode = self.constants.CAMERA_MODES.DEFAULT })
 end
 
 function CameraController:_setDefaultCameraMode()
@@ -109,21 +116,28 @@ function CameraController:_setFollowingCameraMode()
 	self:_setFreeMouse(false)
 end
 
-function CameraController:_followingCamera()
+function CameraController:_followingCamera(deltaTime)
 	-- Smooth angles towards target angles (from mouse input)
 	self.angleX = self.angleX + (self.targetAngleX - self.angleX) * 0.3
 	local dist = self.targetAngleY - self.angleY
 	dist = math.abs(dist) > 180 and dist - (dist / math.abs(dist)) * 360 or dist
 	self.angleY = (self.angleY + dist * 0.3) % 360
 
-	-- Calculate camera CFrame: start with offset from head, then apply rotations
-	local cameraCFrame = CFrame.new(self._head.Position)
-		* CFrame.Angles(math.rad(self.angleX), math.rad(self.angleY), 0)
+	-- Calculate camera CFrame: apply Y rotation first (yaw), then X rotation (pitch) in local space
+	-- This prevents gimbal lock when looking to the side and then up/down
+	local cameraCFrame = CFrame.new(self._humanoidRootPart.Position)
+		* CFrame.Angles(0, math.rad(self.angleY), 0) -- Apply Y rotation first (horizontal/yaw)
+		* CFrame.Angles(math.rad(self.angleX), 0, 0) -- Then apply X rotation (vertical/pitch) in local space
 		* self.headOffset
 
 	self.camera.CFrame = cameraCFrame
 	self.camera.FieldOfView = self.fieldOfView
-
+	
+	self._deltaTime = self._deltaTime + deltaTime
+	if self._deltaTime > .3 then
+		self._deltaTime = 0
+		self:_sendCameraCFrame()
+	end
 end
 
 ---@param state boolean
@@ -136,6 +150,15 @@ function CameraController:_setFreeMouse(state)
 		UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
 		self.mouse.Icon = "http://www.roblox.com/asset/?id=569021388" -- replaces mouse icon
 	end
+end
+
+function CameraController:_sendCameraCFrame()
+	self.remoteEventService:fireServer({
+		eventName = self.constants.REMOTE_EVENTS.SEND_CAMERA_CFRAME,
+		data = {
+			cameraCFrame = self.camera.CFrame,
+		},
+	})
 end
 
 ---@class setModeData

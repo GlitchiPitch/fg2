@@ -1,6 +1,14 @@
 ---@class CrossbowShootingConstants
 local Constants = {
-    
+    SERVER_EVENTS = {
+		PLAYER_JOINED_BALISTA = "PLAYER_JOINED_BALISTA",
+		PLAYER_LEFT_BALISTA = "PLAYER_LEFT_BALISTA",
+	},
+
+	REMOTE_EVENTS = {
+		PLAYER_JOINED_BALISTA = "PLAYER_JOINED_BALISTA",
+		PLAYER_LEFT_BALISTA = "PLAYER_LEFT_BALISTA",
+	},
 }
 
 return Constants

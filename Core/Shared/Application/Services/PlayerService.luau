@@ -59,4 +59,9 @@ function PlayerService:onCharacterRemoving(data)
 	error("Not implemented")
 end
 
+---@param data table
+function PlayerService:onSetPlayerCameraMode(data)
+	error("Not implemented")
+end
+
 return PlayerService

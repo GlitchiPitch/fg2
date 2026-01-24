@@ -14,47 +14,58 @@ Master.__index = Master
 function Master.new(globalDIContainer, layers)
 	local self = setmetatable({}, Master)
 
-	self.diContainer = globalDIContainer.new()
-	self.globalDIContainer = globalDIContainer
-
-	self.shared = layers.Shared and layers.Shared.new() or nil
-	self.infrastructure = layers.Infrastructure and layers.Infrastructure.new(self.diContainer) or nil
-	self.application = layers.Application and layers.Application.new(self.diContainer) or nil
-	self.presentation = layers.Presentation and layers.Presentation.new(self.diContainer) or nil
+	self.shared = layers.Shared and layers.Shared.new(globalDIContainer) or nil
+	self.infrastructure = layers.Infrastructure and layers.Infrastructure.new(self.shared.diContainer) or nil
+	self.application = layers.Application and layers.Application.new(self.shared.diContainer) or nil
+	self.presentation = layers.Presentation and layers.Presentation.new(self.shared.diContainer) or nil
 
 	return self
 end
 
 function Master:init()
-	-- self.diContainer:singleton("Infrastructure", function()
-	-- 	return self.infrastructure
-	-- end)
+	for layerKey, layerName in
+		{
+			CoreInfrastructure = "Infrastructure",
+			CoreApplication = "Application",
+			CorePresentation = "Presentation",
+			CoreShared = "Shared",
+		}
+	do
+		local layer = self.shared.globalDIContainer:resolve(layerName)
+		if layer then
+			self.shared.diContainer:singleton(layerKey, function()
+				return self.shared.globalDIContainer:resolve(layerName)
+			end)
+		end
+	end
 
-	-- self.diContainer:singleton("Application", function()
-	-- 	return self.application
-	-- end)
+	for layerKey, layerName in
+		{
+			Infrastructure = "infrastructure",
+			Application = "application",
+			Presentation = "presentation",
+			Shared = "shared",
+		}
+	do
+		if self[layerName] then
+			self.shared.diContainer:singleton(layerKey, function()
+				return self[layerName]
+			end)
+		end
+	end
 
-	self.diContainer:singleton("Shared", function()
-		return self.shared
-	end)
-
-	-- self.diContainer:singleton("Domain", function()
-	-- 	return self.shared.domain
-	-- end)
-
-	-- if self.presentation then
-	-- 	self.diContainer:singleton("Presentation", function()
-	-- 		return self.presentation
-	-- 	end)
-	-- end
-
-	self.infrastructure:init()
-	self.application:init()
-
+	if self.shared then
+		self.shared:init()
+	end
+	if self.infrastructure then
+		self.infrastructure:init()
+	end
+	if self.application then
+		self.application:init()
+	end
 	if self.presentation then
 		self.presentation:init()
 	end
-	print(self)
 end
 
 function Master:startSession()

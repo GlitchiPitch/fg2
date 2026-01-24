@@ -37,10 +37,6 @@ function Master:init()
 		return self.shared
 	end)
 
-	self.diContainer:singleton("Domain", function()
-		return self.shared.domain
-	end)
-
 	if self.presentation then
 		self.diContainer:singleton("Presentation", function()
 			return self.presentation

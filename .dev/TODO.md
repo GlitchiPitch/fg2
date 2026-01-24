@@ -16,7 +16,7 @@
 ### Minigame Development
 
 * \[x] **Minigame Integration**: Connect minigames to core systems and implement game selection (MinigameLoader service implemented)
-* \[~] **CrossbowShooting**: Implement shooting mechanics, targets, and scoring (BalistasService added, basic structure in place)
+* \[~] **CrossbowShooting**: Implement shooting mechanics, targets, and scoring (BalistasService added, camera integration complete, player visibility management implemented)
 * \[ ] **Racing**: Add track generation, vehicle controls, and lap timing
 * \[ ] **ItemSearch**: Create item spawning, search logic, and time limits
 * \[ ] **FoodEating**: Implement food consumption mechanics and objectives
@@ -26,7 +26,7 @@
 
 * \[ ] **Player Data Persistence**: Implement actual data storage and retrieval for player entities
 * \[ ] **Player Service Logic**: Complete PlayerService with business logic for client and server
-* \[ ] **Camera Controller**: Implement full camera control logic with different modes (follow, fixed, etc.)
+* \[~] **Camera Controller**: Implement full camera control logic with different modes (Following mode implemented, Default mode working)
 * \[ ] **UI Framework**: Build basic UI components and screen management system
 
 ### Network Communication
@@ -100,7 +100,15 @@
 * Added shared constants for CrossbowShooting minigame
 * Enhanced event system with mouse movement handling
 
-### v1.3.0 - Complete Minigame Mechanics
+### v1.3.0 - Camera System Integration ✅
+
+* Implemented camera following mode with smooth rotation
+* Added camera CFrame synchronization for balista alignment
+* Integrated player visibility management for balista interactions
+* Enhanced camera mode switching system
+* Completed balista-camera integration
+
+### v1.4.0 - Complete Minigame Mechanics
 
 * Minigame selection and loading system
 * Individual minigame mechanics implementation

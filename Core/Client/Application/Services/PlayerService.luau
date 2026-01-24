@@ -23,9 +23,8 @@ function PlayerService:init()
 	local shared = self.diContainer:resolve("Shared")
 	self.constants = shared.constants
 	self.eventBus = shared.eventBus
-
+	
 	SharedPlayerService.init(self)
-	warn("PlayerService:init")
 end
 
 ---@class onPlayerAddedData
@@ -40,13 +39,9 @@ function PlayerService:onPlayerAdded(data)
 	local playerEntity = self.playerRepository:getPlayerEntity(player)
 	self:updatePlayer({ player = playerEntity })
 
-	player:GetAttributeChangedSignal(self.constants.PLAYER_ATTRIBUTES.CAMERA_MODE):Connect(function(attribute)
-		local cameraMode = player:GetAttribute(self.constants.PLAYER_ATTRIBUTES.CAMERA_MODE)
-		warn(cameraMode)
-
-		self.eventBus:fire(self.constants.CLIENT_EVENTS.SET_CAMERA_MODE, {
-			mode = cameraMode,
-		})
+	player:GetAttributeChangedSignal(self.constants.PLAYER_ATTRIBUTES.CAMERA_MODE):Connect(function()
+		local mode = player:GetAttribute(self.constants.PLAYER_ATTRIBUTES.CAMERA_MODE)
+		self:onSetPlayerCameraMode({ mode = mode })
 	end)
 end
 
@@ -61,10 +56,17 @@ function PlayerService:updatePlayer(data)
 end
 
 function PlayerService:onCharacterAdded(data)
-	warn("onCharacterAdded", data)
 	local character = data.character
 	self.eventBus:fire(self.constants.CLIENT_EVENTS.ON_CHARACTER_ADDED, {
 		character = character,
+	})
+end
+
+---@param data table
+function PlayerService:onSetPlayerCameraMode(data)
+	local mode = data.mode
+	self.eventBus:fire(self.constants.CLIENT_EVENTS.SET_CAMERA_MODE, {
+		mode = mode,
 	})
 end
 

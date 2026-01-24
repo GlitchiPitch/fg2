@@ -1,11 +1,12 @@
 local Services = require(script.Services)
----@class CrossbowShootingServerApp
----@field services CrossbowShootingServerAppServices
+---@class ShootingServerApp
+---@field services ShootingServerAppServices
+---@field controllers ShootingServerControllers
 local Application = {}
 Application.__index = Application
 
 ---@param diContainer DIContainer
----@return CrossbowShootingServerApp
+---@return ShootingServerApp
 function Application.new(diContainer)
 	local self = setmetatable({}, Application)
     self.diContainer = diContainer

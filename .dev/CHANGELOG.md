@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2026-01-24
+
+### Added
+
+* **Target Spawner System**: Implemented spawner location system for flying and ground targets
+* **Target Type Categorization**: Added support for flying (Starship, BigStarship) and ground (Tank, LightTank) target types
+* **Controller Lifecycle Management**: Added start/stop methods to Controllers for proper lifecycle management
+* **Server Events**: Added SPAWN_TARGET and TARGET_SPAWNED events to constants for target spawning coordination
+
+### Changed
+
+* **TargetController**: Refactored spawnTarget to private method (_spawnTarget) for better encapsulation
+* **Controllers Module**: Separated initialization and runtime logic with init/start/stop methods
+* **TargetService**: Enhanced with spawner-based target placement and target type selection logic
+* **Application Architecture**: Added controllers field to Application class type definition
+* **Code Formatting**: Improved indentation and code organization across Shooting minigame server files
+
+### Infrastructure
+
+* **Event-Driven Architecture**: Improved event bus integration for target spawning workflow
+* **Code Organization**: Better separation between initialization and runtime execution phases
+
 ## [1.6.0] - 2026-01-24
 
 ### Added

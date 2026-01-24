@@ -10,18 +10,23 @@ Controllers.__index = Controllers
 ---@return ShootingServerControllers
 function Controllers.new(diContainer)
 	local self = setmetatable({}, Controllers)
-    self.diContainer = diContainer
-    self.targetController = TargetController.new(diContainer)
+	self.diContainer = diContainer
+	self.targetController = TargetController.new(diContainer)
 	return self
 end
 
 function Controllers:init()
+	self.targetController:init()
+end
 
+function Controllers:start()
 	self.heartbeatConnection = RunService.Heartbeat:Connect(function(deltaTime)
 		self:_update(deltaTime)
 	end)
+end
 
-	self.targetController:init()
+function Controllers:stop()
+	self.heartbeatConnection:Disconnect()
 end
 
 function Controllers:_update(deltaTime)

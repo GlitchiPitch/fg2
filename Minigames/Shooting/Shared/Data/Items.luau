@@ -1,6 +1,11 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Assets = require(ReplicatedStorage.Minigames.Shooting.Assets)
 
+---@class ShootingSharedDataItem
+---@field name string
+---@field image string
+---@field model Model
+
 ---@class ShootingSharedDataItems
 local Items = {
     SpaceMan = {
@@ -18,10 +23,25 @@ local Items = {
         image = "rbxassetid://1234567890",
         model = Assets.Box,
     },
-    Ship = {
-        name = "Ship",
+    Starship = {
+        name = "Starship",
         image = "rbxassetid://1234567890",
-        model = Assets.Ship,
+        model = Assets.Starship,
+    },
+    BigStarship = {
+        name = "Big Starship",
+        image = "rbxassetid://1234567890",
+        model = Assets.BigStarship,
+    },
+    Tank = {
+        name = "Tank",
+        image = "rbxassetid://1234567890",
+        model = Assets.Tank,
+    },
+    LightTank = {
+        name = "Light Tank",
+        image = "rbxassetid://1234567890",
+        model = Assets.LightTank,
     },
 }
 

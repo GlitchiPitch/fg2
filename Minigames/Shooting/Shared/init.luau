@@ -2,6 +2,7 @@ local Constants = require(script.Constants)
 local Assets = require(script.Assets)
 local Data = require(script.Data)
 local Domain = require(script.Domain)
+local Infrastructure = require(script.Infrastructure)
 
 ---@class ShootingShared
 ---@field constants ShootingConstants
@@ -12,6 +13,7 @@ local Domain = require(script.Domain)
 ---@field coreEventBus EventBus
 ---@field coreConstants SharedConstants
 ---@field remoteEventService RemoteEventService
+---@field infrastructure SharedShootingInfrastructure
 local Shared = {}
 Shared.__index = Shared
 
@@ -24,7 +26,8 @@ function Shared.new(globalDIContainer)
 	self.constants = Constants
 	self.assets = Assets
 	self.data = Data
-	
+
+	self.infrastructure = Infrastructure.new(self.diContainer)
 	self.domain = Domain.new()
 	return self
 end
@@ -36,6 +39,8 @@ function Shared:init()
 	self.remoteEventService = shared.remoteEventService.new()
 	self.coreEventBus = shared.eventBus
 	self.coreConstants = shared.constants
+
+	self.infrastructure:init()
 end
 
 return Shared

@@ -16,7 +16,7 @@
 ### Minigame Development
 
 * \[x] **Minigame Integration**: Connect minigames to core systems and implement game selection (MinigameLoader service implemented)
-* \[~] **Shooting**: Implement shooting mechanics, targets, and scoring (Renamed from CrossbowShooting, BalistasService added, camera integration complete, player visibility management implemented, shooting mechanics with parabolic trajectory added)
+* \[~] **Shooting**: Implement shooting mechanics, targets, and scoring (Renamed from CrossbowShooting, BalistasService added, camera integration complete, player visibility management implemented, shooting mechanics with parabolic trajectory added, TargetService and TargetController added, ItemsRepository implemented)
 * \[ ] **Racing**: Add track generation, vehicle controls, and lap timing
 * \[ ] **ItemSearch**: Create item spawning, search logic, and time limits
 * \[ ] **FoodEating**: Implement food consumption mechanics and objectives
@@ -123,7 +123,15 @@
 * Updated all references and configurations to new naming
 * Improved code organization and consistency
 
-### v1.6.0 - Complete Minigame Mechanics
+### v1.6.0 - Target System and Repository Pattern ✅
+
+* Implemented ItemsRepository for data access abstraction
+* Added TargetService and TargetController for target spawning
+* Expanded item definitions with new target models (Starship, BigStarship, Tank, LightTank)
+* Refactored BalistaService to use repository pattern
+* Added Infrastructure layer to Shooting minigame
+
+### v1.7.0 - Complete Minigame Mechanics
 
 * Minigame selection and loading system
 * Individual minigame mechanics implementation

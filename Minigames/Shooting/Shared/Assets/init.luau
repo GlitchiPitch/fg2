@@ -3,7 +3,10 @@ local Assets = {
     Box = script.Box,
     SpaceMan = script.SpaceMan,
     SpaceGirl = script.SpaceGirl,
-    Ship = script.Ship,
+    Starship = script.Starship,
+    BigStarship = script.BigStarship,
+    Tank = script.Tank,
+    LightTank = script.LightTank,
 }
 
 return Assets

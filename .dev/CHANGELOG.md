@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2026-01-24
+
+### Added
+
+* **ItemsRepository**: Created shared repository pattern for accessing item data and assets
+* **TargetService**: New server service for managing target spawning and lifecycle
+* **TargetController**: Controller for periodic target spawning with configurable intervals
+* **Infrastructure Layer**: Added Infrastructure module to Shooting minigame for repository management
+* **New Target Assets**: Added Starship, BigStarship, Tank, and LightTank models for target variety
+* **Item Data System**: Enhanced Items data structure with type annotations and expanded item definitions
+
+### Changed
+
+* **BalistaService**: Refactored to use ItemsRepository instead of direct asset access for better separation of concerns
+* **Assets Module**: Renamed Ship to Starship and added new target models (BigStarship, Tank, LightTank)
+* **Items Data**: Expanded item definitions with Starship, BigStarship, Tank, and LightTank entries
+* **Shared Module**: Integrated Infrastructure layer for repository access
+
+### Infrastructure
+
+* **Repository Pattern**: Implemented ItemsRepository following repository pattern for data access abstraction
+* **Code Cleanup**: Removed unused imports and debug code from BalistaService
+* **Architecture**: Improved separation between data access and business logic layers
+
 ## [1.5.0] - 2026-01-24
 
 ### Changed

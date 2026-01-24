@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-01-24
+
+### Changed
+
+* **Minigame Rename**: Renamed CrossbowShooting minigame to Shooting for better clarity and consistency
+* **MinigameMaster**: Enhanced to skip Presentation layer initialization on server-side for better performance
+* **Constants**: Updated minigame constants to use "Shooting" instead of "CrossbowShooting"
+* **Master Integration**: Updated Master.luau to load "Shooting" minigame instead of "CrossbowShooting"
+* **Project Configuration**: Updated default.project.json and sourcemap.json to reflect new minigame name
+
+### Infrastructure
+
+* **Code Organization**: Improved minigame naming consistency across the codebase
+* **Server Optimization**: Presentation layer is now properly excluded from server-side initialization
+* **Build System**: Updated build configuration to match new minigame structure
+
 ## [1.4.0] - 2026-01-24
 
 ### Added

@@ -54,7 +54,7 @@ function Master:init()
 		self.presentation:init()
 	end
 
-	self.minigameLoader:loadMinigame("CrossbowShooting")
+	self.minigameLoader:loadMinigame("Shooting")
 	-- self.minigameLoader:loadMinigame("ItemSearch")
 	-- self.minigameLoader:loadMinigame("Racing")
 	-- self.minigameLoader:loadMinigame("FoodEating")

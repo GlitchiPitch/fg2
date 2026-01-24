@@ -1,5 +1,5 @@
 local MINIGAMES = {
-	CROSSBOW_SHOOTING = "CrossbowShooting",
+	SHOOTING = "Shooting",
 	ITEM_SEARCH = "ItemSearch",
 	FOOD_EATING = "FoodEating",
 	RACING = "Racing",
@@ -33,7 +33,7 @@ local Constants = {
 
 	MINIGAMES = MINIGAMES,
 	MINIGAME_REQUIREMENTS = {
-		[MINIGAMES.CROSSBOW_SHOOTING] = { minPlayers = 1, maxPlayers = 4 },
+		[MINIGAMES.SHOOTING] = { minPlayers = 1, maxPlayers = 4 },
 		[MINIGAMES.ITEM_SEARCH] = { minPlayers = 2, maxPlayers = 6 },
 		[MINIGAMES.FOOD_EATING] = { minPlayers = 1, maxPlayers = 4 },
 		[MINIGAMES.RACING] = { minPlayers = 2, maxPlayers = 6 },

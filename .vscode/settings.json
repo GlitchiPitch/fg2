@@ -7,4 +7,5 @@
     "workbench.tree.renderIndentGuides": "always",
     "workbench.list.smoothScrolling": true,
     "explorer.compactFolders": false,
+    "robloxLsp.diagnostics.workspaceDelay": 30000,
 }

@@ -8,7 +8,7 @@ local Layers = {
 }
 
 local MinigameModules = {
-	CrossbowShooting = require(script.Parent.Minigames.CrossbowShooting),
+	Shooting = require(script.Parent.Minigames.Shooting),
 	ItemSearch = require(script.Parent.Minigames.ItemSearch),
 	Racing = require(script.Parent.Minigames.Racing),
 	FoodEating = require(script.Parent.Minigames.FoodEating),

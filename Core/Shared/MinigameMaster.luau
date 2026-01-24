@@ -1,3 +1,4 @@
+local RunService = game:GetService("RunService")
 ---@class MinigameMaster
 local Master = {}
 Master.__index = Master
@@ -31,6 +32,10 @@ function Master:init()
 			CoreShared = "Shared",
 		}
 	do
+		if layerName == "Presentation" and RunService:IsServer() then
+			continue
+		end
+
 		local layer = self.shared.globalDIContainer:resolve(layerName)
 		if layer then
 			self.shared.diContainer:singleton(layerKey, function()

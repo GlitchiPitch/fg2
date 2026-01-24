@@ -8,8 +8,8 @@
       },
       "Minigames": {
         "$className": "Folder",
-        "CrossbowShooting": {
-          "$path": "Minigames/CrossbowShooting/Shared"
+        "Shooting": {
+          "$path": "Minigames/Shooting/Shared"
         },
         "ItemSearch": {
           "$path": "Minigames/ItemSearch/Shared"
@@ -31,8 +31,8 @@
       },
       "Minigames": {
         "$className": "Folder",
-        "CrossbowShooting": {
-          "$path": "Minigames/CrossbowShooting/Server"
+        "Shooting": {
+          "$path": "Minigames/Shooting/Server"
         },
         "ItemSearch": {
           "$path": "Minigames/ItemSearch/Server"
@@ -55,8 +55,8 @@
         },
         "Minigames": {
           "$className": "Folder",
-          "CrossbowShooting": {
-            "$path": "Minigames/CrossbowShooting/Client"
+          "Shooting": {
+            "$path": "Minigames/Shooting/Client"
           },
           "ItemSearch": {
             "$path": "Minigames/ItemSearch/Client"

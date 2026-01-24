@@ -16,7 +16,7 @@
 ### Minigame Development
 
 * \[x] **Minigame Integration**: Connect minigames to core systems and implement game selection (MinigameLoader service implemented)
-* \[~] **CrossbowShooting**: Implement shooting mechanics, targets, and scoring (BalistasService added, camera integration complete, player visibility management implemented, shooting mechanics with parabolic trajectory added)
+* \[~] **Shooting**: Implement shooting mechanics, targets, and scoring (Renamed from CrossbowShooting, BalistasService added, camera integration complete, player visibility management implemented, shooting mechanics with parabolic trajectory added)
 * \[ ] **Racing**: Add track generation, vehicle controls, and lap timing
 * \[ ] **ItemSearch**: Create item spawning, search logic, and time limits
 * \[ ] **FoodEating**: Implement food consumption mechanics and objectives
@@ -82,7 +82,7 @@
 ### v1.1.0 - Minigame System ✅
 
 * Modular architecture with Core/Minigames separation
-* 5 minigames implemented (CrossbowShooting, Racing, ItemSearch, FoodEating, DungeonCleaning)
+* 5 minigames implemented (Shooting, Racing, ItemSearch, FoodEating, DungeonCleaning)
 * MinigameMaster component for game management
 * Scalable architecture for adding new minigames
 
@@ -96,8 +96,8 @@
 ### v1.2.0 - Initial Minigame Mechanics ✅
 
 * Added InputService for user input handling
-* Implemented BalistasService for CrossbowShooting balista management
-* Added shared constants for CrossbowShooting minigame
+* Implemented BalistasService for Shooting balista management
+* Added shared constants for Shooting minigame
 * Enhanced event system with mouse movement handling
 
 ### v1.3.0 - Camera System Integration ✅
@@ -116,7 +116,14 @@
 * Added Assets module for shared resources
 * Improved event system for shooting actions
 
-### v1.5.0 - Complete Minigame Mechanics
+### v1.5.0 - Minigame Refactoring ✅
+
+* Renamed CrossbowShooting to Shooting for better clarity
+* Optimized MinigameMaster to skip Presentation layer on server
+* Updated all references and configurations to new naming
+* Improved code organization and consistency
+
+### v1.6.0 - Complete Minigame Mechanics
 
 * Minigame selection and loading system
 * Individual minigame mechanics implementation

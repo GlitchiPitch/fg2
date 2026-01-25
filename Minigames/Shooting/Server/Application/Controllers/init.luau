@@ -1,13 +1,13 @@
 local RunService = game:GetService("RunService")
 local TargetController = require(script.TargetController)
 
----@class ShootingServerControllers
+---@class ServerShootingControllers
 ---@field targetController TargetController
 local Controllers = {}
 Controllers.__index = Controllers
 
 ---@param diContainer DIContainer
----@return ShootingServerControllers
+---@return ServerShootingControllers
 function Controllers.new(diContainer)
 	local self = setmetatable({}, Controllers)
 	self.diContainer = diContainer

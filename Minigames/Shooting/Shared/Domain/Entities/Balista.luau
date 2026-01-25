@@ -7,14 +7,18 @@
 ---@field _cameraCFrameConnection RBXScriptConnection
 ---@field shootAttachment Attachment
 ---@field _ammo Model[]
+---@field id string
+---@field _destroyCallback function () -> void
 local Balista = {}
 Balista.__index = Balista
 
 ---@param balista Model
+---@param id string
 ---@return BalistaEntity
-function Balista.new(balista)
+function Balista.new(balista, id)
 	local self = setmetatable({}, Balista)
 	self.model = balista
+	self.id = id
 	self.seat = balista.Seat :: Seat
 	self.owner = nil
 	self.ownerId = nil
@@ -25,49 +29,38 @@ function Balista.new(balista)
 	return self
 end
 
----@class balistaServiceCallbackData
+---@class balistaInitData
+---@field destroyCallback function () -> void
+
+---@param data balistaInitData
+function Balista:init(data)
+	self._destroyCallback = data.destroyCallback
+end
+
+---@class balistaSetupData
 ---@field activateCallback function (occupant: Humanoid) -> void
 ---@field deactivateCallback function (ownerId: number) -> void
 
----@param balistaServiceCallbacks balistaServiceCallbackData
-function Balista:init(balistaServiceCallbacks)
+---@param data balistaSetupData
+function Balista:setup(data)
 	self.seat.Changed:Connect(function(property)
 		if property == "Occupant" then
 			local occupant = self.seat.Occupant
 			if occupant then
-				local player = balistaServiceCallbacks.activateCallback(occupant)
+				local player = data.activateCallback(occupant)
 				self.owner = player
 				self.ownerId = player.UserId
 				self:_activate()
 			else
-				balistaServiceCallbacks.deactivateCallback(self.ownerId)
+				data.deactivateCallback(self.ownerId)
 				self:_deactivate()
 			end
 		end
 	end)
 end
 
----@param ammo Model[]
-function Balista:setAmmo(ammo)
-	self._ammo = ammo
-end
-
-function Balista:_activate()
-	self.alignOrientation.CFrame = CFrame.new(0, 0, 0)
-
-	self._cameraCFrameConnection = self.owner:GetAttributeChangedSignal("CameraCFrame"):Connect(function()
-		local cameraCFrame = self.owner:GetAttribute("CameraCFrame")
-		self.alignOrientation.CFrame = cameraCFrame
-	end)
-end
-
-function Balista:_deactivate()
-	self.alignOrientation.CFrame = CFrame.new(0, 0, 0)
-
-	self._cameraCFrameConnection:Disconnect()
-	self._cameraCFrameConnection = nil
-	self.owner = nil
-	self.ownerId = nil
+function Balista:destroy()
+	self._destroyCallback()
 end
 
 function Balista:shoot()
@@ -103,6 +96,29 @@ function Balista:shoot()
 		touchConnection:Disconnect()
 		bulletModel:Destroy()
 	end)
+end
+
+---@param ammo Model[]
+function Balista:setAmmo(ammo)
+	self._ammo = ammo
+end
+
+function Balista:_activate()
+	self.alignOrientation.CFrame = CFrame.new(0, 0, 0)
+
+	self._cameraCFrameConnection = self.owner:GetAttributeChangedSignal("CameraCFrame"):Connect(function()
+		local cameraCFrame = self.owner:GetAttribute("CameraCFrame")
+		self.alignOrientation.CFrame = cameraCFrame
+	end)
+end
+
+function Balista:_deactivate()
+	self.alignOrientation.CFrame = CFrame.new(0, 0, 0)
+
+	self._cameraCFrameConnection:Disconnect()
+	self._cameraCFrameConnection = nil
+	self.owner = nil
+	self.ownerId = nil
 end
 
 ---@return Model?

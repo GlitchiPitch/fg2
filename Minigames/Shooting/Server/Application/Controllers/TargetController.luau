@@ -2,7 +2,6 @@
 ---@field diContainer DIContainer
 ---@field constants SharedConstants
 ---@field eventBus EventBus
----@field _isActive boolean
 ---@field _deltaTime number
 ---@field _spawnInterval number
 local TargetController = {}
@@ -13,7 +12,6 @@ TargetController.__index = TargetController
 function TargetController.new(diContainer)
 	local self = setmetatable({}, TargetController)
 	self.diContainer = diContainer
-	self._isActive = false
 	self._deltaTime = 0
 	self._spawnInterval = 1
 	return self
@@ -24,12 +22,6 @@ function TargetController:init()
 	local shared = self.diContainer:resolve("Shared")
 	self.constants = shared.constants
 	self.eventBus = shared.eventBus
-
-	-- self.eventBus:connectToEvents({
-	-- 	[self.constants.SERVER_EVENTS.TARGET_SPAWNED] = function(event)
-	-- 		self:spawnTarget(event.target)
-	-- 	end,
-	-- })
 end
 
 function TargetController:update(deltaTime)
@@ -40,17 +32,8 @@ function TargetController:update(deltaTime)
 	end
 end
 
-function TargetController:start()
-	self._isActive = true
-end
-
 function TargetController:_spawnTarget()
 	self.eventBus:fire(self.constants.SERVER_EVENTS.SPAWN_TARGET)
 end
-
--- function TargetController:onTargetSpawned(target)
-
-	
--- end
 
 return TargetController

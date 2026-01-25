@@ -27,7 +27,7 @@ end
 ---@param itemName string
 ---@return Model
 function ItemsRepository:getItemAsset(itemName)
-	return self:getItemData(itemName).model
+	return self:getItemData(itemName).model:Clone()
 end
 
 return ItemsRepository

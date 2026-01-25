@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] - 2026-01-25
+
+### Added
+
+* **Target Entity**: Complete domain entity implementation with spawn, movement, and destroy lifecycle
+* **Target Movement System**: Implemented AlignPosition and AlignOrientation for smooth target movement between spawners
+* **Target Repository**: New repository pattern for managing target entities with ID-based tracking
+* **Application Lifecycle Management**: Added start/stop methods to Application class for proper controller lifecycle
+* **Target Auto-Destruction**: Automatic target cleanup after 10 seconds with proper resource cleanup
+
+### Changed
+
+* **TargetService**: Enhanced with spawner-based target placement and random target type selection (flying/ground)
+* **BalistaService**: Integrated with application lifecycle - starts/stops controllers when players join/leave balistas
+* **PlayerService**: Added event handling for player joined/left balista events with camera mode switching
+* **Controllers Module**: Implemented RunService.Heartbeat connection for continuous target spawning updates
+* **Infrastructure Layer**: Added TargetRepository to server infrastructure repositories
+* **Target Spawning Logic**: Improved spawner selection with random start/finish attachment pairing
+
+### Infrastructure
+
+* **Repository Pattern**: Complete TargetRepository implementation following repository pattern for target entity management
+* **Entity Lifecycle**: Proper cleanup of AlignPosition, AlignOrientation, and Attachment instances on target destruction
+* **Event Integration**: Enhanced event-driven architecture for target spawning coordination
+* **Code Organization**: Better separation between domain entities, repositories, and services
+
 ## [1.7.0] - 2026-01-24
 
 ### Added

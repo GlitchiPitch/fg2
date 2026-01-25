@@ -1,4 +1,4 @@
----@class TargetService
+---@class ServerShootingTargetService
 ---@field diContainer DIContainer
 ---@field itemsRepository SharedShootingItemsRepository
 ---@field constants SharedConstants
@@ -8,7 +8,7 @@ local TargetService = {}
 TargetService.__index = TargetService
 
 ---@param diContainer DIContainer
----@return TargetService
+---@return ServerShootingTargetService
 function TargetService.new(diContainer)
 	local self = setmetatable({}, TargetService)
 	self.diContainer = diContainer
@@ -18,7 +18,9 @@ end
 function TargetService:init()
 	---@type ShootingShared
 	local shared = self.diContainer:resolve("Shared")
-	self.itemsRepository = shared.infrastructure.repositories.itemsRepository
+	---@type ServerShootingInfrastructure
+	local infrastructure = self.diContainer:resolve("Infrastructure")
+	self.targetRepository = infrastructure.repositories.targetRepository
 	self.constants = shared.constants
 	self.eventBus = shared.eventBus
 
@@ -28,19 +30,15 @@ function TargetService:init()
 		ground = spawners.Ground:GetChildren(),
 	}
 
-	self.targets = {
-		flying = {
-			self.itemsRepository:getItemAsset("Starship"),
-			self.itemsRepository:getItemAsset("BigStarship"),
-		},
-		ground = {
-			self.itemsRepository:getItemAsset("Tank"),
-			self.itemsRepository:getItemAsset("LightTank"),
-		},
-	}
+	local s = 0
 
 	self.eventBus:connectToEvents({
 		[self.constants.SERVER_EVENTS.SPAWN_TARGET] = function()
+			if s > 10 then
+				return
+			end
+			s += 1
+
 			self:_spawnTarget()
 		end,
 	})
@@ -48,17 +46,21 @@ end
 
 function TargetService:_spawnTarget()
 	local targetType = math.random(1, 2) == 1 and "flying" or "ground"
+	local spawnerIndex = math.random(1, #self._spawners[targetType])
+	local finishSpawnerIndex = if spawnerIndex == 1 then 2 else 1
+
 	local target = self:_getRandomTarget(targetType)
-	local spawner = self._spawners[targetType]:GetChildren()[math.random(1, #self._spawners[targetType]:GetChildren())]
-	target.Parent = workspace
-    target:PivotTo(spawner.CFrame)
-    -- self.eventBus:fire(self.constants.SERVER_EVENTS.TARGET_SPAWNED, {
-    --     target = target,
-    -- })
+	local spawner = self._spawners[targetType][spawnerIndex].Attachment
+	local finishSpawner = self._spawners[targetType][finishSpawnerIndex].Attachment
+	target:spawn({
+		startAttachment = spawner,
+		finishAttachment = finishSpawner,
+	})
 end
 
 function TargetService:_getRandomTarget(targetType)
-	return self.targets[targetType][math.random(1, #self.targets[targetType])]:Clone()
+	local target = self.targetRepository:getRandomTarget(targetType)
+	return target
 end
 
 return TargetService

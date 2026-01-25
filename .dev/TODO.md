@@ -16,7 +16,7 @@
 ### Minigame Development
 
 * \[x] **Minigame Integration**: Connect minigames to core systems and implement game selection (MinigameLoader service implemented)
-* \[~] **Shooting**: Implement shooting mechanics, targets, and scoring (Renamed from CrossbowShooting, BalistasService added, camera integration complete, player visibility management implemented, shooting mechanics with parabolic trajectory added, TargetService and TargetController added, ItemsRepository implemented, spawner system and target type categorization added)
+* \[~] **Shooting**: Implement shooting mechanics, targets, and scoring (Renamed from CrossbowShooting, BalistasService added, camera integration complete, player visibility management implemented, shooting mechanics with parabolic trajectory added, TargetService and TargetController added, ItemsRepository implemented, spawner system and target type categorization added, Target entity with movement system and repository pattern implemented, application lifecycle management added)
 * \[ ] **Racing**: Add track generation, vehicle controls, and lap timing
 * \[ ] **ItemSearch**: Create item spawning, search logic, and time limits
 * \[ ] **FoodEating**: Implement food consumption mechanics and objectives
@@ -139,7 +139,17 @@
 * Improved event-driven architecture for target spawning
 * Refactored code organization and encapsulation
 
-### v1.8.0 - Complete Minigame Mechanics
+### v1.8.0 - Complete Target Entity System ✅
+
+* Implemented complete Target entity with spawn, movement, and destroy lifecycle
+* Added TargetRepository following repository pattern for entity management
+* Integrated AlignPosition and AlignOrientation for smooth target movement
+* Enhanced application lifecycle with start/stop methods for controllers
+* Added automatic target cleanup after 10 seconds
+* Improved BalistaService integration with application lifecycle
+* Enhanced PlayerService with event handling for camera mode switching
+
+### v1.9.0 - Complete Minigame Mechanics
 
 * Minigame selection and loading system
 * Individual minigame mechanics implementation

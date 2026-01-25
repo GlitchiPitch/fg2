@@ -1,4 +1,4 @@
----@class ShootingServerPlayerService
+---@class ServerShootingPlayerService
 ---@field diContainer DIContainer
 ---@field constants ShootingConstants
 ---@field eventBus EventBus
@@ -7,7 +7,7 @@ local PlayerService = {}
 PlayerService.__index = PlayerService
 
 ---@param diContainer DIContainer
----@return ShootingServerPlayerService
+---@return ServerShootingPlayerService
 function PlayerService.new(diContainer)
 	local self = setmetatable({}, PlayerService)
 	self.diContainer = diContainer

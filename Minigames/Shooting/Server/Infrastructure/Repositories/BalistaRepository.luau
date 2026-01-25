@@ -1,3 +1,4 @@
+local HttpService = game:GetService("HttpService")
 ---@class ServerShootingBalistaRepository
 ---@field diContainer DIContainer
 ---@field balistaEntity BalistaEntity
@@ -14,28 +15,35 @@ function BalistaRepository.new(diContainer)
 end
 
 function BalistaRepository:init()
-    ---@type ShootingShared
-    local shared = self.diContainer:resolve("Shared")
-    self.balistaEntity = shared.domain.Entities.Balista
+	---@type ShootingShared
+	local shared = self.diContainer:resolve("Shared")
+	self.balistaEntity = shared.domain.Entities.Balista
 end
 
----@param balista Model
+function BalistaRepository:createBalistaEntity(balista)
+	local id = HttpService:GenerateGUID(false)
+	local balistaEntity = self.balistaEntity.new(balista, id)
+	balistaEntity:init({
+		destroyCallback = function()
+			self:removeBalistaEntity(id)
+		end,
+	})
+	self.balistaEntities[id] = balistaEntity
+	return balistaEntity
+end
+
+---@param id string
 ---@return BalistaEntity
-function BalistaRepository:getBalistaEntity(balista)
-    if not self.balistaEntities[balista.Name] then
-        self.balistaEntities[balista.Name] = self.balistaEntity.new(balista)
-    end
+function BalistaRepository:getBalistaEntity(id)
+	if not self.balistaEntities[id] then
+		return nil
+	end
 
-    return self.balistaEntities[balista.Name]
+	return self.balistaEntities[id]
 end
 
-function BalistaRepository:removeBalistaEntity(balista)
-    self.balistaEntities[balista.Name] = nil
-end
-
----@return table<string, BalistaEntity>
-function BalistaRepository:getBalistaEntities()
-    return self.balistaEntities
+function BalistaRepository:removeBalistaEntity(id)
+	self.balistaEntities[id] = nil
 end
 
 return BalistaRepository

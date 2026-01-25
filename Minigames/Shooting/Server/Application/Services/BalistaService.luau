@@ -1,15 +1,16 @@
 local Players = game:GetService("Players")
 
----@class ShootingServerBalistaService
+---@class ServerShootingBalistaService
 ---@field diContainer DIContainer
 ---@field constants SharedConstants
 ---@field balistaRepository ServerShootingBalistaRepository
 ---@field eventBus EventBus
+---@field application ServerShootingApp
 local BalistaService = {}
 BalistaService.__index = BalistaService
 
 ---@param diContainer DIContainer
----@return ShootingServerBalistaService
+---@return ServerShootingBalistaService
 function BalistaService.new(diContainer)
 	local self = setmetatable({}, BalistaService)
 	self.diContainer = diContainer
@@ -20,8 +21,11 @@ end
 function BalistaService:init()
 	---@type ShootingShared
 	local shared = self.diContainer:resolve("Shared")
-	---@type ShootingServerInfrastructure
+	---@type ServerShootingInfrastructure
 	local infrastructure = self.diContainer:resolve("Infrastructure")
+
+	self.application = self.diContainer:resolve("Application")
+
 	self.balistaRepository = infrastructure.repositories.balistaRepository
 	self.itemsRepository = shared.infrastructure.repositories.itemsRepository
 	self.constants = shared.constants
@@ -50,8 +54,8 @@ function BalistaService:_setup()
 	---@param balista Model
 	for _, balista in self.balistas do
 		-- local seat = balista.Seat :: Seat
-		local balistaEntity = self.balistaRepository:getBalistaEntity(balista)
-		balistaEntity:init({
+		local balistaEntity = self.balistaRepository:createBalistaEntity(balista)
+		balistaEntity:setup({
 			---@param occupant Humanoid
 			activateCallback = function(occupant)
 				local player = Players:GetPlayerFromCharacter(occupant.Parent)
@@ -61,6 +65,7 @@ function BalistaService:_setup()
 				})
 				balistaEntity:setAmmo(self.ammo)
 				self._balistaEntities[player.UserId] = balistaEntity
+				self.application:start()
 				return player
 			end,
 			---@param ownerId number
@@ -72,6 +77,7 @@ function BalistaService:_setup()
 					})
 				end
 				self._balistaEntities[ownerId] = nil
+				self.application:stop()
 			end,
 		})
 	end

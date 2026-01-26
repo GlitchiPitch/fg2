@@ -25,37 +25,46 @@ function PlayerService:init()
 
 	self.eventBus:connectToEvents({
 		[self.constants.SERVER_EVENTS.PLAYER_JOINED_BALISTA] = function(data)
-			self:onPlayerJoinedBalista({ player = data.player })
+			self:onPlayerJoinedBalista(data)
 		end,
 		[self.constants.SERVER_EVENTS.PLAYER_LEFT_BALISTA] = function(data)
-			self:onPlayerLeftBalista({ player = data.player })
+			self:onPlayerLeftBalista(data)
 		end,
 	})
 end
 
----@param data table
+---@class onPlayerJoinedBalistaData
+---@field player Player
+---@field balista BalistaEntity
+
+---@param data onPlayerJoinedBalistaData
 function PlayerService:onPlayerJoinedBalista(data)
 	local player = data.player
+	local balista = data.balista
 	self.coreEventBus:fire(self.coreConstants.SERVER_EVENTS.SET_PLAYER_CAMERA_MODE, {
 		player = player,
 		mode = self.coreConstants.CAMERA_MODES.FOLLOWING,
 	})
 	self.remoteEventService:fireClient(player, {
 		eventName = self.constants.REMOTE_EVENTS.PLAYER_JOINED_BALISTA,
-		data = {},
+		data = balista,
 	})
 end
 
----@param data table
+---@class onPlayerLeftBalistaData
+---@field player Player
+
+---@param data onPlayerLeftBalistaData
 function PlayerService:onPlayerLeftBalista(data)
 	local player = data.player
+	local balista = data.balista
 	self.coreEventBus:fire(self.coreConstants.SERVER_EVENTS.SET_PLAYER_CAMERA_MODE, {
 		player = player,
 		mode = self.coreConstants.CAMERA_MODES.DEFAULT,
 	})
 	self.remoteEventService:fireClient(player, {
 		eventName = self.constants.REMOTE_EVENTS.PLAYER_LEFT_BALISTA,
-		data = {},
+		data = balista,
 	})
 end
 

@@ -15,13 +15,12 @@ function Server.new(globalDIContainer)
 		}),
 		Server
 	)
-	warn("CrossbowShootingServer new")
+
 	return self
 end
 
 function Server:init()
 	MinigameMaster.init(self)
-    warn("CrossbowShootingServer init")
 end
 
 function Server:startSession()

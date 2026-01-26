@@ -12,20 +12,27 @@
 local Balista = {}
 Balista.__index = Balista
 
----@param balista Model
----@param id string
+---@class balistaNewData
+---@field id string
+---@field ownerId number
+---@field model Model
+---@field ammo Model[]
+---@field isReloading boolean
+
+---@param data balistaNewData
 ---@return BalistaEntity
-function Balista.new(balista, id)
+function Balista.new(data)
 	local self = setmetatable({}, Balista)
-	self.model = balista
-	self.id = id
-	self.seat = balista.Seat :: Seat
+	self.model = data.model
+	self.id = data.id
+	self.seat = self.model.Seat :: Seat
 	self.owner = nil
 	self.ownerId = nil
 	self._cameraCFrameConnection = nil
 	self._ammo = {}
 	self.alignOrientation = self.seat.AlignOrientation :: AlignOrientation
 	self.shootAttachment = self.model.PrimaryPart.ShootAttachment :: Attachment
+	self._isReloading = false
 	return self
 end
 
@@ -59,15 +66,39 @@ function Balista:setup(data)
 	end)
 end
 
+---@return table
+function Balista:toData()
+	return {
+		id = self.id,
+		ownerId = self.ownerId,
+		model = self.model,
+		ammo = self._ammo,
+		isReloading = self._isReloading,
+	}
+end
+
 function Balista:destroy()
+	for _, ammo in self._ammo do
+		ammo:Destroy()
+	end
+	
+	if self._cameraCFrameConnection then
+		self._cameraCFrameConnection:Disconnect()
+		self._cameraCFrameConnection = nil
+	end
+
 	self._destroyCallback()
 end
 
+---@return table
 function Balista:shoot()
-	local bullet = self:_getRandomAmmo()
-	print(bullet)
-	if not bullet then
+	if self._isReloading then
 		return
+	end
+
+	local bullet = self:_getRandomAmmo()
+	if not bullet then
+		return { reload = true }
 	end
 
 	local origin = self.shootAttachment.WorldCFrame
@@ -92,10 +123,13 @@ function Balista:shoot()
 	bulletModel.PrimaryPart.AssemblyLinearVelocity = velocity
 
 	touchConnection = bulletModel.PrimaryPart.Touched:Connect(function(hit)
-		print(hit.Name)
 		touchConnection:Disconnect()
 		bulletModel:Destroy()
 	end)
+
+	self._isReloading = #self._ammo == 0
+
+	return { reload = self._isReloading }
 end
 
 ---@param ammo Model[]
@@ -127,7 +161,9 @@ function Balista:_getRandomAmmo()
 		return nil
 	end
 
-	return self._ammo[math.random(1, #self._ammo)]
+	local ammo = self._ammo[math.random(1, #self._ammo)]
+	table.remove(self._ammo, math.random(1, #self._ammo))
+	return ammo
 end
 
 return Balista

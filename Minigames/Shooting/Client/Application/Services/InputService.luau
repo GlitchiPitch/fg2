@@ -1,4 +1,3 @@
-local UserInputService = game:GetService("UserInputService")
 local ContextActionService = game:GetService("ContextActionService")
 
 ---@class ShootingInputService
@@ -34,7 +33,7 @@ function InputService:init()
 end
 
 function InputService:onPlayerJoinedBalista()
-	ContextActionService:BindAction("CrossbowShooting:Shoot", function(actionName, inputState, inputObject)
+	ContextActionService:BindAction("Shooting:Shoot", function(actionName, inputState, inputObject)
 		if inputState ~= Enum.UserInputState.Begin then
 			return
 		end
@@ -47,7 +46,7 @@ function InputService:onPlayerJoinedBalista()
 end
 
 function InputService:onPlayerLeftBalista()
-	ContextActionService:UnbindAction("CrossbowShooting:Shoot")
+	ContextActionService:UnbindAction("Shooting:Shoot")
 end
 
 return InputService

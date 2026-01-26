@@ -16,7 +16,7 @@
 ### Minigame Development
 
 * \[x] **Minigame Integration**: Connect minigames to core systems and implement game selection (MinigameLoader service implemented)
-* \[~] **Shooting**: Implement shooting mechanics, targets, and scoring (Renamed from CrossbowShooting, BalistasService added, camera integration complete, player visibility management implemented, shooting mechanics with parabolic trajectory added, TargetService and TargetController added, ItemsRepository implemented, spawner system and target type categorization added, Target entity with movement system and repository pattern implemented, application lifecycle management added)
+* \[~] **Shooting**: Implement shooting mechanics, targets, and scoring (Renamed from CrossbowShooting, BalistasService added, camera integration complete, player visibility management implemented, shooting mechanics with parabolic trajectory added, TargetService and TargetController added, ItemsRepository implemented, spawner system and target type categorization added, Target entity with movement system and repository pattern implemented, application lifecycle management added, client-side BalistaService and repository pattern implemented, reloading system added, UI structure created)
 * \[ ] **Racing**: Add track generation, vehicle controls, and lap timing
 * \[ ] **ItemSearch**: Create item spawning, search logic, and time limits
 * \[ ] **FoodEating**: Implement food consumption mechanics and objectives
@@ -149,7 +149,17 @@
 * Improved BalistaService integration with application lifecycle
 * Enhanced PlayerService with event handling for camera mode switching
 
-### v1.9.0 - Complete Minigame Mechanics
+### v1.9.0 - Client-Server Balista Synchronization ✅
+
+* Implemented shared BalistaRepository pattern for code reuse
+* Added client-side BalistaService for entity management
+* Enhanced balista entity with serialization support
+* Implemented reloading system with 2-second delay
+* Improved event data flow between client and server
+* Added Shooting UI presentation layer structure
+* Enhanced entity lifecycle management with proper cleanup
+
+### v1.10.0 - Complete Minigame Mechanics
 
 * Minigame selection and loading system
 * Individual minigame mechanics implementation

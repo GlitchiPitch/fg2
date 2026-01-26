@@ -1,3 +1,4 @@
+local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
 
 ---@class ServerShootingBalistaService
@@ -54,7 +55,13 @@ function BalistaService:_setup()
 	---@param balista Model
 	for _, balista in self.balistas do
 		-- local seat = balista.Seat :: Seat
-		local balistaEntity = self.balistaRepository:createBalistaEntity(balista)
+		local balistaEntity = self.balistaRepository:createBalistaEntity({
+			id = HttpService:GenerateGUID(false),
+			model = balista,
+			ammo = {},
+			isReloading = false,
+		})
+
 		balistaEntity:setup({
 			---@param occupant Humanoid
 			activateCallback = function(occupant)
@@ -62,10 +69,13 @@ function BalistaService:_setup()
 
 				self.eventBus:fire(self.constants.SERVER_EVENTS.PLAYER_JOINED_BALISTA, {
 					player = player,
+					balista = balistaEntity:toData(),
 				})
 				balistaEntity:setAmmo(self.ammo)
 				self._balistaEntities[player.UserId] = balistaEntity
+				-- start app for test
 				self.application:start()
+
 				return player
 			end,
 			---@param ownerId number
@@ -74,6 +84,7 @@ function BalistaService:_setup()
 				if player then
 					self.eventBus:fire(self.constants.SERVER_EVENTS.PLAYER_LEFT_BALISTA, {
 						player = player,
+						balista = balistaEntity:toData(),
 					})
 				end
 				self._balistaEntities[ownerId] = nil
@@ -90,7 +101,11 @@ function BalistaService:onShoot(eventData)
 		return
 	end
 
-	balistaEntity:shoot()
+	local result = balistaEntity:shoot()
+	if result.reload then
+		task.wait(2)
+		balistaEntity:setAmmo(self.ammo)
+	end
 end
 
 function BalistaService:getBalistaByOwner(player)

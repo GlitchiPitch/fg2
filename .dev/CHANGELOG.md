@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.0] - 2026-01-26
+
+### Added
+
+* **Client BalistaService**: New client-side service for managing balista entities with event-driven architecture
+* **Shared BalistaRepository**: Created shared repository pattern implementation for balista entity management
+* **Balista Entity Serialization**: Added `toData()` method for balista entity state serialization
+* **Reloading System**: Implemented ammo reloading mechanism with 2-second reload delay
+* **Client BalistaRepository**: Client-side repository extending shared repository for balista entity tracking
+* **Shooting UI**: Added Presentation layer UI structure for shooting minigame
+
+### Changed
+
+* **Balista Entity Constructor**: Refactored to accept data table parameter instead of separate arguments for better flexibility
+* **Balista Shoot Method**: Enhanced to return reload status and prevent shooting during reload
+* **Balista Destroy Method**: Improved cleanup with proper ammo and connection disposal
+* **Repository Pattern**: Server and Client repositories now inherit from shared repository for code reuse
+* **Server BalistaService**: Enhanced with GUID-based balista IDs and balista data synchronization to client
+* **Client PlayerService**: Updated to pass balista data through event chain for proper entity creation
+* **Event Data Flow**: Improved event data passing between server and client for balista state synchronization
+
+### Infrastructure
+
+* **Code Reuse**: Shared repository pattern reduces code duplication between client and server
+* **Entity Lifecycle**: Better entity state management with serialization support
+* **Event Architecture**: Enhanced event-driven communication with structured data passing
+* **Client-Server Sync**: Improved synchronization of balista entities between client and server
+
 ## [1.8.0] - 2026-01-25
 
 ### Added

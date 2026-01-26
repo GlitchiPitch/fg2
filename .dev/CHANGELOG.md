@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.10.0] - 2026-01-26
+
+### Added
+
+* **Client Shoot Event Handling**: Added remote event connection for shoot result synchronization from server
+* **Ammo Index System**: Implemented string-based ammo indexing system for better asset management
+* **Shoot Callback Pattern**: Added onShootCallback to balista setup for flexible bullet creation
+
+### Changed
+
+* **Server BalistaService**: Refactored ammo system to use string indexes (`_ammoIndexes`) instead of direct model references
+* **Ammo Asset Management**: Changed from array-based ammo storage to dictionary-based asset lookup (`_ammoAssets`)
+* **Shoot Result Handling**: Enhanced shoot result processing with proper reload/success state management and client synchronization
+* **Balista Shoot Method**: Changed return type from table to string ("reload" or "success") for clearer state communication
+* **Ammo Random Selection**: Refactored `_getRandomAmmo()` to return string names instead of Model instances
+* **Reload State Management**: Improved reloading state tracking in `setAmmo()` method with automatic state updates
+* **Client BalistaService**: Added `_onShoot()` method stub for handling shoot results from server
+
+### Infrastructure
+
+* **Callback Pattern**: Implemented callback-based bullet creation for better separation of concerns
+* **State Communication**: Improved state synchronization between server and client with string-based result codes
+* **Asset Management**: Better separation between ammo data (indexes) and ammo assets (models)
+
 ## [1.9.0] - 2026-01-26
 
 ### Added

@@ -1,6 +1,7 @@
 ---@class ClientBalistaService
 ---@field diContainer DIContainer
 ---@field balistaRepository ClientShootingBalistaRepository
+---@field remoteEventService RemoteEventService
 local BalistaService = {}
 BalistaService.__index = BalistaService
 
@@ -21,12 +22,21 @@ function BalistaService:init()
 
 	self.constants = shared.constants
 	self.eventBus = shared.eventBus
+
+	self.remoteEventService = shared.remoteEventService
+	
 	self.eventBus:connectToEvents({
 		[self.constants.CLIENT_EVENTS.PLAYER_JOINED_BALISTA] = function(data)
 			self:onPlayerJoinedBalista(data)
 		end,
 		[self.constants.CLIENT_EVENTS.PLAYER_LEFT_BALISTA] = function(data)
 			self:onPlayerLeftBalista(data)
+		end,
+	})
+
+	self.remoteEventService:connectToEvents({
+		[self.constants.REMOTE_EVENTS.SHOOT] = function(eventData)
+			self:_onShoot(eventData.data)
 		end,
 	})
 end
@@ -39,6 +49,12 @@ end
 ---@param data table
 function BalistaService:onPlayerLeftBalista(data)
 	self.balistaRepository:removeBalistaEntity(data.id)
+end
+
+---@param data table
+function BalistaService:_onShoot(data)
+	-- self.balistaRepository:shoot(data.id)
+	warn("onShoot", data)
 end
 
 return BalistaService

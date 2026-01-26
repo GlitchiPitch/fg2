@@ -16,7 +16,7 @@
 ### Minigame Development
 
 * \[x] **Minigame Integration**: Connect minigames to core systems and implement game selection (MinigameLoader service implemented)
-* \[~] **Shooting**: Implement shooting mechanics, targets, and scoring (Renamed from CrossbowShooting, BalistasService added, camera integration complete, player visibility management implemented, shooting mechanics with parabolic trajectory added, TargetService and TargetController added, ItemsRepository implemented, spawner system and target type categorization added, Target entity with movement system and repository pattern implemented, application lifecycle management added, client-side BalistaService and repository pattern implemented, reloading system added, UI structure created)
+* \[~] **Shooting**: Implement shooting mechanics, targets, and scoring (Renamed from CrossbowShooting, BalistasService added, camera integration complete, player visibility management implemented, shooting mechanics with parabolic trajectory added, TargetService and TargetController added, ItemsRepository implemented, spawner system and target type categorization added, Target entity with movement system and repository pattern implemented, application lifecycle management added, client-side BalistaService and repository pattern implemented, reloading system added, UI structure created, ammo index system and callback-based bullet creation implemented)
 * \[ ] **Racing**: Add track generation, vehicle controls, and lap timing
 * \[ ] **ItemSearch**: Create item spawning, search logic, and time limits
 * \[ ] **FoodEating**: Implement food consumption mechanics and objectives
@@ -159,7 +159,15 @@
 * Added Shooting UI presentation layer structure
 * Enhanced entity lifecycle management with proper cleanup
 
-### v1.10.0 - Complete Minigame Mechanics
+### v1.10.0 - Ammo System Refactoring ✅
+
+* Refactored ammo system to use string-based indexing
+* Implemented callback-based bullet creation pattern
+* Enhanced shoot result handling with string-based state codes
+* Improved client-server synchronization for shoot events
+* Better separation between ammo data and assets
+
+### v1.11.0 - Complete Minigame Mechanics
 
 * Minigame selection and loading system
 * Individual minigame mechanics implementation

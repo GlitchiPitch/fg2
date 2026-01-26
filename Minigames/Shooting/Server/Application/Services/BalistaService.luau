@@ -32,11 +32,13 @@ function BalistaService:init()
 	self.constants = shared.constants
 	self.eventBus = shared.eventBus
 
-	self.ammo = {
-		self.itemsRepository:getItemAsset("Box"),
-		self.itemsRepository:getItemAsset("SpaceGirl"),
-		self.itemsRepository:getItemAsset("SpaceMan"),
+	self._ammoAssets = {
+		Box = self.itemsRepository:getItemAsset("Box"),
+		SpaceGirl = self.itemsRepository:getItemAsset("SpaceGirl"),
+		SpaceMan = self.itemsRepository:getItemAsset("SpaceMan"),
 	}
+
+	self._ammoIndexes = { "Box", "SpaceGirl", "SpaceMan", "Box" }
 
 	self.remoteEventService = shared.remoteEventService
 
@@ -71,7 +73,7 @@ function BalistaService:_setup()
 					player = player,
 					balista = balistaEntity:toData(),
 				})
-				balistaEntity:setAmmo(self.ammo)
+				balistaEntity:setAmmo(table.clone(self._ammoIndexes))
 				self._balistaEntities[player.UserId] = balistaEntity
 				-- start app for test
 				self.application:start()
@@ -90,6 +92,14 @@ function BalistaService:_setup()
 				self._balistaEntities[ownerId] = nil
 				self.application:stop()
 			end,
+			onShootCallback = function(bulletName)
+				local bullet = self._ammoAssets[bulletName]
+				if not bullet then
+					return nil
+				end
+
+				return bullet:Clone()
+			end,
 		})
 	end
 end
@@ -101,10 +111,29 @@ function BalistaService:onShoot(eventData)
 		return
 	end
 
+	if balistaEntity._isReloading then
+		return
+	end
+
 	local result = balistaEntity:shoot()
-	if result.reload then
+	warn("result", result)
+
+	local function _onShootResult()
+		self.remoteEventService:fireClient(player, {
+			eventName = self.constants.REMOTE_EVENTS.SHOOT,
+			data = {
+				result = result,
+				balista = balistaEntity:toData(),
+			},
+		})
+	end
+
+	if result == "reload" then
 		task.wait(2)
-		balistaEntity:setAmmo(self.ammo)
+		balistaEntity:setAmmo(table.clone(self._ammoIndexes))
+		_onShootResult()
+	elseif result == "success" then
+		_onShootResult()
 	end
 end
 

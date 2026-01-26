@@ -38,7 +38,6 @@ end
 
 ---@class balistaInitData
 ---@field destroyCallback function () -> void
-
 ---@param data balistaInitData
 function Balista:init(data)
 	self._destroyCallback = data.destroyCallback
@@ -47,9 +46,11 @@ end
 ---@class balistaSetupData
 ---@field activateCallback function (occupant: Humanoid) -> void
 ---@field deactivateCallback function (ownerId: number) -> void
+---@field onShootCallback function (bulletName: string) -> Model
 
 ---@param data balistaSetupData
 function Balista:setup(data)
+	self._onShootCallback = data.onShootCallback
 	self.seat.Changed:Connect(function(property)
 		if property == "Occupant" then
 			local occupant = self.seat.Occupant
@@ -78,27 +79,28 @@ function Balista:toData()
 end
 
 function Balista:destroy()
-	for _, ammo in self._ammo do
-		ammo:Destroy()
-	end
-	
 	if self._cameraCFrameConnection then
 		self._cameraCFrameConnection:Disconnect()
 		self._cameraCFrameConnection = nil
 	end
 
+	self._ammo = nil
+	self._onShootCallback = nil
 	self._destroyCallback()
+	self._destroyCallback = nil
 end
 
 ---@return table
 function Balista:shoot()
 	if self._isReloading then
-		return
+		return "reload"
 	end
 
-	local bullet = self:_getRandomAmmo()
+	local bulletName = self:_getRandomAmmo()
+	local bullet = self._onShootCallback(bulletName)
+
 	if not bullet then
-		return { reload = true }
+		return "reload"
 	end
 
 	local origin = self.shootAttachment.WorldCFrame
@@ -129,12 +131,15 @@ function Balista:shoot()
 
 	self._isReloading = #self._ammo == 0
 
-	return { reload = self._isReloading }
+	return self._isReloading and "reload" or "success"
 end
 
 ---@param ammo Model[]
 function Balista:setAmmo(ammo)
+	warn("setAmmo", ammo)
 	self._ammo = ammo
+	self._isReloading = #self._ammo == 0
+	warn("setAmmo", self._isReloading)
 end
 
 function Balista:_activate()
@@ -155,15 +160,15 @@ function Balista:_deactivate()
 	self.ownerId = nil
 end
 
----@return Model?
+---@return string?
 function Balista:_getRandomAmmo()
 	if #self._ammo == 0 then
-		return nil
+		return ""
 	end
 
 	local ammo = self._ammo[math.random(1, #self._ammo)]
 	table.remove(self._ammo, math.random(1, #self._ammo))
-	return ammo
+	return ammo or ""
 end
 
 return Balista

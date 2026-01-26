@@ -69,18 +69,18 @@ end
 
 ---@class onTargetHitData
 ---@field targetId string
----@field shootedPlayer Player
+---@field player Player
 
 ---@param data onTargetHitData
 function TargetService:_onTargetHit(data)
 	local targetId = data.targetId
-	local shootedPlayer = data.shootedPlayer
+	local player = data.player
 	local targetEntity = self.targetRepository:getTargetEntity(targetId)
 	if not targetEntity then
 		return
 	end
 	self.eventBus:fire(self.constants.SERVER_EVENTS.ADD_SCORE, {
-		player = shootedPlayer,
+		player = player,
 		score = targetEntity.score,
 	})
 	targetEntity:destroy()

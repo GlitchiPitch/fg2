@@ -35,6 +35,7 @@ function Presentation:init()
 		[self.constants.CLIENT_EVENTS.ADD_SCORE] = function(data)
 			self.ui:updateScore(data)
 		end,
+		
 	})
 
 	self.ui:init()

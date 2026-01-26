@@ -11,19 +11,19 @@ local Assets = require(ReplicatedStorage.Minigames.Shooting.Assets)
 local Items = {
     SpaceMan = {
         name = "SpaceMan",
-        image = "rbxassetid://1177150746",
+        image = "rbxassetid://94806141361651",
         model = Assets.SpaceMan,
         score = 100,
     },
     SpaceGirl = {
         name = "SpaceGirl",
-        image = "rbxassetid://1177150746",
+        image = "rbxassetid://6294594624",
         model = Assets.SpaceGirl,
         score = 100,
     },
     Box = {
         name = "Box",
-        image = "rbxassetid://1177150746",
+        image = "rbxassetid://7035916568",
         model = Assets.Box,
         score = 100,
     },

@@ -3,9 +3,12 @@ local TweenService = game:GetService("TweenService")
 ---@field diContainer DIContainer
 ---@field shootingUI ScreenGui
 ---@field ammoFrame Frame
+---@field scoreFrame Frame
+---@field scoreLabel TextLabel
 ---@field ammoImageTemplate ImageLabel
----@field playerService ClientPlayerService
+---@field corePlayerService ClientPlayerService
 ---@field itemsRepository SharedShootingItemsRepository
+---@field playerService ShootingClientPlayerService
 local UI = {}
 UI.__index = UI
 
@@ -15,6 +18,8 @@ function UI.new(diContainer)
 	local self = setmetatable({}, UI)
 	self.diContainer = diContainer
 	self.shootingUI = script.ShootingUI:Clone()
+	self.scoreFrame = self.shootingUI.Score
+	self.scoreLabel = self.scoreFrame.TextLabel
 	self.ammoFrame = self.shootingUI.Ammo
 	self.ammoImageTemplate = self.ammoFrame.AmmoImage
 	return self
@@ -25,13 +30,16 @@ function UI:init()
 	local shared = self.diContainer:resolve("Shared")
 	self.itemsRepository = shared.infrastructure.repositories.itemsRepository
 	---@type ClientApp
-	local application = self.diContainer:resolve("CoreApplication")
-	self.playerService = application.services.playerService
+	local coreApplication = self.diContainer:resolve("CoreApplication")
+	self.corePlayerService = coreApplication.services.playerService
+    ---@type ShootingClientApp
+    local application = self.diContainer:resolve("Application")
+    self.playerService = application.services.playerService
 	self:_setup()
 end
 
 function UI:_setup()
-	self.shootingUI.Parent = self.playerService.player.PlayerGui
+	self.shootingUI.Parent = self.corePlayerService.player.PlayerGui
 	self.shootingUI.Enabled = false
 end
 
@@ -52,7 +60,7 @@ end
 function UI:_fillAmmo(data)
 	for i, ammo in data.ammo do
 		local ammoImage = self.ammoImageTemplate:Clone()
-        local item = self.itemsRepository:getItemData(ammo)
+		local item = self.itemsRepository:getItemData(ammo)
 		ammoImage.Parent = self.ammoFrame
 		ammoImage.LayoutOrder = i
 		ammoImage.Visible = true
@@ -69,14 +77,27 @@ function UI:_clearAmmo()
 end
 
 function UI:updateScore(data)
-    self:_animateScore(data.score)
-	self.scoreLabel.Text = data.score
+	local playerEntity = self.playerService:getPlayerEntity()
+	self:_animateScore(data.score)
+	self.scoreLabel.Text = playerEntity.score
 end
 
 ---@param score number
 function UI:_animateScore(score)
-    local tweenInfo = TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut)
-    local tween = TweenService:Create(self.scoreLabel, tweenInfo, {Text = score})
-    tween:Play()
+	local animatedScore = self.scoreLabel:Clone()
+	local tweenInfo = TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut)
+	local tween = TweenService:Create(animatedScore, tweenInfo, { Position = self.scoreLabel.Position })
+
+	local function onCompleted()
+		animatedScore:Destroy()
+	end
+
+	animatedScore.Parent = self.scoreFrame
+	animatedScore.Visible = true
+	animatedScore.Position = UDim2.fromScale(0.5, 2.5)
+	animatedScore.Text = score
+
+	tween.Completed:Connect(onCompleted)
+	tween:Play()
 end
 return UI

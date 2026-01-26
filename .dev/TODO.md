@@ -16,7 +16,7 @@
 ### Minigame Development
 
 * \[x] **Minigame Integration**: Connect minigames to core systems and implement game selection (MinigameLoader service implemented)
-* \[~] **Shooting**: Implement shooting mechanics, targets, and scoring (Renamed from CrossbowShooting, BalistasService added, camera integration complete, player visibility management implemented, shooting mechanics with parabolic trajectory added, TargetService and TargetController added, ItemsRepository implemented, spawner system and target type categorization added, Target entity with movement system and repository pattern implemented, application lifecycle management added, client-side BalistaService and repository pattern implemented, reloading system added, UI structure created, ammo index system and callback-based bullet creation implemented, score system with UI display added)
+* \[~] **Shooting**: Implement shooting mechanics, targets, and scoring (Renamed from CrossbowShooting, BalistasService added, camera integration complete, player visibility management implemented, shooting mechanics with parabolic trajectory added, TargetService and TargetController added, ItemsRepository implemented, spawner system and target type categorization added, Target entity with movement system and repository pattern implemented, application lifecycle management added, client-side BalistaService and repository pattern implemented, reloading system added, UI structure created, ammo index system and callback-based bullet creation implemented, score system with UI display added, Player entity and repository pattern implemented)
 * \[ ] **Racing**: Add track generation, vehicle controls, and lap timing
 * \[ ] **ItemSearch**: Create item spawning, search logic, and time limits
 * \[ ] **FoodEating**: Implement food consumption mechanics and objectives
@@ -175,7 +175,16 @@
 * Integrated score tracking from target entities to player display
 * Improved target hit detection with player attribution
 
-### v1.12.0 - Complete Minigame Mechanics
+### v1.12.0 - Player Entity Repository Pattern ✅
+
+* Implemented ShootingPlayerEntity domain entity with score tracking
+* Created shared PlayerRepository pattern following repository pattern
+* Enhanced client and server PlayerServices with repository integration
+* Improved player state synchronization using entity serialization
+* Refactored score system to use entity-based state management
+* Added consistent repository pattern for player entities matching Balista pattern
+
+### v1.13.0 - Complete Minigame Mechanics
 
 * Minigame selection and loading system
 * Individual minigame mechanics implementation

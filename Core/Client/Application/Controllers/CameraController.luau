@@ -48,7 +48,7 @@ function CameraController:init()
 	---@type ClientApp
 	local app = self.diContainer:resolve("Application")
 	self.playerService = app.services.playerService
-	
+
 	self.mouse = self.playerService.player:GetMouse()
 	self.constants = shared.constants
 	self.eventBus = shared.eventBus
@@ -64,8 +64,6 @@ function CameraController:init()
 			self:_mouseMovement(data.input)
 		end,
 	})
-
-	
 end
 
 function CameraController:update(deltaTime)
@@ -94,8 +92,6 @@ function CameraController:_mouseMovement(input)
 	local X = self.targetAngleX - delta.Y
 	self.targetAngleX = (X >= 80 and 80) or (X <= -80 and -80) or X
 	self.targetAngleY = (self.targetAngleY - delta.X) % 360
-
-	
 end
 
 ---@param character Model
@@ -132,9 +128,9 @@ function CameraController:_followingCamera(deltaTime)
 
 	self.camera.CFrame = cameraCFrame
 	self.camera.FieldOfView = self.fieldOfView
-	
+
 	self._deltaTime = self._deltaTime + deltaTime
-	if self._deltaTime > .3 then
+	if self._deltaTime > 0.3 then
 		self._deltaTime = 0
 		self:_sendCameraCFrame()
 	end

@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.12.0] - 2026-01-26
+
+### Added
+
+* **Player Entity System**: Implemented ShootingPlayerEntity domain entity with score tracking and serialization support
+* **Player Repository Pattern**: Created shared PlayerRepository following repository pattern for player entity management
+* **Client PlayerRepository**: Client-side repository extending shared repository for player entity tracking
+* **Server PlayerRepository**: Server-side repository extending shared repository for player entity management
+* **Player Entity Serialization**: Added `toData()` and `fromData()` methods for player entity state serialization
+* **Player Entity Score Management**: Implemented `addScore()` method for score updates on player entities
+
+### Changed
+
+* **Shared PlayerService**: Enhanced with playerRepository integration and base structure for client/server implementations
+* **Client PlayerService**: Refactored to use PlayerRepository for entity management, added `getPlayerEntity()` method, and integrated with player entity state synchronization
+* **Server PlayerService**: Enhanced to use PlayerRepository for score management, added player entity synchronization on join, and improved score update flow with entity state
+* **UI Score Display**: Updated to use `playerService:getPlayerEntity()` for accessing player score from entity instead of event data
+* **Score System Architecture**: Refactored score system to use repository pattern for persistent player state management
+* **Player State Synchronization**: Improved player state synchronization between server and client using entity serialization
+
+### Infrastructure
+
+* **Repository Pattern Consistency**: Player entities now follow the same repository pattern as Balista entities for code consistency
+* **Entity Lifecycle Management**: Better player entity lifecycle management with proper creation, retrieval, and cleanup
+* **State Management**: Improved state management with entity-based approach instead of event-only communication
+* **Code Reuse**: Shared repository pattern reduces code duplication between client and server player management
+
 ## [1.11.0] - 2026-01-26
 
 ### Added

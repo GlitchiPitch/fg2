@@ -105,6 +105,7 @@ function BalistaService:_setup()
 			hitCallback = function(hit)
 				if hit.Parent:HasTag("Target") then
 					self.eventBus:fire(self.constants.SERVER_EVENTS.TARGET_HIT, {
+						player = balistaEntity.owner,
 						targetId = hit.Parent:GetAttribute("TargetId"),
 					})
 				end

@@ -10,8 +10,8 @@ Services.__index = Services
 ---@return ClientAppServices
 function Services.new(diContainer)
 	local self = setmetatable({}, Services)
-    self.playerService = PlayerService.new(diContainer)
-    self.inputService = InputService.new(diContainer)
+	self.playerService = PlayerService.new(diContainer)
+	self.inputService = InputService.new(diContainer)
 	return self
 end
 

@@ -18,7 +18,7 @@ function TargetRepository.new(diContainer)
 end
 
 function TargetRepository:init()
-	---@type ShootingShared
+	---@type SharedShooting
 	local shared = self.diContainer:resolve("Shared")
 	self.itemsRepository = shared.infrastructure.repositories.itemsRepository
 	self.targetEntity = shared.domain.Entities.Target
@@ -37,7 +37,8 @@ end
 
 function TargetRepository:createTargetEntity(target)
 	local id = HttpService:GenerateGUID(false)
-	local targetEntity = self.targetEntity.new(target, id)
+	local itemData = self.itemsRepository:getItemData(target.Name)
+	local targetEntity = self.targetEntity.new(target, id, itemData.score)
 	targetEntity:init({
 		destroyCallback = function()
 			self:removeTargetEntity(id)

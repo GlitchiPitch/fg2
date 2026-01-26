@@ -10,11 +10,13 @@ TargetEntity.__index = TargetEntity
 
 ---@param model Model
 ---@param id string
+---@param score number
 ---@return TargetEntity
-function TargetEntity.new(model, id)
+function TargetEntity.new(model, id, score)
 	local self = setmetatable({}, TargetEntity)
 	self._model = model
 	self.id = id
+	self.score = score
 	return self
 end
 
@@ -23,6 +25,8 @@ end
 ---@param data targetEntityInitData
 function TargetEntity:init(data)
 	self._destroyCallback = data.destroyCallback
+	self._model:AddTag("Target")
+	self._model:SetAttribute("TargetId", self.id)
 end
 
 ---@class targetEntitySpawnData
@@ -54,12 +58,13 @@ function TargetEntity:_startMoving(data)
     self._alignPosition.Attachment0 = self._attachment
     self._alignPosition.Attachment1 = data.finishAttachment
 
-	task.delay(10, function()
+	task.delay(20, function()
 		self:destroy()
 	end)
 end
 
 function TargetEntity:destroy()
+	warn("destroy")
 	self._alignOrientation:Destroy()
 	self._alignPosition:Destroy()
 	self._attachment:Destroy()

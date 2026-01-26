@@ -15,7 +15,7 @@ function PlayerService.new(diContainer)
 end
 
 function PlayerService:init()
-	---@type ShootingShared
+	---@type SharedShooting
 	local shared = self.diContainer:resolve("Shared")
 	self.constants = shared.constants
 	self.eventBus = shared.eventBus
@@ -29,6 +29,9 @@ function PlayerService:init()
 		end,
 		[self.constants.SERVER_EVENTS.PLAYER_LEFT_BALISTA] = function(data)
 			self:onPlayerLeftBalista(data)
+		end,
+		[self.constants.SERVER_EVENTS.ADD_SCORE] = function(data)
+			self:onAddScore(data)
 		end,
 	})
 end
@@ -65,6 +68,20 @@ function PlayerService:onPlayerLeftBalista(data)
 	self.remoteEventService:fireClient(player, {
 		eventName = self.constants.REMOTE_EVENTS.PLAYER_LEFT_BALISTA,
 		data = balista,
+	})
+end
+
+---@class onAddScoreData
+---@field player Player
+---@field score number
+
+---@param data onAddScoreData
+function PlayerService:onAddScore(data)
+	local player = data.player
+	local score = data.score
+	self.remoteEventService:fireClient(player, {
+		eventName = self.constants.REMOTE_EVENTS.ADD_SCORE,
+		data = score,
 	})
 end
 

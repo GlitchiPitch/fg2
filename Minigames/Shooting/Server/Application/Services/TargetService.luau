@@ -4,6 +4,7 @@
 ---@field constants SharedConstants
 ---@field eventBus EventBus
 ---@field _spawners table<string, Part[]>
+
 local TargetService = {}
 TargetService.__index = TargetService
 
@@ -12,11 +13,13 @@ TargetService.__index = TargetService
 function TargetService.new(diContainer)
 	local self = setmetatable({}, TargetService)
 	self.diContainer = diContainer
+	self._spawnedTargets = 0
+	self._maxSpawnedTargets = 10
 	return self
 end
 
 function TargetService:init()
-	---@type ShootingShared
+	---@type SharedShooting
 	local shared = self.diContainer:resolve("Shared")
 	---@type ServerShootingInfrastructure
 	local infrastructure = self.diContainer:resolve("Infrastructure")
@@ -30,16 +33,17 @@ function TargetService:init()
 		ground = spawners.Ground:GetChildren(),
 	}
 
-	local s = 0
-
 	self.eventBus:connectToEvents({
 		[self.constants.SERVER_EVENTS.SPAWN_TARGET] = function()
-			if s > 10 then
+			if self._spawnedTargets >= self._maxSpawnedTargets then
 				return
 			end
-			s += 1
+			self._spawnedTargets += 1
 
 			self:_spawnTarget()
+		end,
+		[self.constants.SERVER_EVENTS.TARGET_HIT] = function(data)
+			self:_onTargetHit(data)
 		end,
 	})
 end
@@ -61,6 +65,26 @@ end
 function TargetService:_getRandomTarget(targetType)
 	local target = self.targetRepository:getRandomTarget(targetType)
 	return target
+end
+
+---@class onTargetHitData
+---@field targetId string
+---@field shootedPlayer Player
+
+---@param data onTargetHitData
+function TargetService:_onTargetHit(data)
+	local targetId = data.targetId
+	local shootedPlayer = data.shootedPlayer
+	local targetEntity = self.targetRepository:getTargetEntity(targetId)
+	if not targetEntity then
+		return
+	end
+	self.eventBus:fire(self.constants.SERVER_EVENTS.ADD_SCORE, {
+		player = shootedPlayer,
+		score = targetEntity.score,
+	})
+	targetEntity:destroy()
+	self._spawnedTargets -= 1
 end
 
 return TargetService

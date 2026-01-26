@@ -14,7 +14,7 @@ function BalistaService.new(diContainer)
 end
 
 function BalistaService:init()
-	---@type ShootingShared
+	---@type SharedShooting
 	local shared = self.diContainer:resolve("Shared")
 	---@type ClientShootingInfrastructure
 	local infrastructure = self.diContainer:resolve("Infrastructure")
@@ -24,7 +24,7 @@ function BalistaService:init()
 	self.eventBus = shared.eventBus
 
 	self.remoteEventService = shared.remoteEventService
-	
+
 	self.eventBus:connectToEvents({
 		[self.constants.CLIENT_EVENTS.PLAYER_JOINED_BALISTA] = function(data)
 			self:onPlayerJoinedBalista(data)
@@ -43,18 +43,24 @@ end
 
 ---@param data table
 function BalistaService:onPlayerJoinedBalista(data)
-	self.balistaRepository:createBalistaEntity(data)
+	local balistaEntity = self.balistaRepository:createBalistaEntity(data)
+	self.balistaRepository:setBallistaId(balistaEntity.id)
 end
 
 ---@param data table
 function BalistaService:onPlayerLeftBalista(data)
 	self.balistaRepository:removeBalistaEntity(data.id)
+	self.balistaRepository:setBallistaId(nil)
 end
 
 ---@param data table
 function BalistaService:_onShoot(data)
 	-- self.balistaRepository:shoot(data.id)
-	warn("onShoot", data)
+	self.eventBus:fire(self.constants.CLIENT_EVENTS.SHOOT, data.balista)
+end
+
+function BalistaService:getBalistaEntity()
+	return self.balistaRepository:getBalistaEntity(self.balistaRepository.ballistaId)
 end
 
 return BalistaService

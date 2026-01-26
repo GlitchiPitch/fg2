@@ -18,7 +18,7 @@ function TargetController.new(diContainer)
 end
 
 function TargetController:init()
-	---@type ShootingShared
+	---@type SharedShooting
 	local shared = self.diContainer:resolve("Shared")
 	self.constants = shared.constants
 	self.eventBus = shared.eventBus

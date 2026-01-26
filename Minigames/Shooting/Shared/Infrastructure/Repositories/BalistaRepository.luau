@@ -14,7 +14,7 @@ function BalistaRepository.new(diContainer)
 end
 
 function BalistaRepository:init()
-	---@type ShootingShared
+	---@type SharedShooting
 	local shared = self.diContainer:resolve("Shared")
 	self.balistaEntity = shared.domain.Entities.Balista
 end

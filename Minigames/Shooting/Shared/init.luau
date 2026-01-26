@@ -4,7 +4,7 @@ local Data = require(script.Data)
 local Domain = require(script.Domain)
 local Infrastructure = require(script.Infrastructure)
 
----@class ShootingShared
+---@class SharedShooting
 ---@field constants ShootingConstants
 ---@field assets ShootingSharedAssets
 ---@field data ShootingSharedData
@@ -18,7 +18,7 @@ local Shared = {}
 Shared.__index = Shared
 
 ---@param globalDIContainer DIContainer
----@return ShootingShared
+---@return SharedShooting
 function Shared.new(globalDIContainer)
 	local self = setmetatable({}, Shared)
 	self.globalDIContainer = globalDIContainer

@@ -5,43 +5,51 @@ local Assets = require(ReplicatedStorage.Minigames.Shooting.Assets)
 ---@field name string
 ---@field image string
 ---@field model Model
+---@field score number
 
 ---@class ShootingSharedDataItems
 local Items = {
     SpaceMan = {
-        name = "Sailor",
-        image = "rbxassetid://1234567890",
+        name = "SpaceMan",
+        image = "rbxassetid://1177150746",
         model = Assets.SpaceMan,
+        score = 100,
     },
     SpaceGirl = {
-        name = "Space Girl",
-        image = "rbxassetid://1234567890",
+        name = "SpaceGirl",
+        image = "rbxassetid://1177150746",
         model = Assets.SpaceGirl,
+        score = 100,
     },
     Box = {
         name = "Box",
-        image = "rbxassetid://1234567890",
+        image = "rbxassetid://1177150746",
         model = Assets.Box,
+        score = 100,
     },
     Starship = {
         name = "Starship",
         image = "rbxassetid://1234567890",
         model = Assets.Starship,
+        score = 100,
     },
     BigStarship = {
-        name = "Big Starship",
+        name = "BigStarship",
         image = "rbxassetid://1234567890",
         model = Assets.BigStarship,
+        score = 100,
     },
     Tank = {
         name = "Tank",
         image = "rbxassetid://1234567890",
         model = Assets.Tank,
+        score = 100,
     },
     LightTank = {
-        name = "Light Tank",
+        name = "LightTank",
         image = "rbxassetid://1234567890",
         model = Assets.LightTank,
+        score = 100,
     },
 }
 

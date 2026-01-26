@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.11.0] - 2026-01-26
+
+### Added
+
+* **Score System**: Implemented complete scoring system for target hits with score tracking and display
+* **Score Display UI**: Added score label and animated score updates in Shooting UI
+* **Score Events**: Added ADD_SCORE events to SERVER_EVENTS, REMOTE_EVENTS, and CLIENT_EVENTS constants
+* **Target Score Integration**: Target entities now include score values from item data
+* **Score Animation**: Implemented smooth score transition animation using TweenService
+
+### Changed
+
+* **TargetService**: Enhanced to fire ADD_SCORE events when targets are hit with player tracking
+* **Server PlayerService**: Added score handling to forward ADD_SCORE events to clients
+* **Client PlayerService**: Added ADD_SCORE remote event handling and client event firing
+* **UI Presentation**: Integrated score update handling in Presentation layer event connections
+* **Shooting UI**: Added updateScore method with score label display and animation support
+* **Target Hit Flow**: Improved target hit detection flow with score calculation and player attribution
+
+### Infrastructure
+
+* **Score Synchronization**: Complete score synchronization between server and client
+* **Event Flow**: Enhanced event-driven architecture for score updates across all layers
+* **UI Integration**: Better integration between game logic and UI presentation for score display
+
 ## [1.10.0] - 2026-01-26
 
 ### Added

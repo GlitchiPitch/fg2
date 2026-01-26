@@ -9,6 +9,8 @@
 ---@field _ammo Model[]
 ---@field id string
 ---@field _destroyCallback function () -> void
+---@field _getRandomAmmo function (bulletName: string) -> Model
+---@field _hitCallback function (hit: Model) -> void
 local Balista = {}
 Balista.__index = Balista
 
@@ -46,11 +48,13 @@ end
 ---@class balistaSetupData
 ---@field activateCallback function (occupant: Humanoid) -> void
 ---@field deactivateCallback function (ownerId: number) -> void
----@field onShootCallback function (bulletName: string) -> Model
+---@field getRandomAmmoCallback function (bulletName: string) -> Model
+---@field hitCallback function (hit: Model) -> void
 
 ---@param data balistaSetupData
 function Balista:setup(data)
-	self._onShootCallback = data.onShootCallback
+	self._getRandomAmmo = data.getRandomAmmoCallback
+	self._hitCallback = data.hitCallback
 	self.seat.Changed:Connect(function(property)
 		if property == "Occupant" then
 			local occupant = self.seat.Occupant
@@ -85,7 +89,7 @@ function Balista:destroy()
 	end
 
 	self._ammo = nil
-	self._onShootCallback = nil
+	self._getRandomAmmo = nil
 	self._destroyCallback()
 	self._destroyCallback = nil
 end
@@ -96,8 +100,8 @@ function Balista:shoot()
 		return "reload"
 	end
 
-	local bulletName = self:_getRandomAmmo()
-	local bullet = self._onShootCallback(bulletName)
+	local bulletName = self:_getRandomAmmoIndex()
+	local bullet = self._getRandomAmmo(bulletName)
 
 	if not bullet then
 		return "reload"
@@ -125,6 +129,7 @@ function Balista:shoot()
 	bulletModel.PrimaryPart.AssemblyLinearVelocity = velocity
 
 	touchConnection = bulletModel.PrimaryPart.Touched:Connect(function(hit)
+		self._hitCallback(hit)
 		touchConnection:Disconnect()
 		bulletModel:Destroy()
 	end)
@@ -136,10 +141,8 @@ end
 
 ---@param ammo Model[]
 function Balista:setAmmo(ammo)
-	warn("setAmmo", ammo)
 	self._ammo = ammo
 	self._isReloading = #self._ammo == 0
-	warn("setAmmo", self._isReloading)
 end
 
 function Balista:_activate()
@@ -161,13 +164,13 @@ function Balista:_deactivate()
 end
 
 ---@return string?
-function Balista:_getRandomAmmo()
+function Balista:_getRandomAmmoIndex()
 	if #self._ammo == 0 then
 		return ""
 	end
 
-	local ammo = self._ammo[math.random(1, #self._ammo)]
-	table.remove(self._ammo, math.random(1, #self._ammo))
+	local ammo = self._ammo[1]
+	table.remove(self._ammo, 1)
 	return ammo or ""
 end
 

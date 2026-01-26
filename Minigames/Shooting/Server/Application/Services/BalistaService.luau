@@ -20,7 +20,7 @@ function BalistaService.new(diContainer)
 end
 
 function BalistaService:init()
-	---@type ShootingShared
+	---@type SharedShooting
 	local shared = self.diContainer:resolve("Shared")
 	---@type ServerShootingInfrastructure
 	local infrastructure = self.diContainer:resolve("Infrastructure")
@@ -69,12 +69,14 @@ function BalistaService:_setup()
 			activateCallback = function(occupant)
 				local player = Players:GetPlayerFromCharacter(occupant.Parent)
 
+				balistaEntity:setAmmo(table.clone(self._ammoIndexes))
+				self._balistaEntities[player.UserId] = balistaEntity
+
 				self.eventBus:fire(self.constants.SERVER_EVENTS.PLAYER_JOINED_BALISTA, {
 					player = player,
 					balista = balistaEntity:toData(),
 				})
-				balistaEntity:setAmmo(table.clone(self._ammoIndexes))
-				self._balistaEntities[player.UserId] = balistaEntity
+
 				-- start app for test
 				self.application:start()
 
@@ -92,13 +94,20 @@ function BalistaService:_setup()
 				self._balistaEntities[ownerId] = nil
 				self.application:stop()
 			end,
-			onShootCallback = function(bulletName)
+			getRandomAmmoCallback = function(bulletName)
 				local bullet = self._ammoAssets[bulletName]
 				if not bullet then
 					return nil
 				end
 
 				return bullet:Clone()
+			end,
+			hitCallback = function(hit)
+				if hit.Parent:HasTag("Target") then
+					self.eventBus:fire(self.constants.SERVER_EVENTS.TARGET_HIT, {
+						targetId = hit.Parent:GetAttribute("TargetId"),
+					})
+				end
 			end,
 		})
 	end
@@ -116,7 +125,6 @@ function BalistaService:onShoot(eventData)
 	end
 
 	local result = balistaEntity:shoot()
-	warn("result", result)
 
 	local function _onShootResult()
 		self.remoteEventService:fireClient(player, {
@@ -129,6 +137,7 @@ function BalistaService:onShoot(eventData)
 	end
 
 	if result == "reload" then
+		_onShootResult()
 		task.wait(2)
 		balistaEntity:setAmmo(table.clone(self._ammoIndexes))
 		_onShootResult()

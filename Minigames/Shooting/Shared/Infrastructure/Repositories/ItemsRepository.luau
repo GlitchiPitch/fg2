@@ -13,7 +13,7 @@ function ItemsRepository.new(diContainer)
 end
 
 function ItemsRepository:init()
-	---@type ShootingShared
+	---@type SharedShooting
 	local shared = self.diContainer:resolve("Shared")
 	self.items = shared.data.Items
 end

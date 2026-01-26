@@ -16,7 +16,7 @@
 ### Minigame Development
 
 * \[x] **Minigame Integration**: Connect minigames to core systems and implement game selection (MinigameLoader service implemented)
-* \[~] **Shooting**: Implement shooting mechanics, targets, and scoring (Renamed from CrossbowShooting, BalistasService added, camera integration complete, player visibility management implemented, shooting mechanics with parabolic trajectory added, TargetService and TargetController added, ItemsRepository implemented, spawner system and target type categorization added, Target entity with movement system and repository pattern implemented, application lifecycle management added, client-side BalistaService and repository pattern implemented, reloading system added, UI structure created, ammo index system and callback-based bullet creation implemented)
+* \[~] **Shooting**: Implement shooting mechanics, targets, and scoring (Renamed from CrossbowShooting, BalistasService added, camera integration complete, player visibility management implemented, shooting mechanics with parabolic trajectory added, TargetService and TargetController added, ItemsRepository implemented, spawner system and target type categorization added, Target entity with movement system and repository pattern implemented, application lifecycle management added, client-side BalistaService and repository pattern implemented, reloading system added, UI structure created, ammo index system and callback-based bullet creation implemented, score system with UI display added)
 * \[ ] **Racing**: Add track generation, vehicle controls, and lap timing
 * \[ ] **ItemSearch**: Create item spawning, search logic, and time limits
 * \[ ] **FoodEating**: Implement food consumption mechanics and objectives
@@ -167,7 +167,15 @@
 * Improved client-server synchronization for shoot events
 * Better separation between ammo data and assets
 
-### v1.11.0 - Complete Minigame Mechanics
+### v1.11.0 - Score System Implementation ✅
+
+* Implemented complete scoring system for target hits
+* Added score display UI with animated updates
+* Enhanced event system with ADD_SCORE events across all layers
+* Integrated score tracking from target entities to player display
+* Improved target hit detection with player attribution
+
+### v1.12.0 - Complete Minigame Mechanics
 
 * Minigame selection and loading system
 * Individual minigame mechanics implementation

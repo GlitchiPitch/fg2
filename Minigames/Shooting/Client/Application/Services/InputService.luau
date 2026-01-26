@@ -16,7 +16,7 @@ function InputService.new(diContainer)
 end
 
 function InputService:init()
-	---@type ShootingShared
+	---@type SharedShooting
 	local shared = self.diContainer:resolve("Shared")
 	self.eventBus = shared.eventBus
 	self.constants = shared.constants

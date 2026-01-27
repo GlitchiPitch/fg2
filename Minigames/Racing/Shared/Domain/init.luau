@@ -1,11 +1,11 @@
 local Entities = require(script.Entities)
 
----@class SharedShootingDomain
----@field Entities SharedShootingEntities
+---@class SharedRacingDomain
+---@field Entities SharedRacingEntities
 local Domain = {}
 Domain.__index = Domain
 
----@return SharedShootingDomain
+---@return SharedRacingDomain
 function Domain.new()
 	local self = setmetatable({}, Domain)
 	self.Entities = Entities

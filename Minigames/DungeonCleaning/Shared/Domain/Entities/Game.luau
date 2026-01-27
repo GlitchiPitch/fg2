@@ -1,11 +1,11 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local CoreGameEntity = require(ReplicatedStorage.Shared.Domain.Entities.Game)
 
----@class ShootingGameEntity
+---@class DungeonCleaningGameEntity
 local Game = setmetatable({}, CoreGameEntity)
 Game.__index = Game
 
----@return ShootingGameEntity
+---@return DungeonCleaningGameEntity
 function Game.new()
 	local self = setmetatable(CoreGameEntity.new(script), Game)
 	return self

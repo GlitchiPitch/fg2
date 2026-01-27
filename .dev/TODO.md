@@ -193,7 +193,15 @@
 * Enhanced event system with UPDATE_TIME events across all layers
 * Improved game state synchronization between server and client
 
-### v1.14.0 - Complete Minigame Mechanics
+### v1.14.0 - Domain Layer Architecture ✅
+
+* Implemented Domain layer structure for all minigames following clean architecture
+* Created Game entities for all minigames extending core Game entity
+* Standardized Shared module initialization with dependency injection
+* Enhanced code consistency and reusability across minigames
+* Improved architectural pattern alignment
+
+### v1.15.0 - Complete Minigame Mechanics
 
 * Minigame selection and loading system
 * Individual minigame mechanics implementation

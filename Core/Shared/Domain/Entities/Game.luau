@@ -2,12 +2,13 @@
 local Game = {}
 Game.__index = Game
 
+---@param gameModule ModuleScript
 ---@return GameEntity
-function Game.new()
+function Game.new(gameModule)
 	local self = setmetatable({}, Game)
-	self.time = script:FindFirstChild("Time") or Instance.new("IntValue")
+	self.time = gameModule:FindFirstChild("Time") or Instance.new("IntValue")
 	self.time.Name = "Time"
-	self.time.Parent = script
+	self.time.Parent = gameModule
 
 	return self
 end

@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.14.0] - 2026-01-27
+
+### Added
+
+* **Domain Layer Architecture**: Implemented Domain layer structure for all minigames (DungeonCleaning, FoodEating, ItemSearch, Racing) following clean architecture pattern
+* **Game Entity Inheritance**: Created Game entities for all minigames extending core Game entity with time tracking functionality
+* **Minigame Domain Entities**: Added Domain/Entities structure to DungeonCleaning, FoodEating, ItemSearch, and Racing minigames
+* **Consistent Shared Module Pattern**: Standardized Shared module initialization across all minigames with dependency injection support
+
+### Changed
+
+* **Core Game Entity**: Refactored Game entity constructor to accept `gameModule` parameter for better inheritance support
+* **Minigame Shared Modules**: Enhanced all minigame Shared modules (DungeonCleaning, FoodEating, ItemSearch, Racing) with proper dependency injection, domain initialization, and event bus setup
+* **Naming Consistency**: Updated Shooting minigame class names to use "Shared" prefix (SharedShootingDomain, SharedShootingEntities) for consistency
+* **Code Formatting**: Improved indentation and code organization across minigame Domain modules
+
+### Infrastructure
+
+* **Architecture Consistency**: All minigames now follow the same architectural pattern with Domain layer separation
+* **Code Reuse**: Game entities across minigames inherit from core Game entity, reducing code duplication
+* **Dependency Injection**: Standardized DI container usage across all minigame Shared modules
+* **Event System Integration**: Consistent event bus initialization pattern across all minigames
+
 ## [1.13.0] - 2026-01-27
 
 ### Added

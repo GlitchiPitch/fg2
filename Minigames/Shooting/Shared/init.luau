@@ -8,7 +8,7 @@ local Infrastructure = require(script.Infrastructure)
 ---@field constants ShootingConstants
 ---@field assets ShootingSharedAssets
 ---@field data ShootingSharedData
----@field domain ShootingSharedDomain
+---@field domain SharedShootingDomain
 ---@field eventBus EventBus
 ---@field coreEventBus EventBus
 ---@field coreConstants SharedConstants

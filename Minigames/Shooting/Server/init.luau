@@ -24,17 +24,11 @@ function Server:init()
 end
 
 function Server:startSession()
-	warn("startSession")
-	return {
-        map = "CrossbowShooting"
-    }
+	self.application:start()
 end
 
 function Server:endSession()
-	warn("endSession")
-	return {
-        map = "CrossbowShooting"
-    }
+	self.application:stop()
 end
 
 return Server

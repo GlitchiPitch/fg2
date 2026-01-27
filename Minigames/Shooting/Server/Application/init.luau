@@ -17,8 +17,20 @@ function Application.new(diContainer)
 end
 
 function Application:init()
+	---@type SharedShooting
+	local shared = self.diContainer:resolve("Shared")
+	self.constants = shared.constants
+	self.eventBus = shared.eventBus
+
 	self.services:init()
 	self.controllers:init()
+
+	self.eventBus:connectToEvents({
+		[self.constants.SERVER_EVENTS.GAME_FINISHED] = function()
+			warn("game finished")
+			self:stop()
+		end,
+	})
 end
 
 function Application:start()
@@ -27,6 +39,9 @@ end
 
 function Application:stop()
 	self.controllers:stop()
+	self.services.gameService:finish()
+	self.services.playerService:finish()
+	self.services.targetService:finish()
 end
 
 return Application

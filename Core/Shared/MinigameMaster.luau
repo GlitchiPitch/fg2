@@ -1,5 +1,9 @@
 local RunService = game:GetService("RunService")
 ---@class MinigameMaster
+---@field shared table
+---@field infrastructure table
+---@field application table
+---@field presentation table
 local Master = {}
 Master.__index = Master
 

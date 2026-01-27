@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.15.0] - 2026-01-27
+
+### Added
+
+* **Core Player Entity**: Created MiniGamePlayerEntity base class in Core/Shared/Domain/MiniGameEntities/Player.luau with score tracking and lifecycle management
+* **Minigame Player Entities**: Implemented Player entities for all minigames (DungeonCleaning, FoodEating, ItemSearch, Racing, Shooting) extending core Player entity
+* **Game Finishing System**: Added GAME_FINISHED event to Shooting minigame constants for game end detection
+* **Application Lifecycle**: Enhanced Application stop() method to properly cleanup services (gameService, playerService, targetService) on game finish
+
+### Changed
+
+* **Game Entity Location**: Moved Game entity from Core/Shared/Domain/Entities/Game.luau to Core/Shared/Domain/MiniGameEntities/Game.luau for better organization
+* **GameService**: Enhanced GameService to fire GAME_FINISHED event when game time expires
+* **Application Event Handling**: Added GAME_FINISHED event listener in Application init() to trigger game stop and cleanup
+* **Player Entity Pattern**: Standardized Player entity inheritance pattern across all minigames matching Game entity pattern
+
+### Infrastructure
+
+* **Entity Consistency**: All minigames now have consistent Player and Game entity patterns with core entity inheritance
+* **Lifecycle Management**: Improved game lifecycle with proper finish/stop/cleanup flow
+* **Code Organization**: Better separation of core entities (MiniGameEntities) from domain-specific entities
+
 ## [1.14.0] - 2026-01-27
 
 ### Added

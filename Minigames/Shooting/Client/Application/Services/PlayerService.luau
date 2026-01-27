@@ -60,7 +60,8 @@ function PlayerService:onPlayerLeftBalista(data)
 
 	for _, v in self.player.Character:GetDescendants() do
 		if v:IsA("BasePart") then
-			v.Transparency = if v.Name == "HumanoidRootPart" then 1 else 0
+			local targetTransparency = if table.find({ "HumanoidRootPart", "CollisionPart" }, v.Name) then 1 else 0
+			v.Transparency = targetTransparency
 		end
 	end
 

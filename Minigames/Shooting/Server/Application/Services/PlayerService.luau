@@ -13,6 +13,7 @@ PlayerService.__index = PlayerService
 ---@return ServerShootingPlayerService
 function PlayerService.new(diContainer)
 	local self = setmetatable(SharedShootingPlayerService.new(diContainer), PlayerService)
+	self._connections = {}
 	return self
 end
 
@@ -61,6 +62,20 @@ function PlayerService:onPlayerJoinedBalista(data)
 		eventName = self.constants.REMOTE_EVENTS.PLAYER_JOINED_BALISTA,
 		data = balista,
 	})
+
+	self._connections[player.UserId] = {
+		player.Changed:Connect(function(property)
+			if property == "Parent" then
+				self:onPlayerLeftBalista({ player = player })
+			end
+		end),
+
+		player.Character.Changed:Connect(function(property)
+			if property == "Parent" then
+				self:onPlayerLeftBalista({ player = player })
+			end
+		end),
+	}
 end
 
 ---@class onPlayerLeftBalistaData
@@ -82,6 +97,12 @@ function PlayerService:onPlayerLeftBalista(data)
 		eventName = self.constants.REMOTE_EVENTS.PLAYER_LEFT_BALISTA,
 		data = balista,
 	})
+
+	for _, connection in self._connections[player.UserId] do
+		connection:Disconnect()
+	end
+
+	self._connections[player.UserId] = nil
 end
 
 ---@class onAddScoreData
@@ -94,7 +115,23 @@ function PlayerService:onAddScore(data)
 	local score = data.score
 	local playerEntity = self.playerRepository:getPlayerEntity(player)
 	playerEntity:addScore(score)
-	
+end
+
+function PlayerService:finish() end
+
+function PlayerService:_calculateReward()
+	local players = self.playerRepository:getPlayers()
+	---@param player ShootingPlayerEntity
+	for _, playerEntity in players do
+		local score = playerEntity.score.Value
+		local reward = {
+			points = score * self.constants.SCORE_REWARD_MULTIPLIER,
+		}
+		self.coreEventBus:fire(self.coreConstants.SERVER_EVENTS.REWARD_PLAYER, {
+			player = playerEntity.player,
+			reward = reward,
+		})
+	end
 end
 
 return PlayerService

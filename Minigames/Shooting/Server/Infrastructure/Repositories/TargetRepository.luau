@@ -68,4 +68,11 @@ function TargetRepository:getRandomTarget(targetType)
 	return targetEntity
 end
 
+function TargetRepository:clear()
+	---@param target TargetEntity
+	for _, target in self.targetEntities do
+		target:destroy()
+	end
+end
+
 return TargetRepository

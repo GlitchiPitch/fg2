@@ -24,4 +24,12 @@ function Client:init()
 	MinigameMaster.init(self)
 end
 
+function Client:start()
+	
+end
+
+function Client:stop()
+	
+end
+
 return Client

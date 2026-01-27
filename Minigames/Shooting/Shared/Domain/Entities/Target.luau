@@ -64,10 +64,6 @@ function TargetEntity:_startMoving(data)
 end
 
 function TargetEntity:destroy()
-	warn("destroy")
-	self._alignOrientation:Destroy()
-	self._alignPosition:Destroy()
-	self._attachment:Destroy()
 	self._model:Destroy()
 	self:_playDestroyAnimation()
 	self._destroyCallback()

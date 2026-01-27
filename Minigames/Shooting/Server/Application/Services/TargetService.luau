@@ -86,4 +86,8 @@ function TargetService:_onTargetHit(data)
 	self._spawnedTargets -= 1
 end
 
+function TargetService:finish()
+	self.targetRepository:clear()
+end
+
 return TargetService

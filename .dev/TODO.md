@@ -201,7 +201,16 @@
 * Enhanced code consistency and reusability across minigames
 * Improved architectural pattern alignment
 
-### v1.15.0 - Complete Minigame Mechanics
+### v1.15.0 - Player Entity System and Game Lifecycle ✅
+
+* Created core MiniGamePlayerEntity base class with score tracking
+* Implemented Player entities for all minigames extending core Player entity
+* Added game finishing system with GAME_FINISHED event
+* Enhanced Application lifecycle with proper cleanup on game finish
+* Standardized Player entity inheritance pattern across all minigames
+* Improved game lifecycle management with finish/stop/cleanup flow
+
+### v1.16.0 - Complete Minigame Mechanics
 
 * Minigame selection and loading system
 * Individual minigame mechanics implementation

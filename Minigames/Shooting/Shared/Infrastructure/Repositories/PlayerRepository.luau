@@ -1,4 +1,5 @@
 ---@class SharedShootingPlayerRepository
+---@field playerEntities table<number, ShootingPlayerEntity>
 local PlayerRepository = {}
 PlayerRepository.__index = PlayerRepository
 
@@ -40,6 +41,10 @@ function PlayerRepository:removePlayerEntity(player)
 		playerEntity:destroy()
 	end
 	self.playerEntities[player.UserId] = nil
+end
+
+function PlayerRepository:getPlayers()
+	return self.playerEntities
 end
 
 return PlayerRepository

@@ -63,7 +63,7 @@ function Master:init()
 	self.minigameLoader:loadMinigame("Shooting")
 	-- self.minigameLoader:loadMinigame("ItemSearch")
 	-- self.minigameLoader:loadMinigame("Racing")
-	-- self.minigameLoader:loadMinigame("FoodEating")
+	self.minigameLoader:loadMinigame("FoodEating")
 	-- self.minigameLoader:loadMinigame("DungeonCleaning")
 end
 

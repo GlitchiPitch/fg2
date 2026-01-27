@@ -49,7 +49,15 @@ end
 function PlayerService:onSetPlayerCameraMode(data)
 	local player = data.player
 	local mode = data.mode
-	player:SetAttribute(self.constants.PLAYER_ATTRIBUTES.CAMERA_MODE, mode)
+	local cameraCFrame = data.cameraCFrame
+	-- player:SetAttribute(self.constants.PLAYER_ATTRIBUTES.CAMERA_MODE, mode)
+	self.remoteEventService:fireClient(player, {
+		eventName = self.constants.REMOTE_EVENTS.SET_PLAYER_CAMERA_MODE,
+		data = {
+			mode = mode,
+			cameraCFrame = cameraCFrame,
+		},
+	})
 end
 
 return PlayerService

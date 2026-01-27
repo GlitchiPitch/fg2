@@ -19,7 +19,7 @@
 * \[~] **Shooting**: Implement shooting mechanics, targets, and scoring (Renamed from CrossbowShooting, BalistasService added, camera integration complete, player visibility management implemented, shooting mechanics with parabolic trajectory added, TargetService and TargetController added, ItemsRepository implemented, spawner system and target type categorization added, Target entity with movement system and repository pattern implemented, application lifecycle management added, client-side BalistaService and repository pattern implemented, reloading system added, UI structure created, ammo index system and callback-based bullet creation implemented, score system with UI display added, Player entity and repository pattern implemented, Game entity with countdown timer and time synchronization added)
 * \[ ] **Racing**: Add track generation, vehicle controls, and lap timing
 * \[ ] **ItemSearch**: Create item spawning, search logic, and time limits
-* \[~] **FoodEating**: Implement food consumption mechanics and objectives (Chair system with seat and proximity prompt handling added, ChairService and ChairRepository implemented, PlayerService with camera mode switching added, Fixed camera mode support added to camera system, Infrastructure layer established)
+* \[~] **FoodEating**: Implement food consumption mechanics and objectives (Chair system with seat and proximity prompt handling added, ChairService and ChairRepository implemented, PlayerService with camera mode switching added, Fixed camera mode support added to camera system, Infrastructure layer established, Food entity and FoodService added, FoodController for periodic spawning implemented, InputService for eating mechanics added, ItemsRepository and Assets module added, food spawning and eating system complete)
 * \[ ] **DungeonCleaning**: Add cleaning mechanics and area progression
 
 ### Core Systems Enhancement
@@ -219,7 +219,20 @@
 * Established FoodEating Infrastructure layer with Repositories
 * Integrated event-driven architecture for player join/leave notifications
 
-### v1.17.0 - Complete Minigame Mechanics
+### v1.17.0 - FoodEating Food System ✅
+
+* Implemented Food entity with foodModel and foodType tracking
+* Added FoodService for server-side food spawning and eating management
+* Created FoodRepository following repository pattern for food entities
+* Implemented FoodController for periodic food spawning with 1-second intervals
+* Added InputService for client-side mouse click food eating input
+* Created ItemsRepository for shared food asset access
+* Added comprehensive Assets module with food models (Bread, Burger, Fries, Pizza, etc.)
+* Enhanced Chair entity with food spawning and eating methods
+* Integrated food system with event-driven architecture
+* Complete food lifecycle management (spawn, eat, cleanup)
+
+### v1.18.0 - Complete Minigame Mechanics
 
 * Minigame selection and loading system
 * Individual minigame mechanics implementation

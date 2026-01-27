@@ -6,6 +6,8 @@
 ---@field prompt ProximityPrompt
 ---@field occupant Player?
 ---@field occupantId string?
+---@field foodSpawnPart BasePart
+---@field currentFood Model?
 local ChairEntity = {}
 ChairEntity.__index = ChairEntity
 
@@ -17,10 +19,12 @@ function ChairEntity.new(chair, id)
 	self.chair = chair
 	self.id = id
 	self.cameraPart = self.chair.CameraPart
-	self.seat = self.chair.Seat
-	self.prompt = self.chair.ProximityPrompt
+	self.seat = self.chair.PrimaryPart
+	self.prompt = self.seat.ProximityPrompt
+	self.foodSpawnPart = self.chair.FoodSpawnPart
     self.occupant = nil
     self.occupantId = nil
+	self.currentFood = nil
 	return self
 end
 
@@ -51,15 +55,28 @@ function ChairEntity:setup(data)
 	self.seat:GetPropertyChangedSignal("Occupant"):Connect(function()
 		local humanoid = self.seat.Occupant
 		if humanoid then
-            self.occupant = humanoid.Parent
-            self.occupantId = self.occupant.UserId
+            
 			self.prompt.Enabled = false
 			data.occupiedCallback(humanoid)
 		else
 			self.prompt.Enabled = true
-			data.unoccupiedCallback(humanoid)
+			data.unoccupiedCallback()
 		end
 	end)
+end
+
+---@param foodModel Model
+function ChairEntity:spawnFood(foodModel)
+	foodModel.Parent = self.foodSpawnPart
+	foodModel:PivotTo(self.foodSpawnPart.CFrame * CFrame.new(0, 2, 0))
+	self.currentFood = foodModel
+end
+
+function ChairEntity:eatFood()
+	if self.currentFood then
+		self.currentFood:Destroy()
+		self.currentFood = nil
+	end
 end
 
 return ChairEntity

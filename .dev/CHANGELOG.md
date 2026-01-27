@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.17.0] - 2026-01-27
+
+### Added
+
+* **FoodEating Food Entity**: Implemented Food domain entity with foodModel and foodType tracking
+* **FoodEating FoodService**: Server-side service for managing food spawning and eating mechanics with chair integration
+* **FoodEating FoodRepository**: Repository pattern implementation for food entity management following established patterns
+* **FoodEating FoodController**: Controller for periodic food spawning with 1-second interval updates
+* **FoodEating InputService**: Client-side service for handling mouse click input to eat food with ContextActionService binding
+* **FoodEating ItemsRepository**: Shared repository for accessing food assets following repository pattern
+* **FoodEating Assets Module**: Added comprehensive food assets collection (Bread, Burger, Fries, Pizza, Steak, Pies, Cakes, etc.)
+* **Food Spawning System**: Implemented automatic food spawning for occupied chairs without current food
+* **Food Eating Mechanics**: Added eat food functionality with remote event handling and chair-food interaction
+
+### Changed
+
+* **Chair Entity**: Enhanced with foodSpawnPart field, currentFood tracking, spawnFood() method, and eatFood() method for food lifecycle management
+* **ChairRepository**: Added getChairByPlayer() method for finding chairs by occupant player
+* **FoodEating Constants**: Added SPAWN_FOOD server event and EAT_FOOD remote event for food system coordination
+* **FoodEating Architecture**: Reorganized services into Application/Services directory structure for better organization
+* **FoodEating Infrastructure**: Added Infrastructure layer with ItemsRepository for shared asset access
+
+### Infrastructure
+
+* **Food System Architecture**: Complete food spawning and eating system with event-driven architecture
+* **Controller Pattern**: FoodController integrated into application lifecycle with periodic updates
+* **Input Handling**: Client-side input service with event-driven food eating actions
+* **Repository Pattern Consistency**: FoodRepository follows same pattern as ChairRepository for code consistency
+* **Asset Management**: Centralized food asset management through ItemsRepository with shared infrastructure
+
 ## [1.16.0] - 2026-01-27
 
 ### Added

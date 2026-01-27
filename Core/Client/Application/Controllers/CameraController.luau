@@ -66,6 +66,11 @@ function CameraController:init()
 	})
 end
 
+function CameraController:_setupEventListeners()
+	
+end
+
+
 function CameraController:update(deltaTime)
 	if not self._humanoidRootPart then
 		return

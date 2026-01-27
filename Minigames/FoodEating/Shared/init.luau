@@ -1,11 +1,17 @@
 local Domain = require(script.Domain)
+local Constants = require(script.Constants)
+local Assets = require(script.Assets)
+local Infrastructure = require(script.Infrastructure)
 
 ---@class SharedFoodEating
 ---@field domain SharedFoodEatingDomain
 ---@field eventBus EventBus
+---@field constants SharedFoodEatingConstants
 ---@field coreEventBus EventBus
 ---@field coreConstants SharedConstants
 ---@field remoteEventService RemoteEventService
+---@field assets SharedFoodEatingAssets
+---@field infrastructure SharedFoodEatingInfrastructure
 local Shared = {}
 Shared.__index = Shared
 
@@ -15,8 +21,10 @@ function Shared.new(globalDIContainer)
 	local self = setmetatable({}, Shared)
 	self.globalDIContainer = globalDIContainer
 	self.diContainer = globalDIContainer.new()
-
+	self.constants = Constants
 	self.domain = Domain.new()
+	self.assets = Assets
+	self.infrastructure = Infrastructure.new(self.diContainer)
 	return self
 end
 
@@ -27,6 +35,8 @@ function Shared:init()
 	self.remoteEventService = shared.remoteEventService.new()
 	self.coreEventBus = shared.eventBus
 	self.coreConstants = shared.constants
+	
+	self.infrastructure:init()
 end
 
 return Shared

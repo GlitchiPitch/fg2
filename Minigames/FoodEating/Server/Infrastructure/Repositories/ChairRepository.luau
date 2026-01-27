@@ -1,5 +1,8 @@
 local HttpService = game:GetService("HttpService")
 ---@class ServerFoodEatingChairRepository
+---@field diContainer DIContainer
+---@field chairs table<string, ChairEntity>
+---@field chairEntity ChairEntity
 local ChairRepository = {}
 ChairRepository.__index = ChairRepository
 
@@ -15,7 +18,7 @@ end
 function ChairRepository:init()
 	---@type SharedFoodEating
 	local shared = self.diContainer:resolve("Shared")
-	self.chairEntity = shared.domain.entities.Chair
+	self.chairEntity = shared.domain.Entities.Chair
 end
 
 ---@param chair Model
@@ -38,5 +41,20 @@ function ChairRepository:removeChairEntity(id)
 	self.chairs[id] = nil
 end
 
+function ChairRepository:getChairs()
+	return self.chairs
+end
+
+---@param player Player
+---@return ChairEntity?
+function ChairRepository:getChairByPlayer(player)
+	warn("getChairByPlayer", player)
+	for _, chair in self.chairs do
+		if chair.occupant == player then
+			return chair
+		end
+	end
+	return nil
+end
 
 return ChairRepository

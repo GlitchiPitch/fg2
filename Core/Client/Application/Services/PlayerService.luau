@@ -23,10 +23,19 @@ function PlayerService:init()
 	local shared = self.diContainer:resolve("Shared")
 	self.constants = shared.constants
 	self.eventBus = shared.eventBus
+	self.remoteEventService = shared.remoteEventService
 	
+	self:_setupRemoteEventListeners()
 	SharedPlayerService.init(self)
 end
 
+function PlayerService:_setupRemoteEventListeners()
+	self.remoteEventService:connectToEvents({
+		[self.constants.REMOTE_EVENTS.SET_PLAYER_CAMERA_MODE] = function(eventData)
+			self:onSetPlayerCameraMode(eventData.data)
+		end,
+	})
+end
 ---@class onPlayerAddedData
 ---@field player Player
 
@@ -65,8 +74,10 @@ end
 ---@param data table
 function PlayerService:onSetPlayerCameraMode(data)
 	local mode = data.mode
+	local cameraCFrame = data.cameraCFrame
 	self.eventBus:fire(self.constants.CLIENT_EVENTS.SET_CAMERA_MODE, {
 		mode = mode,
+		cameraCFrame = cameraCFrame,
 	})
 end
 

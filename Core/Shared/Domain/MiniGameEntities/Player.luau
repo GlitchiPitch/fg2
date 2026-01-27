@@ -23,9 +23,7 @@ function Player:addScore(score)
 end
 
 function Player:destroy()
-	warn("destroy player", self.score)
 	if self.score then
-		warn("destroy score")
 		self.score:Destroy()
 		self.score = nil
 	end

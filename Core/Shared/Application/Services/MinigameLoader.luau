@@ -1,10 +1,14 @@
--- Core/Shared/Application/Services/MinigameLoader.luau
 ---@class MinigameLoader
+---@field diContainer DIContainer
+---@field loadedMinigames table<string, table>
+---@field activeSessions table<string, table>
+---@field minigameModules table
 local MinigameLoader = {}
 MinigameLoader.__index = MinigameLoader
 
 ---@param diContainer DIContainer
 ---@param minigameModules table
+---@return MinigameLoader
 function MinigameLoader.new(diContainer, minigameModules)
 	local self = setmetatable({}, MinigameLoader)
 	self.diContainer = diContainer
@@ -47,6 +51,7 @@ function MinigameLoader:unloadMinigame(sessionId)
 	end
 end
 
+---@param minigameType string
 function MinigameLoader:startSession(minigameType)
 	local minigameInstance = self:loadMinigame(minigameType)
 	return minigameInstance:startSession()

@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.16.0] - 2026-01-27
+
+### Added
+
+* **FoodEating Chair System**: Implemented Chair entity with seat and proximity prompt handling for player interaction
+* **FoodEating ChairService**: Server-side service for managing chair entities and player seating mechanics
+* **FoodEating ChairRepository**: Repository pattern implementation for chair entity management following established patterns
+* **FoodEating PlayerService**: Server-side player service with camera mode switching for seated players
+* **FoodEating Constants**: Added shared constants module with PLAYER_JOINED_FOOD_EATING and PLAYER_LEFT_FOOD_EATING events
+* **Fixed Camera Mode**: Added FIXED camera mode to camera system for static camera positioning (used by FoodEating minigame)
+* **FoodEating Infrastructure**: Added Infrastructure layer with Repositories module for FoodEating minigame
+
+### Changed
+
+* **CameraController**: Enhanced with `_setFixedCameraMode()` method for static camera positioning based on CFrame
+* **Core Constants**: Added FIXED camera mode to CAMERA_MODES and updated cameraMode type alias
+* **FoodEating Map Assets**: Added Workspace/Maps/FoodEating/ directory with chair assets
+* **Shooting PlayerService**: Updated with reward calculation method for game completion
+
+### Infrastructure
+
+* **FoodEating Architecture**: Established complete server-side architecture with ChairService, ChairRepository, and PlayerService
+* **Camera Mode System**: Extended camera system to support three modes: Default, Following, and Fixed
+* **Repository Pattern Consistency**: FoodEating ChairRepository follows same pattern as other minigame repositories
+* **Event-Driven Architecture**: FoodEating minigame integrated with event bus for player join/leave notifications
+
 ## [1.15.0] - 2026-01-27
 
 ### Added

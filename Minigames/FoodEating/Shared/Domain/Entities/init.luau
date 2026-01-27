@@ -2,6 +2,7 @@
 local Entities = {
 	Game = require(script.Game),
 	Player = require(script.Player),
+	Chair = require(script.Chair),
 }
 
 return Entities

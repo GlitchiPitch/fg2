@@ -22,11 +22,6 @@ function PlayerService:init()
     self.eventBus = shared.eventBus
 	self.remoteEventService = shared.remoteEventService
 
-	self.remoteEventService:connectToEvents({
-		[shared.constants.REMOTE_EVENTS.SEND_CAMERA_CFRAME] = function(player, eventData)
-			self:onSendCameraCFrame({ player = player, cameraCFrame = eventData.data.cameraCFrame })
-		end,
-	})
     self.eventBus:connectToEvents({
         [self.constants.SERVER_EVENTS.SET_PLAYER_CAMERA_MODE] = function(data)
             self:onSetPlayerCameraMode(data)
@@ -55,12 +50,6 @@ function PlayerService:onSetPlayerCameraMode(data)
 	local player = data.player
 	local mode = data.mode
 	player:SetAttribute(self.constants.PLAYER_ATTRIBUTES.CAMERA_MODE, mode)
-end
-
-function PlayerService:onSendCameraCFrame(data)
-	local player = data.player
-	local cameraCFrame = data.cameraCFrame
-	player:SetAttribute("CameraCFrame", cameraCFrame)
 end
 
 return PlayerService

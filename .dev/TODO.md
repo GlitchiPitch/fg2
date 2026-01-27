@@ -19,14 +19,14 @@
 * \[~] **Shooting**: Implement shooting mechanics, targets, and scoring (Renamed from CrossbowShooting, BalistasService added, camera integration complete, player visibility management implemented, shooting mechanics with parabolic trajectory added, TargetService and TargetController added, ItemsRepository implemented, spawner system and target type categorization added, Target entity with movement system and repository pattern implemented, application lifecycle management added, client-side BalistaService and repository pattern implemented, reloading system added, UI structure created, ammo index system and callback-based bullet creation implemented, score system with UI display added, Player entity and repository pattern implemented, Game entity with countdown timer and time synchronization added)
 * \[ ] **Racing**: Add track generation, vehicle controls, and lap timing
 * \[ ] **ItemSearch**: Create item spawning, search logic, and time limits
-* \[ ] **FoodEating**: Implement food consumption mechanics and objectives
+* \[~] **FoodEating**: Implement food consumption mechanics and objectives (Chair system with seat and proximity prompt handling added, ChairService and ChairRepository implemented, PlayerService with camera mode switching added, Fixed camera mode support added to camera system, Infrastructure layer established)
 * \[ ] **DungeonCleaning**: Add cleaning mechanics and area progression
 
 ### Core Systems Enhancement
 
 * \[ ] **Player Data Persistence**: Implement actual data storage and retrieval for player entities
 * \[ ] **Player Service Logic**: Complete PlayerService with business logic for client and server
-* \[~] **Camera Controller**: Implement full camera control logic with different modes (Following mode implemented, Default mode working)
+* \[~] **Camera Controller**: Implement full camera control logic with different modes (Following mode implemented, Default mode working, Fixed mode added for static camera positioning)
 * \[ ] **UI Framework**: Build basic UI components and screen management system
 
 ### Network Communication
@@ -210,7 +210,16 @@
 * Standardized Player entity inheritance pattern across all minigames
 * Improved game lifecycle management with finish/stop/cleanup flow
 
-### v1.16.0 - Complete Minigame Mechanics
+### v1.16.0 - FoodEating Minigame Foundation ✅
+
+* Implemented Chair entity system with seat and proximity prompt handling
+* Added ChairService and ChairRepository following repository pattern
+* Created FoodEating PlayerService with camera mode switching
+* Added Fixed camera mode to camera system for static positioning
+* Established FoodEating Infrastructure layer with Repositories
+* Integrated event-driven architecture for player join/leave notifications
+
+### v1.17.0 - Complete Minigame Mechanics
 
 * Minigame selection and loading system
 * Individual minigame mechanics implementation

@@ -27,6 +27,7 @@ function PlayerService:init()
 	self.coreEventBus = shared.coreEventBus
 
 	self:_setupEventListeners()
+	self:_setupRemoteEventListeners()
 end
 
 function PlayerService:_setupEventListeners()
@@ -41,6 +42,21 @@ function PlayerService:_setupEventListeners()
 			self:onAddScore(data)
 		end,
 	})
+end
+
+function PlayerService:_setupRemoteEventListeners()
+
+	self.remoteEventService:connectToEvents({
+		[self.constants.REMOTE_EVENTS.SEND_CAMERA_CFRAME] = function(player, eventData)
+			self:onSendCameraCFrame({ player = player, cameraCFrame = eventData.data.cameraCFrame })
+		end,
+	})
+end
+
+function PlayerService:onSendCameraCFrame(data)
+	local player = data.player
+	local cameraCFrame = data.cameraCFrame
+	player:SetAttribute("CameraCFrame", cameraCFrame)
 end
 
 ---@class onPlayerJoinedBalistaData

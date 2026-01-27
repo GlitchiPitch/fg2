@@ -82,6 +82,8 @@ function CameraController:setCameraMode(data)
 		self:_setDefaultCameraMode()
 	elseif data.mode == self.constants.CAMERA_MODES.FOLLOWING then
 		self:_setFollowingCameraMode()
+	elseif data.mode == self.constants.CAMERA_MODES.FIXED then
+		self:_setFixedCameraMode(data.cameraCFrame)
 	end
 end
 
@@ -109,6 +111,13 @@ end
 function CameraController:_setFollowingCameraMode()
 	self.cameraMode = self.constants.CAMERA_MODES.FOLLOWING
 	self.camera.CameraType = Enum.CameraType.Scriptable
+	self:_setFreeMouse(false)
+end
+
+function CameraController:_setFixedCameraMode(cameraCFrame)
+	self.cameraMode = self.constants.CAMERA_MODES.FIXED
+	self.camera.CameraType = Enum.CameraType.Scriptable
+	self.camera.CFrame = cameraCFrame
 	self:_setFreeMouse(false)
 end
 

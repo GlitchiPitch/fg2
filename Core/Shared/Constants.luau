@@ -6,7 +6,7 @@ local MINIGAMES = {
 	DUNGEON_CLEARING = "DungeonClearing",
 }
 
----@alias cameraMode "Default" | "Following"
+---@alias cameraMode "Default" | "Following" | "Fixed"
 
 ---@class SharedConstants
 local Constants = {
@@ -18,15 +18,14 @@ local Constants = {
 		ON_CHARACTER_ADDED = "ON_CHARACTER_ADDED",
 	},
 
-	REMOTE_EVENTS = {
-		SEND_CAMERA_CFRAME = "SEND_CAMERA_CFRAME",
-	},
-	
 	CAMERA_MODES = {
 		DEFAULT = "Default",
 		FOLLOWING = "Following",
+		FIXED = "Fixed",
 	},
-
+	REMOTE_EVENTS = {
+		SEND_CAMERA_CFRAME = "SEND_CAMERA_CFRAME",
+	},
 	SERVER_EVENTS = {
 		SET_PLAYER_CAMERA_MODE = "SET_PLAYER_CAMERA_MODE",
 		REWARD_PLAYER = "REWARD_PLAYER",

@@ -1,0 +1,13 @@
+---@class SharedFoodEatingConstants
+local Constants = {
+    SERVER_EVENTS = {
+        PLAYER_JOINED_FOOD_EATING = "PLAYER_JOINED_FOOD_EATING",
+        PLAYER_LEFT_FOOD_EATING = "PLAYER_LEFT_FOOD_EATING",
+    },
+    CLIENT_EVENTS = {
+        PLAYER_JOINED_FOOD_EATING = "PLAYER_JOINED_FOOD_EATING",
+        PLAYER_LEFT_FOOD_EATING = "PLAYER_LEFT_FOOD_EATING",
+    },
+}
+
+return Constants

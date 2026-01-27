@@ -3,6 +3,12 @@ local Shared = require(ReplicatedStorage.Shared)
 local MinigameLoader = require(ReplicatedStorage.Shared.Application.Services.MinigameLoader)
 
 ---@class Master
+---@field shared table
+---@field diContainer DIContainer
+---@field infrastructure table
+---@field application table
+---@field presentation table
+---@field minigameLoader MinigameLoader
 local Master = {}
 Master.__index = Master
 

@@ -18,13 +18,14 @@ function PlayerRepository:init()
 end
 
 function PlayerRepository:createPlayerEntity(player)
-	return self.playerEntity.new(player)
+	local playerEntity = self.playerEntity.new(player)
+	self.playerEntities[player.UserId] = playerEntity
+	return playerEntity
 end
 
 ---@param player Player
 ---@return ShootingPlayerEntity
 function PlayerRepository:getPlayerEntity(player)
-	
 	if not self.playerEntities[player.UserId] then
 		self.playerEntities[player.UserId] = self:createPlayerEntity(player)
 	end
@@ -34,6 +35,10 @@ end
 
 ---@param player Player
 function PlayerRepository:removePlayerEntity(player)
+	local playerEntity = self.playerEntities[player.UserId]
+	if playerEntity then
+		playerEntity:destroy()
+	end
 	self.playerEntities[player.UserId] = nil
 end
 

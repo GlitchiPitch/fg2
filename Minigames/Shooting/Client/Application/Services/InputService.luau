@@ -22,6 +22,10 @@ function InputService:init()
 	self.constants = shared.constants
 	self.remoteEventService = shared.remoteEventService
 
+	self:_setupEventListeners()
+end
+
+function InputService:_setupEventListeners()
 	self.eventBus:connectToEvents({
 		[self.constants.CLIENT_EVENTS.PLAYER_JOINED_BALISTA] = function()
 			self:onPlayerJoinedBalista()

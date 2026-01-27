@@ -18,4 +18,12 @@ function Application:init()
     self.services:init()
 end
 
+-- function Application:start()
+--     self.services:start()
+-- end
+
+-- function Application:stop()
+--     self.services:stop()
+-- end
+
 return Application

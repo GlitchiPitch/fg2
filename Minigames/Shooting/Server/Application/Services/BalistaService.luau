@@ -29,6 +29,7 @@ function BalistaService:init()
 
 	self.balistaRepository = infrastructure.repositories.balistaRepository
 	self.itemsRepository = shared.infrastructure.repositories.itemsRepository
+	self.remoteEventService = shared.remoteEventService
 	self.constants = shared.constants
 	self.eventBus = shared.eventBus
 
@@ -40,19 +41,20 @@ function BalistaService:init()
 
 	self._ammoIndexes = { "Box", "SpaceGirl", "SpaceMan", "Box" }
 
-	self.remoteEventService = shared.remoteEventService
-
 	self.balistas = workspace.Workspace.Maps.Shooting.Balistas:GetChildren()
 
+	self:_setupRemoteEventListeners()
+	self:_setup()
+end
+
+function BalistaService:_setupRemoteEventListeners()
 	self.remoteEventService:connectToEvents({
 		[self.constants.REMOTE_EVENTS.SHOOT] = function(player, eventData)
 			eventData.data.player = player
 			self:onShoot(eventData.data)
 		end,
 	})
-	self:_setup()
 end
-
 function BalistaService:_setup()
 	---@param balista Model
 	for _, balista in self.balistas do

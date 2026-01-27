@@ -25,6 +25,10 @@ function PlayerService:init()
 	self.coreConstants = shared.coreConstants
 	self.coreEventBus = shared.coreEventBus
 
+	self:_setupEventListeners()
+end
+
+function PlayerService:_setupEventListeners()
 	self.eventBus:connectToEvents({
 		[self.constants.SERVER_EVENTS.PLAYER_JOINED_BALISTA] = function(data)
 			self:onPlayerJoinedBalista(data)
@@ -47,7 +51,7 @@ function PlayerService:onPlayerJoinedBalista(data)
 	local player = data.player
 	local balista = data.balista
 
-	local playerEntity = self.playerRepository:getPlayerEntity(player)
+	self.playerRepository:createPlayerEntity(player)
 
 	self.coreEventBus:fire(self.coreConstants.SERVER_EVENTS.SET_PLAYER_CAMERA_MODE, {
 		player = player,
@@ -56,11 +60,6 @@ function PlayerService:onPlayerJoinedBalista(data)
 	self.remoteEventService:fireClient(player, {
 		eventName = self.constants.REMOTE_EVENTS.PLAYER_JOINED_BALISTA,
 		data = balista,
-	})
-
-	self.remoteEventService:fireClient(player, {
-		eventName = self.constants.REMOTE_EVENTS.PLAYER_ADDED_TO_GAME,
-		data = playerEntity:toData(),
 	})
 end
 
@@ -71,10 +70,14 @@ end
 function PlayerService:onPlayerLeftBalista(data)
 	local player = data.player
 	local balista = data.balista
+
+	self.playerRepository:removePlayerEntity(player)
+
 	self.coreEventBus:fire(self.coreConstants.SERVER_EVENTS.SET_PLAYER_CAMERA_MODE, {
 		player = player,
 		mode = self.coreConstants.CAMERA_MODES.DEFAULT,
 	})
+
 	self.remoteEventService:fireClient(player, {
 		eventName = self.constants.REMOTE_EVENTS.PLAYER_LEFT_BALISTA,
 		data = balista,
@@ -91,16 +94,7 @@ function PlayerService:onAddScore(data)
 	local score = data.score
 	local playerEntity = self.playerRepository:getPlayerEntity(player)
 	playerEntity:addScore(score)
-	self.remoteEventService:fireClient(player, {
-		eventName = self.constants.REMOTE_EVENTS.ADD_SCORE,
-		data = {
-			score = score,
-		},
-	})
-	self.remoteEventService:fireClient(player, {
-		eventName = self.constants.REMOTE_EVENTS.UPDATE_PLAYER,
-		data = playerEntity:toData(),
-	})
+	
 end
 
 return PlayerService

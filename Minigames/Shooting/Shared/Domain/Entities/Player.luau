@@ -1,5 +1,5 @@
 ---@class ShootingPlayerEntity
----@field score number
+---@field score IntValue
 ---@field player Player
 local Player = {}
 Player.__index = Player
@@ -9,24 +9,28 @@ Player.__index = Player
 function Player.new(player)
 	local self = setmetatable({}, Player)
 	self.player = player
-	self.score = 0
+
+	print(self.player:FindFirstChild("Score"))
+
+	self.score = self.player:FindFirstChild("Score") or Instance.new("IntValue")
+	self.score.Name = "Score"
+	self.score.Parent = self.player
+
+	warn(self)
 	return self
 end
 
-function Player:toData()
-	warn("toData")
-	return {
-		score = self.score,
-	}
-end
-
-function Player:fromData(data)
-	warn("fromData")
-	self.score = data.score
-end
-
 function Player:addScore(score)
-	self.score += score
+	self.score:SetAttribute("OldValue", self.score.Value)
+	self.score.Value += score
+end
+
+function Player:destroy()
+	warn("destroy player", self.score)
+	if self.score then
+		warn("destroy score")
+		self.score:Destroy()
+	end
 end
 
 return Player

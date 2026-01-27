@@ -1,4 +1,4 @@
----@class TargetController
+---@class ServerShootingTargetController
 ---@field diContainer DIContainer
 ---@field constants SharedConstants
 ---@field eventBus EventBus
@@ -8,7 +8,7 @@ local TargetController = {}
 TargetController.__index = TargetController
 
 ---@param diContainer DIContainer
----@return TargetController
+---@return ServerShootingTargetController
 function TargetController.new(diContainer)
 	local self = setmetatable({}, TargetController)
 	self.diContainer = diContainer

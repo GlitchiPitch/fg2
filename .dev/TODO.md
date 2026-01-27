@@ -16,7 +16,7 @@
 ### Minigame Development
 
 * \[x] **Minigame Integration**: Connect minigames to core systems and implement game selection (MinigameLoader service implemented)
-* \[~] **Shooting**: Implement shooting mechanics, targets, and scoring (Renamed from CrossbowShooting, BalistasService added, camera integration complete, player visibility management implemented, shooting mechanics with parabolic trajectory added, TargetService and TargetController added, ItemsRepository implemented, spawner system and target type categorization added, Target entity with movement system and repository pattern implemented, application lifecycle management added, client-side BalistaService and repository pattern implemented, reloading system added, UI structure created, ammo index system and callback-based bullet creation implemented, score system with UI display added, Player entity and repository pattern implemented)
+* \[~] **Shooting**: Implement shooting mechanics, targets, and scoring (Renamed from CrossbowShooting, BalistasService added, camera integration complete, player visibility management implemented, shooting mechanics with parabolic trajectory added, TargetService and TargetController added, ItemsRepository implemented, spawner system and target type categorization added, Target entity with movement system and repository pattern implemented, application lifecycle management added, client-side BalistaService and repository pattern implemented, reloading system added, UI structure created, ammo index system and callback-based bullet creation implemented, score system with UI display added, Player entity and repository pattern implemented, Game entity with countdown timer and time synchronization added)
 * \[ ] **Racing**: Add track generation, vehicle controls, and lap timing
 * \[ ] **ItemSearch**: Create item spawning, search logic, and time limits
 * \[ ] **FoodEating**: Implement food consumption mechanics and objectives
@@ -184,7 +184,16 @@
 * Refactored score system to use entity-based state management
 * Added consistent repository pattern for player entities matching Balista pattern
 
-### v1.13.0 - Complete Minigame Mechanics
+### v1.13.0 - Game Timer System ✅
+
+* Implemented Game entity with time tracking and countdown functionality
+* Added GameService on both client and server for game state management
+* Created GameController for periodic time updates with 1-second intervals
+* Integrated timer display in Shooting UI with MM:SS formatting
+* Enhanced event system with UPDATE_TIME events across all layers
+* Improved game state synchronization between server and client
+
+### v1.14.0 - Complete Minigame Mechanics
 
 * Minigame selection and loading system
 * Individual minigame mechanics implementation

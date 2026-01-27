@@ -3,7 +3,7 @@ local TweenService = game:GetService("TweenService")
 ---@field diContainer DIContainer
 ---@field shootingUI ScreenGui
 ---@field ammoFrame Frame
----@field scoreFrame Frame
+---@field timerLabel TextLabel
 ---@field scoreLabel TextLabel
 ---@field ammoImageTemplate ImageLabel
 ---@field corePlayerService ClientPlayerService
@@ -20,8 +20,11 @@ function UI.new(diContainer)
 	self.shootingUI = script.ShootingUI:Clone()
 	self.scoreFrame = self.shootingUI.Score
 	self.scoreLabel = self.scoreFrame.TextLabel
+
 	self.ammoFrame = self.shootingUI.Ammo
 	self.ammoImageTemplate = self.ammoFrame.AmmoImage
+
+	self.timerLabel = self.shootingUI.Timer.TextLabel
 	return self
 end
 
@@ -32,9 +35,9 @@ function UI:init()
 	---@type ClientApp
 	local coreApplication = self.diContainer:resolve("CoreApplication")
 	self.corePlayerService = coreApplication.services.playerService
-    ---@type ShootingClientApp
-    local application = self.diContainer:resolve("Application")
-    self.playerService = application.services.playerService
+	---@type ShootingClientApp
+	local application = self.diContainer:resolve("Application")
+	self.playerService = application.services.playerService
 	self:_setup()
 end
 
@@ -78,8 +81,8 @@ end
 
 function UI:updateScore(data)
 	local playerEntity = self.playerService:getPlayerEntity()
-	self:_animateScore(data.score)
-	self.scoreLabel.Text = playerEntity.score
+	self:_animateScore(data.addedScore)
+	self.scoreLabel.Text = playerEntity.score.Value
 end
 
 ---@param score number
@@ -93,11 +96,19 @@ function UI:_animateScore(score)
 	end
 
 	animatedScore.Parent = self.scoreFrame
-	animatedScore.Visible = true
 	animatedScore.Position = UDim2.fromScale(0.5, 2.5)
 	animatedScore.Text = score
 
 	tween.Completed:Connect(onCompleted)
 	tween:Play()
 end
+
+---@param data table
+function UI:updateTimer(data)
+	local timer = data.time
+	local minutes = math.floor(timer / 60)
+	local seconds = timer % 60
+	self.timerLabel.Text = string.format("%02d:%02d", minutes, seconds)
+end
+
 return UI

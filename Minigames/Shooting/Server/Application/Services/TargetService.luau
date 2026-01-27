@@ -33,13 +33,12 @@ function TargetService:init()
 		ground = spawners.Ground:GetChildren(),
 	}
 
+	self:_setupEventListeners()
+end
+
+function TargetService:_setupEventListeners()
 	self.eventBus:connectToEvents({
 		[self.constants.SERVER_EVENTS.SPAWN_TARGET] = function()
-			if self._spawnedTargets >= self._maxSpawnedTargets then
-				return
-			end
-			self._spawnedTargets += 1
-
 			self:_spawnTarget()
 		end,
 		[self.constants.SERVER_EVENTS.TARGET_HIT] = function(data)

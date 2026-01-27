@@ -21,6 +21,12 @@ function Presentation:init()
 	self.eventBus = shared.eventBus
 	self.constants = shared.constants
 
+	self:_setupEventListeners()
+
+	self.ui:init()
+end
+
+function Presentation:_setupEventListeners()
 	self.eventBus:connectToEvents({
 		[self.constants.CLIENT_EVENTS.SHOOT] = function(data)
 			self.ui:onShoot(data)
@@ -32,13 +38,12 @@ function Presentation:init()
 		[self.constants.CLIENT_EVENTS.PLAYER_LEFT_BALISTA] = function()
 			self.ui:toggle(false)
 		end,
-		[self.constants.CLIENT_EVENTS.ADD_SCORE] = function(data)
+		[self.constants.CLIENT_EVENTS.UPDATE_SCORE] = function(data)
 			self.ui:updateScore(data)
 		end,
-		
+		[self.constants.CLIENT_EVENTS.UPDATE_TIME] = function(data)
+			self.ui:updateTimer(data)
+		end,
 	})
-
-	self.ui:init()
 end
-
 return Presentation

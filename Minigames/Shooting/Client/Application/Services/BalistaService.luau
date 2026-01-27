@@ -25,18 +25,25 @@ function BalistaService:init()
 
 	self.remoteEventService = shared.remoteEventService
 
+	self:_setupEventListeners()
+	self:_setupRemoteEventListeners()
+end
+
+function BalistaService:_setupRemoteEventListeners()
+	self.remoteEventService:connectToEvents({
+		[self.constants.REMOTE_EVENTS.SHOOT] = function(eventData)
+			self:_onShoot(eventData.data)
+		end,
+	})
+end
+
+function BalistaService:_setupEventListeners()
 	self.eventBus:connectToEvents({
 		[self.constants.CLIENT_EVENTS.PLAYER_JOINED_BALISTA] = function(data)
 			self:onPlayerJoinedBalista(data)
 		end,
 		[self.constants.CLIENT_EVENTS.PLAYER_LEFT_BALISTA] = function(data)
 			self:onPlayerLeftBalista(data)
-		end,
-	})
-
-	self.remoteEventService:connectToEvents({
-		[self.constants.REMOTE_EVENTS.SHOOT] = function(eventData)
-			self:_onShoot(eventData.data)
 		end,
 	})
 end

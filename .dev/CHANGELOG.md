@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.13.0] - 2026-01-27
+
+### Added
+
+* **Game Entity System**: Implemented ShootingGameEntity domain entity with time tracking and countdown timer functionality
+* **Server GameService**: Server-side service for managing game state with initial time configuration (60 seconds)
+* **Client GameService**: Client-side service for game entity management and time synchronization
+* **GameController**: Server controller for periodic game time updates with 1-second interval countdown
+* **Timer UI Display**: Added timer label to Shooting UI showing formatted time (MM:SS)
+* **Time Events**: Added UPDATE_TIME events to SERVER_EVENTS, REMOTE_EVENTS, and CLIENT_EVENTS constants
+* **Time Synchronization**: Implemented time synchronization between server and client with event-driven updates
+
+### Changed
+
+* **Controllers Module**: Enhanced to include GameController in heartbeat update loop alongside TargetController
+* **UI Presentation**: Added UPDATE_TIME event listener for timer display updates
+* **Game Entity Lifecycle**: Game entity created when player joins balista and synchronized to client
+* **Application Services**: Added GameService to both client and server service initialization
+
+### Infrastructure
+
+* **Game State Management**: Centralized game state management with entity-based time tracking
+* **Controller Integration**: GameController integrated into existing controller heartbeat system for consistent updates
+* **Event Flow**: Enhanced event-driven architecture for game time synchronization across all layers
+* **UI Integration**: Timer display integrated into existing Shooting UI with proper formatting
+
 ## [1.12.0] - 2026-01-26
 
 ### Added

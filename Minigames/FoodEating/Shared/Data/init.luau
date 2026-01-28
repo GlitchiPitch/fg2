@@ -18,11 +18,11 @@ local Data = {
 	},
 	Pizza = {
 		model = Assets.Pizza,
-		eatingType = "combo",
+		eatingType = "taper",
 	},
 	Steak = {
 		model = Assets.Steak,
-		eatingType = "combo",
+		eatingType = "clicker",
 	},
 	PieCherry = {
 		model = Assets.PieCherry,
@@ -30,11 +30,11 @@ local Data = {
 	},
 	PieApple = {
 		model = Assets.PieApple,
-		eatingType = "combo",
+		eatingType = "taper",
 	},
 	PieBlueberry = {
 		model = Assets.PieBlueberry,
-		eatingType = "combo",
+		eatingType = "clicker",
 	},
 	Cake = {
 		model = Assets.Cake,
@@ -42,11 +42,11 @@ local Data = {
 	},
 	BirthdayCake = {
 		model = Assets.BirthdayCake,
-		eatingType = "combo",
+		eatingType = "taper",
 	},
 	Pancaik = {
 		model = Assets.Pancaik,
-		eatingType = "combo",
+		eatingType = "clicker",
 	},
 	Waffle = {
 		model = Assets.Waffle,
@@ -54,11 +54,11 @@ local Data = {
 	},
 	Muffin = {
 		model = Assets.Muffin,
-		eatingType = "combo",
+		eatingType = "taper",
 	},
 	HotDog = {
 		model = Assets.HotDog,
-		eatingType = "combo",
+		eatingType = "clicker",
 	},
 	Taco = {
 		model = Assets.Taco,
@@ -66,11 +66,11 @@ local Data = {
 	},
 	TurkeyLeg = {
 		model = Assets.TurkeyLeg,
-		eatingType = "combo",
+		eatingType = "taper",
 	},
 	AppleGreen = {
 		model = Assets.AppleGreen,
-		eatingType = "combo",
+		eatingType = "clicker",
 	},
 	AppleRed = {
 		model = Assets.AppleRed,
@@ -78,7 +78,7 @@ local Data = {
 	},
 	Grapes = {
 		model = Assets.Grapes,
-		eatingType = "combo",
+		eatingType = "taper",
 	},
 }
 

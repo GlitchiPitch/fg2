@@ -26,7 +26,6 @@ function InputService:init()
 end
 
 function InputService:_setupEventListeners()
-	warn("setupEventListeners")
 	self.eventBus:connectToEvents({
 		[self.constants.CLIENT_EVENTS.PLAYER_JOINED_FOOD_EATING] = function()
 			warn("playerJoinedFoodEating")

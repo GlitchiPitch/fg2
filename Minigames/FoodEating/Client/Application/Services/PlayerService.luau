@@ -1,4 +1,5 @@
 ---@class ClientFoodEatingPlayerService
+---@field application FoodEatingClientApp
 local PlayerService = {}
 PlayerService.__index = PlayerService
 
@@ -17,6 +18,7 @@ function PlayerService:init()
 	self.constants = shared.constants
 	self.remoteEventService = shared.remoteEventService
 
+	self.application = self.diContainer:resolve("Application")
     self:_setupRemoteEventListeners()
 end
 
@@ -34,11 +36,13 @@ end
 function PlayerService:onPlayerJoinedFoodEating()
 	warn("onPlayerJoinedFoodEating")
 	self.eventBus:fire(self.constants.CLIENT_EVENTS.PLAYER_JOINED_FOOD_EATING, {})
+	self.application:start()
 end
 
 function PlayerService:onPlayerLeftFoodEating()
 	warn("onPlayerLeftFoodEating")
 	self.eventBus:fire(self.constants.CLIENT_EVENTS.PLAYER_LEFT_FOOD_EATING, {})
+	self.application:stop()
 end
 
 return PlayerService

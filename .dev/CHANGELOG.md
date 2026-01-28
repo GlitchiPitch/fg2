@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.18.0] - 2026-01-28
+
+### Added
+
+* **FoodEating Minigame Modules**: Implemented modular minigame system with three minigame types (ClickerMinigame, ComboMinigame, TaperMinigame) for different food eating mechanics
+* **FoodEating FoodController**: Client-side controller for periodic minigame updates with 1-second interval
+* **FoodEating Minigame UI Modules**: Created UI modules for each minigame type (ClickerMinigame, ComboMinigame, TaperMinigame) with show/hide functionality
+* **FoodEating Eating Types**: Added eatingType system (taper, clicker, combo) to food data for different minigame mechanics
+* **FoodEating Application Lifecycle**: Enhanced Application with start/stop methods for controller lifecycle management
+* **FoodEating Minigame Integration**: Integrated minigame modules into FoodService with event-driven activation based on food type
+
+### Changed
+
+* **FoodEating FoodService**: Refactored into modular structure with minigame modules directory (FoodService/Modules/) for better organization
+* **FoodEating Food Data**: Enhanced food data with eatingType field mapping each food to its corresponding minigame type
+* **FoodEating InputService**: Enhanced with player join/leave event handling for proper input binding lifecycle
+* **FoodEating PlayerService**: Added application start/stop integration for proper lifecycle management
+* **FoodEating UI**: Refactored to support multiple minigame UI modules with dynamic activation based on eatingType
+* **FoodEating Presentation**: Enhanced with SPAWN_FOOD event listener for minigame UI activation
+
+### Infrastructure
+
+* **Modular Minigame Architecture**: Established modular minigame system allowing different food types to trigger different minigame mechanics
+* **Event-Driven Minigame Activation**: Implemented event-driven system for activating appropriate minigame based on food eatingType
+* **Controller Lifecycle Management**: Enhanced application lifecycle with proper start/stop flow for controllers
+* **UI Module Pattern**: Standardized UI module pattern with setup/start/stop methods for consistent minigame UI management
+
 ## [1.17.0] - 2026-01-27
 
 ### Added

@@ -3,9 +3,9 @@ local ClickerMinigame = require(script.Modules.ClickerMinigame)
 local ComboMinigame = require(script.Modules.ComboMinigame)
 
 ---@class minigames
----@field taper TaperMinigame
----@field clicker ClickerMinigame
----@field combo ComboMinigame
+---@field taper TaperMinigameUIModule
+---@field clicker ClickerMinigameUIModule
+---@field combo ComboMinigameUIModule
 
 ---@class FoodEatingClientUI
 ---@field minigames minigames
@@ -17,28 +17,32 @@ UI.__index = UI
 ---@return FoodEatingClientUI
 function UI.new(diContainer)
 	local self = setmetatable({}, UI)
-    self.diContainer = diContainer
-    self.foodUI = script.FoodUI:Clone()
-    self.minigames = {
-        taper = TaperMinigame.new(self.foodUI.Taper),
-        clicker = ClickerMinigame.new(self.foodUI.Clicker),
-        combo = ComboMinigame.new(self.foodUI.Combo),
-    }
+	self.diContainer = diContainer
+	self.foodUI = script.FoodUI:Clone()
+	self.scoreFrame = self.foodUI.Score
+	self.scoreLabel = self.scoreFrame.TextLabel
+	self.timerLabel = self.foodUI.Timer.TextLabel
+
+	self.minigames = {
+		taper = TaperMinigame.new(self.foodUI.Taper),
+		clicker = ClickerMinigame.new(self.foodUI.Clicker),
+		combo = ComboMinigame.new(self.foodUI.Combo),
+	}
 	return self
 end
 
 function UI:init()
-    ---@type ClientApp
-    local application = self.diContainer:resolve("CoreApplication")
-    self.foodUI.Parent = application.services.playerService.player.PlayerGui
+	---@type ClientApp
+	local application = self.diContainer:resolve("CoreApplication")
+	self.foodUI.Parent = application.services.playerService.player.PlayerGui
 
-    for _, minigame in self.minigames do
-        minigame:setup()
-    end
+	for _, minigame in self.minigames do
+		minigame:setup()
+	end
 end
 
 function UI:toggle(state)
-    self.foodUI.Enabled = state
+	self.foodUI.Enabled = state
 end
 
 ---@class foodMinigameData
@@ -46,13 +50,13 @@ end
 
 ---@param data foodMinigameData
 function UI:showFoodMinigame(data)
-    for _, minigame in self.minigames do
-        minigame:stop()
-    end
-    
-    local minigame = self.minigames[data.eatingType]
-    minigame:start()
+	warn("showFoodMinigame", data)
+	for _, minigame in self.minigames do
+		minigame:stop()
+	end
 
+	local minigame = self.minigames[data.eatingType]
+	minigame:start()
 end
 
 return UI

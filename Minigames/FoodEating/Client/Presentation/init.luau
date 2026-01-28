@@ -17,9 +17,10 @@ end
 function Presentation:init()
 	self.ui:init()
 
-	--@type SharedFoodEating
+	---@type SharedFoodEating
 	local shared = self.diContainer:resolve("Shared")
 	self.eventBus = shared.eventBus
+	self.constants = shared.constants
 
 	self:_setupEventListeners()
 end

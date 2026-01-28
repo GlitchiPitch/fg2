@@ -19,7 +19,7 @@
 * \[~] **Shooting**: Implement shooting mechanics, targets, and scoring (Renamed from CrossbowShooting, BalistasService added, camera integration complete, player visibility management implemented, shooting mechanics with parabolic trajectory added, TargetService and TargetController added, ItemsRepository implemented, spawner system and target type categorization added, Target entity with movement system and repository pattern implemented, application lifecycle management added, client-side BalistaService and repository pattern implemented, reloading system added, UI structure created, ammo index system and callback-based bullet creation implemented, score system with UI display added, Player entity and repository pattern implemented, Game entity with countdown timer and time synchronization added)
 * \[ ] **Racing**: Add track generation, vehicle controls, and lap timing
 * \[ ] **ItemSearch**: Create item spawning, search logic, and time limits
-* \[~] **FoodEating**: Implement food consumption mechanics and objectives (Chair system with seat and proximity prompt handling added, ChairService and ChairRepository implemented, PlayerService with camera mode switching added, Fixed camera mode support added to camera system, Infrastructure layer established, Food entity and FoodService added, FoodController for periodic spawning implemented, InputService for eating mechanics added, ItemsRepository and Assets module added, food spawning and eating system complete)
+* \[~] **FoodEating**: Implement food consumption mechanics and objectives (Chair system with seat and proximity prompt handling added, ChairService and ChairRepository implemented, PlayerService with camera mode switching added, Fixed camera mode support added to camera system, Infrastructure layer established, Food entity and FoodService added, FoodController for periodic spawning implemented, InputService for eating mechanics added, ItemsRepository and Assets module added, food spawning and eating system complete, modular minigame system with ClickerMinigame/ComboMinigame/TaperMinigame added, FoodController for minigame updates added, UI modules for each minigame type implemented, eatingType system integrated into food data)
 * \[ ] **DungeonCleaning**: Add cleaning mechanics and area progression
 
 ### Core Systems Enhancement
@@ -232,7 +232,18 @@
 * Integrated food system with event-driven architecture
 * Complete food lifecycle management (spawn, eat, cleanup)
 
-### v1.18.0 - Complete Minigame Mechanics
+### v1.18.0 - FoodEating Minigame System ✅
+
+* Implemented modular minigame system with three minigame types (ClickerMinigame, ComboMinigame, TaperMinigame)
+* Added FoodController for periodic minigame updates with 1-second intervals
+* Created UI modules for each minigame type with show/hide functionality
+* Enhanced food data with eatingType system (taper, clicker, combo) for different mechanics
+* Refactored FoodService into modular structure with minigame modules directory
+* Integrated event-driven minigame activation based on food eatingType
+* Enhanced Application lifecycle with start/stop methods for controller management
+* Standardized UI module pattern with setup/start/stop methods
+
+### v1.19.0 - Complete Minigame Mechanics
 
 * Minigame selection and loading system
 * Individual minigame mechanics implementation

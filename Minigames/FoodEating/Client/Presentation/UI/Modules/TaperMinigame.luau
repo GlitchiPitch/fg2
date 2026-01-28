@@ -1,25 +1,26 @@
----@class TaperMinigame
+---@class TaperMinigameUIModule
+---@field minigameFrame Frame
+---@field taperButtonTemplate TextButton
 local TaperMinigame = {}
 TaperMinigame.__index = TaperMinigame
 
 ---@param minigameFrame Frame
----@return TaperMinigame
+---@return TaperMinigameUIModule
 function TaperMinigame.new(minigameFrame)
 	local self = setmetatable({}, TaperMinigame)
-    self.minigameFrame = minigameFrame
+	self.minigameFrame = minigameFrame
+	self.taperButtonTemplate = self.minigameFrame.Template
 	return self
 end
 
-function TaperMinigame:setup()
-    
-end
+function TaperMinigame:setup() end
 
 function TaperMinigame:start()
-    self.minigameFrame.Enabled = true
+	self.minigameFrame.Visible = true
 end
 
 function TaperMinigame:stop()
-    self.minigameFrame.Enabled = false
+	self.minigameFrame.Visible = false
 end
 
 return TaperMinigame

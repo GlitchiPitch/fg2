@@ -1,25 +1,26 @@
----@class ClickerMinigame
+---@class ClickerMinigameUIModule
+---@field minigameFrame Frame
+---@field bar Frame
 local ClickerMinigame = {}
 ClickerMinigame.__index = ClickerMinigame
 
 ---@param minigameFrame Frame
----@return ClickerMinigame
+---@return ClickerMinigameUIModule
 function ClickerMinigame.new(minigameFrame)
 	local self = setmetatable({}, ClickerMinigame)
-    self.minigameFrame = minigameFrame
+	self.minigameFrame = minigameFrame
+	self.bar = self.minigameFrame.CanvasGroup.Bar
 	return self
 end
 
-function ClickerMinigame:setup()
-    
-end
+function ClickerMinigame:setup() end
 
 function ClickerMinigame:start()
-    self.minigameFrame.Enabled = true
+	self.minigameFrame.Visible = true
 end
 
 function ClickerMinigame:stop()
-    self.minigameFrame.Enabled = false
+	self.minigameFrame.Visible = false
 end
 
 return ClickerMinigame

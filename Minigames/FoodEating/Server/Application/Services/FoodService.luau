@@ -45,7 +45,6 @@ function FoodService:_setupRemoteEventListener()
 			self:_eatFood(player)
 		end,
 	})
-	
 end
 
 function FoodService:_eatFood(player)
@@ -61,14 +60,18 @@ end
 function FoodService:_spawnFood()
 	local chairs = self.chairRepository:getChairs()
 
-	local items = self.foodRepository.itemsRepository:getAssets()
-	local item = items[math.random(1, #items)]
-
 	---@param chair ChairEntity
 	for _, chair in chairs do
 		if chair.occupant and not chair.currentFood then
-			local foodModel = item:Clone()
-			chair:spawnFood(foodModel)
+			local foodName = self.foodRepository:getRandomFoodName()
+			local food = self.foodRepository:createFoodEntity(foodName)
+			chair:spawnFood(food)
+			self.remoteEventService:fireClient(chair.occupant, {
+				eventName = self.constants.REMOTE_EVENTS.SPAWN_FOOD,
+				data = {
+					eatingType = food.eatingType,
+				},
+			})
 		end
 	end
 end

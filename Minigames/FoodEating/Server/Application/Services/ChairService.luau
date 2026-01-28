@@ -27,8 +27,6 @@ function ChairService:init()
 	self.eventBus = shared.eventBus
 
 	self.application = self.diContainer:resolve("Application")
-
-
 	
 	self.chairs = workspace.Workspace.Maps.FoodEating.Chairs:GetChildren()
 	self:_setup()

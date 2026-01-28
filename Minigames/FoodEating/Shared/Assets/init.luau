@@ -5,7 +5,6 @@ local Assets = {
 	Fries = script.Fries,
 	Pizza = script.Pizza,
 	Steak = script.Steak,
-
 	PieCherry = script.PieCherry,
 	PieApple = script.PieApple,
 	PieBlueberry = script.PieBlueberry,

@@ -7,7 +7,7 @@
 ---@field occupant Player?
 ---@field occupantId string?
 ---@field foodSpawnPart BasePart
----@field currentFood Model?
+---@field currentFood FoodEntity?
 local ChairEntity = {}
 ChairEntity.__index = ChairEntity
 
@@ -65,16 +65,15 @@ function ChairEntity:setup(data)
 	end)
 end
 
----@param foodModel Model
-function ChairEntity:spawnFood(foodModel)
-	foodModel.Parent = self.foodSpawnPart
-	foodModel:PivotTo(self.foodSpawnPart.CFrame * CFrame.new(0, 2, 0))
-	self.currentFood = foodModel
+---@param food FoodEntity
+function ChairEntity:spawnFood(food)
+	food:spawn(self.foodSpawnPart)
+	self.currentFood = food
 end
 
 function ChairEntity:eatFood()
 	if self.currentFood then
-		self.currentFood:Destroy()
+		self.currentFood:destroy()
 		self.currentFood = nil
 	end
 end

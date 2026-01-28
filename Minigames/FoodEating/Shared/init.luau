@@ -1,6 +1,7 @@
 local Domain = require(script.Domain)
 local Constants = require(script.Constants)
 local Assets = require(script.Assets)
+local Data = require(script.Data)
 local Infrastructure = require(script.Infrastructure)
 
 ---@class SharedFoodEating
@@ -12,6 +13,7 @@ local Infrastructure = require(script.Infrastructure)
 ---@field remoteEventService RemoteEventService
 ---@field assets SharedFoodEatingAssets
 ---@field infrastructure SharedFoodEatingInfrastructure
+---@field data SharedFoodEatingData
 local Shared = {}
 Shared.__index = Shared
 
@@ -25,6 +27,7 @@ function Shared.new(globalDIContainer)
 	self.domain = Domain.new()
 	self.assets = Assets
 	self.infrastructure = Infrastructure.new(self.diContainer)
+	self.data = Data
 	return self
 end
 

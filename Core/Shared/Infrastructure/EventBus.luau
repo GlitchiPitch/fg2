@@ -8,7 +8,7 @@ EventBus.__index = EventBus
 function EventBus.new()
 	local self = setmetatable({}, EventBus)
 	self._connects = {}
-	self.event = script.Event
+	self.event = Instance.new("BindableEvent")
 	return self
 end
 

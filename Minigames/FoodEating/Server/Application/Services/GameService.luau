@@ -1,9 +1,9 @@
----@class ServerShootingGameService
+---@class ServerFoodEatingGameService
 local GameService = {}
 GameService.__index = GameService
 
 ---@param diContainer DIContainer
----@return ServerShootingGameService
+---@return ServerFoodEatingGameService
 function GameService.new(diContainer)
 	local self = setmetatable({}, GameService)
 	self.diContainer = diContainer
@@ -12,14 +12,14 @@ function GameService.new(diContainer)
 end
 
 function GameService:init()
-	---@type SharedShooting
+	---@type SharedFoodEating
 	local shared = self.diContainer:resolve("Shared")
 	self.constants = shared.constants
 	self.eventBus = shared.eventBus
 
 	self.gameEntity = shared.domain.Entities.Game.new()
 	self.gameEntity:fromData({
-		defaultTime = 15,
+		defaultTime = 30,
 	})
 
 	self:_setupEventListeners()
@@ -28,7 +28,7 @@ end
 function GameService:_setupEventListeners()
 	self.eventBus:connectToEvents({
 		[self.constants.SERVER_EVENTS.UPDATE_TIME] = function(data)
-			warn("update time shooting game", data)
+			warn("update time food eating game", data)
 			self:onUpdateTime(data)
 		end,
 	})
@@ -37,7 +37,7 @@ end
 function GameService:onUpdateTime()
 	self.gameEntity:updateTime(-1)
 	if not self.gameEntity:hasTime() then
-		warn("shooting game finished")
+		warn("food eating game finished")
 		self.eventBus:fire(self.constants.SERVER_EVENTS.GAME_FINISHED)
 	end
 end

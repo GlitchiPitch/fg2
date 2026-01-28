@@ -18,8 +18,34 @@ function PlayerService:init()
 	self.constants = shared.constants
 	self.remoteEventService = shared.remoteEventService
 
+	---@type Shared
+	local coreShared = self.diContainer:resolve("CoreShared")
+	self.coreConstants = coreShared.constants
+	self.coreEventBus = coreShared.eventBus
+
 	self.application = self.diContainer:resolve("Application")
     self:_setupRemoteEventListeners()
+	self:_setupEventListeners()
+end
+
+function PlayerService:onPlayerJoinedFoodEating()
+	warn("onPlayerJoinedFoodEating")
+	self.application:start()
+	self.eventBus:fire(self.constants.CLIENT_EVENTS.PLAYER_JOINED_FOOD_EATING, {})
+end
+
+function PlayerService:onPlayerLeftFoodEating()
+	warn("onPlayerLeftFoodEating")
+	self.application:stop()
+	self.eventBus:fire(self.constants.CLIENT_EVENTS.PLAYER_LEFT_FOOD_EATING, {})
+end
+
+function PlayerService:_setupEventListeners()
+	self.eventBus:connectToEvents({
+		[self.constants.CLIENT_EVENTS.TOGGLE_TAPER_MINIGAME] = function(data)
+			self:_onToggleTaperMinigame(data)
+		end,
+	})
 end
 
 function PlayerService:_setupRemoteEventListeners()
@@ -33,16 +59,8 @@ function PlayerService:_setupRemoteEventListeners()
 	})
 end
 
-function PlayerService:onPlayerJoinedFoodEating()
-	warn("onPlayerJoinedFoodEating")
-	self.application:start()
-	self.eventBus:fire(self.constants.CLIENT_EVENTS.PLAYER_JOINED_FOOD_EATING, {})
-end
-
-function PlayerService:onPlayerLeftFoodEating()
-	warn("onPlayerLeftFoodEating")
-	self.application:stop()
-	self.eventBus:fire(self.constants.CLIENT_EVENTS.PLAYER_LEFT_FOOD_EATING, {})
+function PlayerService:_onToggleTaperMinigame(data)
+	self.coreEventBus:fire(self.coreConstants.CLIENT_EVENTS.SET_FREE_MOUSE, data)
 end
 
 return PlayerService

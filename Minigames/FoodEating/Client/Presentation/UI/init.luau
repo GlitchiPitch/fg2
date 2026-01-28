@@ -61,4 +61,12 @@ function UI:showFoodMinigame(data)
 	minigame:start(data.combo)
 end
 
+function UI:updateScore(data)
+	self.scoreLabel.Text = data.score
+end
+
+function UI:updateTimer(data)
+	self.timerLabel.Text = data.time
+end
+
 return UI

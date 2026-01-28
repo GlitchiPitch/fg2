@@ -27,7 +27,7 @@ function Application:init()
 
 	self.eventBus:connectToEvents({
 		[self.constants.SERVER_EVENTS.GAME_FINISHED] = function()
-			warn("game finished")
+			warn("shooting game finished")
 			self:stop()
 		end,
 	})

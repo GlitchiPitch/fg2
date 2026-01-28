@@ -23,7 +23,6 @@ function FoodRepository:init()
 	self.foodEntity = shared.domain.Entities.Food
 	self.data = shared.data.Food
 
-	
 	for foodName, _ in self.data do
 		table.insert(self.foodNames, foodName)
 	end
@@ -31,7 +30,7 @@ end
 
 ---@return string
 function FoodRepository:getRandomFoodName()
-	local a = {"Fries", "Burger"}
+	local a = { "Fries", "Burger", "Bread" }
 	return a[math.random(1, #a)]
 
 	-- return self.foodNames[math.random(1, #self.foodNames)]

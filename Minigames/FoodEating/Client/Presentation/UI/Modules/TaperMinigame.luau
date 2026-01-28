@@ -1,3 +1,4 @@
+local TweenService = game:GetService("TweenService")
 ---@class TaperMinigameUIModule
 ---@field diContainer DIContainer
 ---@field minigameFrame Frame
@@ -22,11 +23,15 @@ function TaperMinigame:init()
 	self.constants = shared.constants
 	self.eventBus = shared.eventBus
 
-    self:_setupEventListeners()
+	self:_setupEventListeners()
 end
 
 function TaperMinigame:_setupEventListeners()
-	
+	self.eventBus:connectToEvents({
+		[self.constants.CLIENT_EVENTS.CREATE_TAPER] = function()
+			self:onCreateTaper()
+		end,
+	})
 end
 
 function TaperMinigame:start()
@@ -35,6 +40,36 @@ end
 
 function TaperMinigame:stop()
 	self.minigameFrame.Visible = false
+end
+
+function TaperMinigame:onCreateTaper()
+	local taperButton = self.taperButtonTemplate:Clone()
+	local tween = TweenService:Create(taperButton.UIStroke, TweenInfo.new(2), {
+		BorderOffset = UDim.new(0, 0),
+	})
+	local _connection = nil
+	local _isTap = false
+	taperButton.Parent = self.minigameFrame
+	taperButton.Visible = true
+	taperButton.Position = UDim2.fromScale(math.random() * 0.8 + 0.1, math.random() * 0.8 + 0.1)
+
+	_connection = taperButton.MouseButton1Click:Connect(function()
+		warn("taperButton.MouseButton1Click")
+		_connection:Disconnect()
+		tween:Cancel()
+		_isTap = true
+	end)
+
+	tween.Completed:Connect(function()
+		warn("tween.Completed")
+		taperButton:Destroy()
+		self.eventBus:fire(self.constants.CLIENT_EVENTS.TAPER_CLICKED, {
+			isTap = _isTap,
+		})
+		_connection:Disconnect()
+	end)
+
+	tween:Play()
 end
 
 return TaperMinigame

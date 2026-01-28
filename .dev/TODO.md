@@ -19,7 +19,7 @@
 * \[~] **Shooting**: Implement shooting mechanics, targets, and scoring (Renamed from CrossbowShooting, BalistasService added, camera integration complete, player visibility management implemented, shooting mechanics with parabolic trajectory added, TargetService and TargetController added, ItemsRepository implemented, spawner system and target type categorization added, Target entity with movement system and repository pattern implemented, application lifecycle management added, client-side BalistaService and repository pattern implemented, reloading system added, UI structure created, ammo index system and callback-based bullet creation implemented, score system with UI display added, Player entity and repository pattern implemented, Game entity with countdown timer and time synchronization added)
 * \[ ] **Racing**: Add track generation, vehicle controls, and lap timing
 * \[ ] **ItemSearch**: Create item spawning, search logic, and time limits
-* \[~] **FoodEating**: Implement food consumption mechanics and objectives (Chair system with seat and proximity prompt handling added, ChairService and ChairRepository implemented, PlayerService with camera mode switching added, Fixed camera mode support added to camera system, Infrastructure layer established, Food entity and FoodService added, FoodController for periodic spawning implemented, InputService for eating mechanics added, ItemsRepository and Assets module added, food spawning and eating system complete, modular minigame system with ClickerMinigame/ComboMinigame/TaperMinigame added, FoodController for minigame updates added, UI modules for each minigame type implemented, eatingType system integrated into food data, ClickerMinigame fully implemented with progress tracking and completion logic, ComboMinigame fully implemented with sequence tracking and visual feedback, event-driven input binding system added, progress synchronization between logic and UI implemented, comprehensive Food data system with all food definitions and combo sequences added, KeyImages data module for UI assets added)
+* \[~] **FoodEating**: Implement food consumption mechanics and objectives (Chair system with seat and proximity prompt handling added, ChairService and ChairRepository implemented, PlayerService with camera mode switching added, Fixed camera mode support added to camera system, Infrastructure layer established, Food entity and FoodService added, FoodController for periodic spawning implemented, InputService for eating mechanics added, ItemsRepository and Assets module added, food spawning and eating system complete, modular minigame system with ClickerMinigame/ComboMinigame/TaperMinigame added, FoodController for minigame updates added, UI modules for each minigame type implemented, eatingType system integrated into food data, ClickerMinigame fully implemented with progress tracking and completion logic, ComboMinigame fully implemented with sequence tracking and visual feedback, event-driven input binding system added, progress synchronization between logic and UI implemented, comprehensive Food data system with all food definitions and combo sequences added, KeyImages data module for UI assets added, Game timer system with countdown functionality added matching Shooting minigame pattern)
 * \[ ] **DungeonCleaning**: Add cleaning mechanics and area progression
 
 ### Core Systems Enhancement
@@ -261,6 +261,16 @@
 * Enhanced ComboMinigame UI with key image display and visual progress feedback
 * Refactored FoodRepository to use data-driven food definitions
 * Established centralized data access pattern for food and key images
+
+### v1.21.0 - FoodEating Game Timer System and EventBus Refactoring ✅
+
+* Implemented complete game timer system with countdown functionality matching Shooting minigame pattern
+* Added GameService on both client and server for game state management
+* Created GameController for periodic time updates with 1-second intervals
+* Added timer display to FoodEating UI with time synchronization
+* Implemented GAME_FINISHED event handling for proper game lifecycle
+* Refactored EventBus from directory structure to single consolidated file
+* Enhanced game lifecycle management with finish/stop flow
 
 ### v1.3.0 - Enhanced Features
 

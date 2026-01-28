@@ -53,21 +53,24 @@ function CameraController:init()
 	self.constants = shared.constants
 	self.eventBus = shared.eventBus
 	self.remoteEventService = shared.remoteEventService
-	self.eventBus:connectToEvents({
-		[shared.constants.CLIENT_EVENTS.SET_CAMERA_MODE] = function(data)
-			self:setCameraMode(data)
-		end,
-		[shared.constants.CLIENT_EVENTS.ON_CHARACTER_ADDED] = function(data)
-			self:_onCharacterAdded(data.character)
-		end,
-		[shared.constants.CLIENT_EVENTS.MOUSE_MOVEMENT] = function(data)
-			self:_mouseMovement(data.input)
-		end,
-	})
+	self:_setupEventListeners()
 end
 
 function CameraController:_setupEventListeners()
-	
+	self.eventBus:connectToEvents({
+		[self.constants.CLIENT_EVENTS.SET_FREE_MOUSE] = function(data)
+			self:_setFreeMouse(data.isEnabled)
+		end,
+		[self.constants.CLIENT_EVENTS.SET_CAMERA_MODE] = function(data)
+			self:setCameraMode(data)
+		end,
+		[self.constants.CLIENT_EVENTS.ON_CHARACTER_ADDED] = function(data)
+			self:_onCharacterAdded(data.character)
+		end,
+		[self.constants.CLIENT_EVENTS.MOUSE_MOVEMENT] = function(data)
+			self:_mouseMovement(data.input)
+		end,
+	})
 end
 
 

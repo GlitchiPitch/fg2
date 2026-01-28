@@ -3,7 +3,7 @@ local UI = require(script.UI)
 ---@class FoodEatingClientPresentation
 ---@field ui UI
 local Presentation = {}
-Presentation.__index = Presentation 
+Presentation.__index = Presentation
 
 ---@param diContainer DIContainer
 ---@return FoodEatingClientPresentation
@@ -36,8 +36,13 @@ function Presentation:_setupEventListeners()
 		[self.constants.CLIENT_EVENTS.PLAYER_LEFT_FOOD_EATING] = function()
 			self.ui:toggle(false)
 		end,
+		[self.constants.CLIENT_EVENTS.UPDATE_SCORE] = function(data)
+			self.ui:updateScore(data)
+		end,
+		[self.constants.CLIENT_EVENTS.UPDATE_TIME] = function(data)
+			self.ui:updateTimer(data)
+		end,
 	})
 end
-
 
 return Presentation

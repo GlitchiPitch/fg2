@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.21.0] - 2026-01-28
+
+### Added
+
+* **FoodEating Game Timer System**: Implemented complete game timer system with countdown functionality matching Shooting minigame pattern
+* **FoodEating GameService**: Added server-side GameService for managing game state with 30-second default time and countdown timer
+* **FoodEating Client GameService**: Added client-side GameService for game entity management and time synchronization
+* **FoodEating GameController**: Created server controller for periodic game time updates with 1-second interval countdown
+* **FoodEating Timer UI Display**: Added timer label to FoodEating UI showing game time countdown
+* **FoodEating Game Lifecycle**: Implemented GAME_FINISHED event handling for proper game end and cleanup flow
+* **FoodEating Time Events**: Added UPDATE_TIME and GAME_FINISHED events to SERVER_EVENTS and CLIENT_EVENTS constants
+
+### Changed
+
+* **EventBus Infrastructure**: Refactored EventBus from directory structure (EventBus/init.luau and EventBus/Event.model.json) to single consolidated file (EventBus.luau) for simpler structure
+* **FoodEating Application**: Enhanced Application with GAME_FINISHED event listener for automatic game stop on time expiration
+* **FoodEating Controllers**: Integrated GameController into Controllers heartbeat update loop alongside FoodController
+* **FoodEating Services**: Added GameService to both client and server service initialization
+* **FoodEating Presentation**: Added UPDATE_TIME event listener for timer display updates in UI
+
+### Infrastructure
+
+* **Game Timer Consistency**: FoodEating minigame now follows same timer pattern as Shooting minigame for consistency
+* **EventBus Simplification**: Consolidated EventBus structure reduces complexity and improves maintainability
+* **Game Lifecycle Management**: Enhanced game lifecycle with proper finish/stop flow matching Shooting minigame pattern
+* **Time Synchronization**: Implemented time synchronization between server and client with event-driven updates
+
 ## [1.20.0] - 2026-01-28
 
 ### Added

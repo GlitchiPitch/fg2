@@ -18,59 +18,64 @@ FoodService.__index = FoodService
 function FoodService.new(diContainer)
 	local self = setmetatable({}, FoodService)
 	self.diContainer = diContainer
-    self._currentMinigame = nil
-    self.minigameModules = {
-        clicker = ClickerMinigame.new(diContainer),
-        combo = ComboMinigame.new(diContainer),
-        taper = TaperMinigame.new(diContainer),
-    }
+	self._currentMinigame = nil
+	self.minigameModules = {
+		clicker = ClickerMinigame.new(diContainer),
+		combo = ComboMinigame.new(diContainer),
+		taper = TaperMinigame.new(diContainer),
+	}
 	return self
 end
 
 function FoodService:init()
-    ---@type SharedFoodEating
-    local shared = self.diContainer:resolve("Shared")
-    self.constants = shared.constants
-    self.remoteEventService = shared.remoteEventService
-    self.eventBus = shared.eventBus
+	---@type SharedFoodEating
+	local shared = self.diContainer:resolve("Shared")
+	self.constants = shared.constants
+	self.remoteEventService = shared.remoteEventService
+	self.eventBus = shared.eventBus
 
-    for _, minigameModule in self.minigameModules do
-        minigameModule:init()
-    end
+	for _, minigameModule in self.minigameModules do
+		minigameModule:init()
+	end
 
-    self:_setupRemoteEventListeners()
-    self:_setupEventListeners()
+	self:_setupRemoteEventListeners()
+	self:_setupEventListeners()
 end
 
 function FoodService:_setupEventListeners()
-    self.eventBus:connectToEvents({
-        [self.constants.CLIENT_EVENTS.UPDATE_MINIGAME] = function()
-            self:updateMinigame()
-        end,
-    })
+	self.eventBus:connectToEvents({
+		[self.constants.CLIENT_EVENTS.UPDATE_MINIGAME] = function()
+			self:updateMinigame()
+		end,
+	})
 end
 
 function FoodService:_setupRemoteEventListeners()
-    self.remoteEventService:connectToEvents({
-        [self.constants.REMOTE_EVENTS.SPAWN_FOOD] = function(eventData)
-            self:onSpawnFood(eventData.data)
-        end,
-    })
+	self.remoteEventService:connectToEvents({
+		[self.constants.REMOTE_EVENTS.SPAWN_FOOD] = function(eventData)
+			self:onSpawnFood(eventData.data)
+		end,
+	})
 end
 
 function FoodService:onSpawnFood(data)
-    local eatingType = data.eatingType
-    self._currentMinigame = eatingType
-    self.minigameModules[eatingType]:start()
+	local eatingType = data.eatingType
+	self._currentMinigame = eatingType
+	self.minigameModules[eatingType]:start()
 
-    self.eventBus:fire(self.constants.CLIENT_EVENTS.SPAWN_FOOD, {
-        eatingType = eatingType,
-    })
+	self.eventBus:fire(self.constants.CLIENT_EVENTS.SPAWN_FOOD, {
+		eatingType = eatingType,
+	})
 end
 
 function FoodService:updateMinigame()
-    warn("updateMinigame")
-    self.minigameModules[self._currentMinigame]:update()
+	self.minigameModules[self._currentMinigame]:update()
+end
+
+function FoodService:stop()
+	for _, minigameModule in self.minigameModules do
+		minigameModule:stop()
+	end
 end
 
 return FoodService

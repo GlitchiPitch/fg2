@@ -30,6 +30,12 @@ function Presentation:_setupEventListeners()
 		[self.constants.CLIENT_EVENTS.SPAWN_FOOD] = function(data)
 			self.ui:showFoodMinigame(data)
 		end,
+		[self.constants.CLIENT_EVENTS.PLAYER_JOINED_FOOD_EATING] = function()
+			self.ui:toggle(true)
+		end,
+		[self.constants.CLIENT_EVENTS.PLAYER_LEFT_FOOD_EATING] = function()
+			self.ui:toggle(false)
+		end,
 	})
 end
 

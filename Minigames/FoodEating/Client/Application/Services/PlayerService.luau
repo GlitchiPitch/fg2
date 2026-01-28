@@ -35,14 +35,14 @@ end
 
 function PlayerService:onPlayerJoinedFoodEating()
 	warn("onPlayerJoinedFoodEating")
-	self.eventBus:fire(self.constants.CLIENT_EVENTS.PLAYER_JOINED_FOOD_EATING, {})
 	self.application:start()
+	self.eventBus:fire(self.constants.CLIENT_EVENTS.PLAYER_JOINED_FOOD_EATING, {})
 end
 
 function PlayerService:onPlayerLeftFoodEating()
 	warn("onPlayerLeftFoodEating")
-	self.eventBus:fire(self.constants.CLIENT_EVENTS.PLAYER_LEFT_FOOD_EATING, {})
 	self.application:stop()
+	self.eventBus:fire(self.constants.CLIENT_EVENTS.PLAYER_LEFT_FOOD_EATING, {})
 end
 
 return PlayerService

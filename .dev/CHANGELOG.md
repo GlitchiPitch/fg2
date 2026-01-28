@@ -5,6 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.19.0] - 2026-01-28
+
+### Added
+
+* **FoodEating ClickerMinigame Logic**: Implemented complete clicker minigame mechanics with progress tracking (0-1 range), input handling, and automatic decay over time
+* **FoodEating ClickerMinigame Completion**: Added food eating completion logic that fires EAT_FOOD remote event when progress reaches maximum
+* **FoodEating ComboMinigame Toggle**: Implemented toggle events for enabling/disabling combo minigame input handling
+* **FoodEating Input Service Events**: Added CLICKER_MINIGAME_INPUT and COMBO_MINIGAME_INPUT events to constants for minigame input coordination
+* **FoodEating UI Progress Tracking**: Implemented progress bar updates for ClickerMinigame UI module with real-time progress synchronization
+* **FoodEating UI Lifecycle**: Added init() methods to all UI modules (ClickerMinigame, ComboMinigame, TaperMinigame) for proper event listener setup
+* **FoodEating Application Stop Flow**: Enhanced Application stop() method to properly cleanup services and minigame modules
+
+### Changed
+
+* **FoodEating ClickerMinigame**: Enhanced with progress tracking system, event-driven input handling, and completion detection
+* **FoodEating InputService**: Refactored to use event-driven toggle system for different minigame types instead of player join/leave events
+* **FoodEating InputService**: Changed from ContextActionService-only to hybrid approach (ContextActionService for clicker, UserInputService for combo)
+* **FoodEating FoodService**: Added stop() method to properly cleanup all minigame modules when application stops
+* **FoodEating Services**: Enhanced Services module with stop() method for proper lifecycle management
+* **FoodEating PlayerService**: Fixed application lifecycle order - application start/stop now fires before/after events
+* **FoodEating UI Modules**: Refactored to accept diContainer parameter for dependency injection and event bus access
+* **FoodEating Presentation**: Enhanced with PLAYER_JOINED_FOOD_EATING and PLAYER_LEFT_FOOD_EATING event listeners for UI toggle
+* **FoodEating UI**: Changed setup() to init() method for consistency with service initialization pattern
+* **FoodEating UI**: Added Enabled property control for UI visibility management
+
+### Infrastructure
+
+* **Event-Driven Input Binding**: Implemented toggle-based input binding system allowing minigames to dynamically enable/disable input handling
+* **Minigame Lifecycle Management**: Enhanced minigame module lifecycle with proper start/stop/update flow and cleanup
+* **Progress Synchronization**: Established event-driven progress synchronization between minigame logic and UI presentation
+* **Service Cleanup Pattern**: Standardized service cleanup pattern with stop() methods throughout application lifecycle
+
 ## [1.18.0] - 2026-01-28
 
 ### Added

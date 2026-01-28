@@ -31,14 +31,15 @@ end
 
 ---@return string
 function FoodRepository:getRandomFoodName()
-	return self.foodNames[math.random(1, #self.foodNames)]
+	return "Burger"
+	-- return self.foodNames[math.random(1, #self.foodNames)]
 end
 
 ---@param foodName string
 ---@return FoodEntity
 function FoodRepository:createFoodEntity(foodName)
 	local id = HttpService:GenerateGUID(false)
-	local foodModel = self.data[foodName].model
+	local foodModel = self.data[foodName].model:Clone()
 	local eatingType = self.data[foodName].eatingType
 
 	local foodEntity = self.foodEntity.new(foodModel, eatingType, id)

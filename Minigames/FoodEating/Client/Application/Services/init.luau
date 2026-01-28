@@ -24,4 +24,8 @@ function Services:init()
 	self.foodService:init()
 end
 
+function Services:stop()
+	self.foodService:stop()
+end
+
 return Services

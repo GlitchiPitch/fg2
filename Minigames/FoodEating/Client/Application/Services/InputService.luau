@@ -1,9 +1,12 @@
 local ContextActionService = game:GetService("ContextActionService")
+local UserInputService = game:GetService("UserInputService")
 
 ---@class FoodEatingInputService
 ---@field diContainer DIContainer
 ---@field eventBus EventBus
----@field constants SharedConstants
+---@field constants SharedFoodEatingConstants
+---@field remoteEventService RemoteEventService
+---@field _connections table<string, RBXScriptConnection>
 local InputService = {}
 InputService.__index = InputService
 
@@ -12,6 +15,7 @@ InputService.__index = InputService
 function InputService.new(diContainer)
 	local self = setmetatable({}, InputService)
 	self.diContainer = diContainer
+	self._connections = {}
 	return self
 end
 
@@ -27,31 +31,61 @@ end
 
 function InputService:_setupEventListeners()
 	self.eventBus:connectToEvents({
-		[self.constants.CLIENT_EVENTS.PLAYER_JOINED_FOOD_EATING] = function()
-			warn("playerJoinedFoodEating")
-			self:onPlayerJoinedFoodEating()
+		[self.constants.CLIENT_EVENTS.TOGGLE_CLICKER_MINIGAME] = function(data)
+			self:onClickerMinigameToggle(data)
 		end,
-		[self.constants.CLIENT_EVENTS.PLAYER_LEFT_FOOD_EATING] = function()
-			self:onPlayerLeftFoodEating()
+		[self.constants.CLIENT_EVENTS.TOGGLE_COMBO_MINIGAME] = function(data)
+			self:onComboMinigameToggle(data)
 		end,
 	})
 end
 
-function InputService:onPlayerJoinedFoodEating()
-	ContextActionService:BindAction("FoodEating", function(_, inputState, _)
-		if inputState ~= Enum.UserInputState.Begin then
-			return
-		end
-		warn("eating food")
-		self.remoteEventService:fireServer({
-			eventName = self.constants.REMOTE_EVENTS.EAT_FOOD,
-			data = {},
-		})
-	end, false, Enum.UserInputType.MouseButton1)
+---@class minigameToggleData
+---@field isEnabled boolean
+
+---@param data minigameToggleData
+function InputService:onClickerMinigameToggle(data)
+	if data.isEnabled then
+		warn("onClickerMinigameToggle")
+		ContextActionService:BindAction("ClickerMinigame", function(_, inputState, _)
+			if inputState ~= Enum.UserInputState.Begin then
+				return
+			end
+
+			warn("onClickerMinigameInput")
+			self:_onClickerMinigameInput()
+		end, false, Enum.UserInputType.MouseButton1)
+	else
+		ContextActionService:UnbindAction("ClickerMinigame")
+	end
 end
 
-function InputService:onPlayerLeftFoodEating()
-	ContextActionService:UnbindAction("FoodEating")
+function InputService:onComboMinigameToggle(data)
+	if data.isEnabled then
+		self._connections["ComboMinigame"] = UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+			if gameProcessedEvent then
+				return
+			end
+			if input.UserInputType == Enum.UserInputType.Keyboard then
+				self:_onComboMinigameInput(input)
+			end
+		end)
+	else
+		if self._connections["ComboMinigame"] then
+			self._connections["ComboMinigame"]:Disconnect()
+			self._connections["ComboMinigame"] = nil
+		end
+	end
+end
+
+function InputService:_onComboMinigameInput(input)
+	self.eventBus:fire(self.constants.CLIENT_EVENTS.COMBO_MINIGAME_INPUT, {
+		input = input,
+	})
+end
+
+function InputService:_onClickerMinigameInput()
+	self.eventBus:fire(self.constants.CLIENT_EVENTS.CLICKER_MINIGAME_INPUT, {})
 end
 
 return InputService

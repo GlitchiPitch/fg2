@@ -24,9 +24,9 @@ function UI.new(diContainer)
 	self.timerLabel = self.foodUI.Timer.TextLabel
 
 	self.minigames = {
-		taper = TaperMinigame.new(self.foodUI.Taper),
-		clicker = ClickerMinigame.new(self.foodUI.Clicker),
-		combo = ComboMinigame.new(self.foodUI.Combo),
+		taper = TaperMinigame.new(self.diContainer, self.foodUI.Taper),
+		clicker = ClickerMinigame.new(self.diContainer, self.foodUI.Clicker),
+		combo = ComboMinigame.new(self.diContainer, self.foodUI.Combo),
 	}
 	return self
 end
@@ -37,8 +37,10 @@ function UI:init()
 	self.foodUI.Parent = application.services.playerService.player.PlayerGui
 
 	for _, minigame in self.minigames do
-		minigame:setup()
+		minigame:init()
 	end
+
+    self.foodUI.Enabled = false
 end
 
 function UI:toggle(state)
@@ -50,7 +52,6 @@ end
 
 ---@param data foodMinigameData
 function UI:showFoodMinigame(data)
-	warn("showFoodMinigame", data)
 	for _, minigame in self.minigames do
 		minigame:stop()
 	end

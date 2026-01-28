@@ -18,9 +18,15 @@ function ComboMinigame:init()
 end
 
 function ComboMinigame:start()
+    self.eventBus:fire(self.constants.CLIENT_EVENTS.TOGGLE_COMBO_MINIGAME, {
+        isEnabled = true,
+    })
 end
 
 function ComboMinigame:stop()
+    self.eventBus:fire(self.constants.CLIENT_EVENTS.TOGGLE_COMBO_MINIGAME, {
+        isEnabled = false,
+    })
 end
 
 function ComboMinigame:update()

@@ -18,9 +18,11 @@ function TaperMinigame:init()
 end
 
 function TaperMinigame:start()
+    
 end
 
 function TaperMinigame:stop()
+    
 end
 
 function TaperMinigame:update()

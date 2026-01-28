@@ -1,51 +1,61 @@
----@class ServerFoodEatingPlayerService
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local SharedFoodEatingPlayerService = require(ReplicatedStorage.Minigames.FoodEating.Application.Services.PlayerService)
+
+---@class ServerFoodEatingPlayerService : SharedFoodEatingPlayerService
 ---@field diContainer DIContainer
 ---@field coreConstants SharedConstants
 ---@field coreEventBus EventBus
 ---@field constants SharedFoodEatingConstants
 ---@field eventBus EventBus
-local PlayerService = {}
+local PlayerService = setmetatable({}, SharedFoodEatingPlayerService)
 PlayerService.__index = PlayerService
 
 ---@param diContainer DIContainer
 ---@return ServerFoodEatingPlayerService
 function PlayerService.new(diContainer)
-	local self = setmetatable({}, PlayerService)
-	self.diContainer = diContainer
+	local self = setmetatable(SharedFoodEatingPlayerService.new(diContainer), PlayerService)
+	self._connections = {}
 	return self
 end
 
 function PlayerService:init()
+	SharedFoodEatingPlayerService.init(self)
 	---@type Shared
 	local coreShared = self.diContainer:resolve("CoreShared")
 	self.coreConstants = coreShared.constants
 	self.coreEventBus = coreShared.eventBus
-	---@type SharedFoodEating
-	local shared = self.diContainer:resolve("Shared")
-	self.constants = shared.constants
-	self.eventBus = shared.eventBus
-	self.remoteEventService = shared.remoteEventService
 
 	self:_setupEventListeners()
+
+	warn(self)
 end
 
 function PlayerService:_setupEventListeners()
 	self.eventBus:connectToEvents({
 		[self.constants.SERVER_EVENTS.PLAYER_JOINED_FOOD_EATING] = function(data)
+			warn("PLAYER_JOINED_FOOD_EATING", data)
 			self:_onPlayerJoinedFoodEating(data)
 		end,
 		[self.constants.SERVER_EVENTS.PLAYER_LEFT_FOOD_EATING] = function(data)
+			warn("PLAYER_LEFT_FOOD_EATING", data)
 			self:_onPlayerLeftFoodEating(data)
+		end,
+		[self.constants.SERVER_EVENTS.ADD_SCORE] = function(data)
+			warn("ADD_SCORE", data)
+			self:_onAddScore(data)
 		end,
 	})
 end
 
 function PlayerService:_onPlayerJoinedFoodEating(data)
+	warn("onPlayerJoinedFoodEating", data)
 	local player = data.player
 	local cameraCFrame = data.cameraCFrame
 	if not player then
 		return
 	end
+
+	self.playerRepository:createPlayerEntity(player)
 
 	self.coreEventBus:fire(self.coreConstants.SERVER_EVENTS.SET_PLAYER_CAMERA_MODE, {
 		player = player,
@@ -57,6 +67,20 @@ function PlayerService:_onPlayerJoinedFoodEating(data)
 		eventName = self.constants.REMOTE_EVENTS.PLAYER_JOINED_FOOD_EATING,
 		data = {},
 	})
+
+	self._connections[player.UserId] = {
+		player.Changed:Connect(function(property)
+			if property == "Parent" then
+				self:_onPlayerLeftFoodEating({ player = player })
+			end
+		end),
+
+		player.Character.Changed:Connect(function(property)
+			if property == "Parent" then
+				self:_onPlayerLeftFoodEating({ player = player })
+			end
+		end),
+	}
 end
 
 function PlayerService:_onPlayerLeftFoodEating(data)
@@ -64,6 +88,8 @@ function PlayerService:_onPlayerLeftFoodEating(data)
 	if not player then
 		return
 	end
+
+	self.playerRepository:removePlayerEntity(player)
 
 	self.coreEventBus:fire(self.coreConstants.SERVER_EVENTS.SET_PLAYER_CAMERA_MODE, {
 		player = player,
@@ -74,6 +100,23 @@ function PlayerService:_onPlayerLeftFoodEating(data)
 		eventName = self.constants.REMOTE_EVENTS.PLAYER_LEFT_FOOD_EATING,
 		data = {},
 	})
+	warn("disconnecting connections", self._connections[player.UserId], player.UserId)
+	for _, connection in self._connections[player.UserId] do
+		connection:Disconnect()
+	end
+
+	self._connections[player.UserId] = nil
+end
+
+function PlayerService:_onAddScore(data)
+	local player = data.player
+	local score = data.score
+	if not player then
+		return
+	end
+
+	local playerEntity = self.playerRepository:getPlayerEntity(player)
+	playerEntity:addScore(score)
 end
 
 return PlayerService

@@ -6,6 +6,7 @@ local Constants = {
         SPAWN_FOOD = "SPAWN_FOOD",
         UPDATE_TIME = "UPDATE_TIME",
         GAME_FINISHED = "GAME_FINISHED",
+        ADD_SCORE = "ADD_SCORE",
     },
     CLIENT_EVENTS = {
         UPDATE_SCORE = "UPDATE_SCORE",

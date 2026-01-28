@@ -41,7 +41,7 @@ function ChairService:_setup()
 				if not player then
 					return
 				end
-
+				
 				chairEntity.occupant = player
 				chairEntity.occupantId = player.UserId
 				self:_onChairOccupied(player, chairEntity.cameraPart.CFrame)
@@ -49,9 +49,7 @@ function ChairService:_setup()
 			end,
 			unoccupiedCallback = function()
 				local player = chairEntity.occupant or Players:GetPlayerByUserId(chairEntity.occupantId)
-				if not player then
-					return
-				end
+				
 				chairEntity.occupant = nil
 				chairEntity.occupantId = nil
 				self:_onChairUnoccupied(player)

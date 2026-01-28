@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.22.0] - 2026-01-28
+
+### Added
+
+* **FoodEating PlayerRepository Pattern**: Implemented complete repository pattern for player entity management following Shooting minigame pattern
+* **FoodEating Shared PlayerRepository**: Created SharedFoodEatingPlayerRepository base class in Shared/Infrastructure/Repositories/ for player entity lifecycle management
+* **FoodEating Client PlayerRepository**: Added ClientFoodEatingPlayerRepository extending shared repository for client-side player entity tracking
+* **FoodEating Server PlayerRepository**: Added ServerFoodEatingPlayerRepository extending shared repository for server-side player entity management
+* **FoodEating Shared Application Services**: Created Shared/Application/Services/ directory with base PlayerService class for code reuse
+* **FoodEating Player Entity Integration**: Integrated player repository into PlayerServices for entity-based state management
+
+### Changed
+
+* **FoodEating Client PlayerService**: Refactored to use PlayerRepository for player entity management with createPlayerEntity() and removePlayerEntity() methods
+* **FoodEating Server PlayerService**: Enhanced to use PlayerRepository for score management and player entity lifecycle (create, get, remove)
+* **FoodEating Client Infrastructure**: Added PlayerRepository to client repositories module for entity management
+* **FoodEating Server Infrastructure**: Added PlayerRepository to server repositories module alongside ChairRepository and FoodRepository
+* **FoodEating PlayerService Architecture**: Refactored PlayerServices to extend shared base class for consistent pattern across client and server
+* **FoodEating Score System**: Enhanced score system to use player entity addScore() method through repository pattern
+
+### Infrastructure
+
+* **Repository Pattern Consistency**: FoodEating minigame now follows same repository pattern as Shooting minigame for player entities
+* **Code Reuse**: Shared repository pattern reduces code duplication between client and server player management
+* **Entity Lifecycle Management**: Improved player entity lifecycle with proper creation, retrieval, and cleanup through repository
+* **State Management**: Enhanced state management with entity-based approach instead of event-only communication
+
 ## [1.21.0] - 2026-01-28
 
 ### Added

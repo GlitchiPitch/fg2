@@ -30,10 +30,7 @@ end
 
 ---@return string
 function FoodRepository:getRandomFoodName()
-	local a = { "Fries", "Burger", "Bread" }
-	return a[math.random(1, #a)]
-
-	-- return self.foodNames[math.random(1, #self.foodNames)]
+	return self.foodNames[math.random(1, #self.foodNames)]
 end
 
 ---@param foodName string
@@ -43,12 +40,14 @@ function FoodRepository:createFoodEntity(foodName)
 	local foodModel = self.data[foodName].model:Clone()
 	local eatingType = self.data[foodName].eatingType
 	local combo = self.data[foodName].combo
-
+	local score = self.data[foodName].score
+	
 	local foodEntity = self.foodEntity.new({
 		foodModel = foodModel,
 		eatingType = eatingType,
 		id = id,
 		combo = combo,
+		score = score,
 	})
 	self.foodEntities[id] = foodEntity
 	return foodEntity

@@ -1,7 +1,7 @@
-local ItemsRepository = require(script.ItemsRepository)
+local Repositories = require(script.Repositories)
 
 ---@class SharedFoodEatingInfrastructure
----@field itemsRepository SharedFoodEatingItemsRepository
+---@field repositories SharedFoodEatingRepositories
 local Infrastructure = {}
 Infrastructure.__index = Infrastructure
 
@@ -9,13 +9,13 @@ Infrastructure.__index = Infrastructure
 ---@return SharedFoodEatingInfrastructure
 function Infrastructure.new(diContainer)
 	local self = setmetatable({}, Infrastructure)
-    self.itemsRepository = ItemsRepository.new(diContainer)
+    self.repositories = Repositories.new(diContainer)
 	self.diContainer = diContainer
 	return self
 end
 
 function Infrastructure:init()
-	self.itemsRepository:init()
+	self.repositories:init()
 end
 
 return Infrastructure

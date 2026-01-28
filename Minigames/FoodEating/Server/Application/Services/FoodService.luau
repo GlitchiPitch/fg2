@@ -54,6 +54,11 @@ function FoodService:_eatFood(player)
 		return
 	end
 	warn("eating food")
+	local score = chair.currentFood.score
+	self.eventBus:fire(self.constants.SERVER_EVENTS.ADD_SCORE, {
+		player = player,
+		score = score,
+	})
 	chair:eatFood()
 end
 

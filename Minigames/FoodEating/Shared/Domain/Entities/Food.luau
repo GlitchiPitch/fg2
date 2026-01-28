@@ -2,6 +2,8 @@
 ---@field foodModel Model
 ---@field eatingType eatingType
 ---@field id string
+---@field combo table<number, Enum.KeyCode>?
+---@field score number
 local Food = {}
 Food.__index = Food
 
@@ -10,6 +12,7 @@ Food.__index = Food
 ---@field eatingType eatingType
 ---@field id string
 ---@field combo table<number, Enum.KeyCode>?
+---@field score number
 
 ---@param data foodEntityData
 ---@return FoodEntity
@@ -19,6 +22,7 @@ function Food.new(data)
 	self.eatingType = data.eatingType
 	self.id = data.id
 	self.combo = data.combo
+	self.score = data.score
 	return self
 end
 

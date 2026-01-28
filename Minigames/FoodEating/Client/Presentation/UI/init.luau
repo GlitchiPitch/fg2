@@ -1,3 +1,4 @@
+local TweenService = game:GetService("TweenService")
 local TaperMinigame = require(script.Modules.TaperMinigame)
 local ClickerMinigame = require(script.Modules.ClickerMinigame)
 local ComboMinigame = require(script.Modules.ComboMinigame)
@@ -35,7 +36,7 @@ function UI:init()
 	---@type ClientApp
 	local application = self.diContainer:resolve("CoreApplication")
 	self.foodUI.Parent = application.services.playerService.player.PlayerGui
-
+	self.playerService = application.services.playerService
 	for _, minigame in self.minigames do
 		minigame:init()
 	end
@@ -62,11 +63,46 @@ function UI:showFoodMinigame(data)
 end
 
 function UI:updateScore(data)
-	self.scoreLabel.Text = data.score
-end
+	local playerEntity = self.playerService:getPlayerEntity()
+	local _scoreValue = Instance.new("IntValue")
+	local tween = TweenService:Create(_scoreValue, TweenInfo.new(1), { Value = playerEntity.score.Value })
+	local _scoreChangedConnection = nil
 
+	_scoreValue.Value = playerEntity.score.Value - data.addedScore
+
+	_scoreChangedConnection = _scoreValue.Changed:Connect(function(score)
+		self.scoreLabel.Text = score
+	end)
+
+	tween.Completed:Connect(function()
+		_scoreValue:Destroy()
+		_scoreChangedConnection:Disconnect()
+	end)
+
+	tween:Play()
+	self:_animateScore(data.addedScore)
+end
 function UI:updateTimer(data)
 	self.timerLabel.Text = data.time
 end
+
+---@param score number
+function UI:_animateScore(score)
+	local animatedScore = self.scoreLabel:Clone()
+	local tweenInfo = TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut)
+	local tween = TweenService:Create(animatedScore, tweenInfo, { Position = self.scoreLabel.Position })
+
+	local function onCompleted()
+		animatedScore:Destroy()
+	end
+
+	animatedScore.Parent = self.scoreFrame
+	animatedScore.Position = UDim2.fromScale(0.5, 2.5)
+	animatedScore.Text = score
+
+	tween.Completed:Connect(onCompleted)
+	tween:Play()
+end
+
 
 return UI

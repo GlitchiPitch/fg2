@@ -15,8 +15,6 @@ function ItemsRepository:init()
 	---@type Shared
 	local shared = self.diContainer:resolve("Shared")
 	self.assets = shared.assets
-
-	warn(self.assets)
 end
 
 function ItemsRepository:getAssets()

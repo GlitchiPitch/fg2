@@ -21,7 +21,7 @@ function FoodRepository:init()
 	---@type SharedFoodEating
 	local shared = self.diContainer:resolve("Shared")
 	self.foodEntity = shared.domain.Entities.Food
-	self.data = shared.data
+	self.data = shared.data.Food
 
 	
 	for foodName, _ in self.data do
@@ -31,7 +31,9 @@ end
 
 ---@return string
 function FoodRepository:getRandomFoodName()
-	return "Burger"
+	local a = {"Fries", "Burger"}
+	return a[math.random(1, #a)]
+
 	-- return self.foodNames[math.random(1, #self.foodNames)]
 end
 
@@ -41,8 +43,14 @@ function FoodRepository:createFoodEntity(foodName)
 	local id = HttpService:GenerateGUID(false)
 	local foodModel = self.data[foodName].model:Clone()
 	local eatingType = self.data[foodName].eatingType
+	local combo = self.data[foodName].combo
 
-	local foodEntity = self.foodEntity.new(foodModel, eatingType, id)
+	local foodEntity = self.foodEntity.new({
+		foodModel = foodModel,
+		eatingType = eatingType,
+		id = id,
+		combo = combo,
+	})
 	self.foodEntities[id] = foodEntity
 	return foodEntity
 end

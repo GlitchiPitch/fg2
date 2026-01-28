@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.20.0] - 2026-01-28
+
+### Added
+
+* **FoodEating ComboMinigame Logic**: Implemented complete combo minigame mechanics with sequence tracking, input validation, and completion detection
+* **FoodEating Food Data System**: Created comprehensive Food.luau data module with all food definitions including eatingType and combo sequences
+* **FoodEating KeyImages Data**: Added KeyImages.luau module with UI image asset IDs for arrow keys (Left, Right, Up, Down) used in combo minigame
+* **FoodEating ComboMinigame UI**: Implemented key image display system showing combo sequence with visual feedback for completed keys
+* **FoodEating ComboMinigame Input Success Event**: Added COMBO_MINIGAME_INPUT_SUCCESS event to constants for UI synchronization
+
+### Changed
+
+* **FoodEating ComboMinigame**: Enhanced with proper input handling, sequence validation, and automatic completion when combo is finished
+* **FoodEating FoodRepository**: Refactored to use new Food data structure from Shared/Data/Food.luau instead of hardcoded food definitions
+* **FoodEating ComboMinigame UI**: Enhanced with dynamic key image creation, combo sequence visualization, and progress transparency updates
+* **FoodEating Shared Data Module**: Updated Shared/Data/init.luau to include Food and KeyImages modules for centralized data access
+* **FoodEating Food Entity**: Enhanced Food entity to support combo sequences in food data structure
+
+### Infrastructure
+
+* **Data-Driven Food System**: Established data-driven approach for food definitions with eatingType and combo sequences
+* **Combo Sequence Visualization**: Implemented visual feedback system showing combo progress through key image transparency
+* **Food Data Centralization**: Centralized all food definitions in Shared/Data/Food.luau for easier maintenance and expansion
+
 ## [1.19.0] - 2026-01-28
 
 ### Added

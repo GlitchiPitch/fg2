@@ -70,6 +70,7 @@ function FoodService:_spawnFood()
 				eventName = self.constants.REMOTE_EVENTS.SPAWN_FOOD,
 				data = {
 					eatingType = food.eatingType,
+					combo = food.combo,
 				},
 			})
 		end

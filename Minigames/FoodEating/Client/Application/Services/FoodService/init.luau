@@ -61,15 +61,22 @@ end
 function FoodService:onSpawnFood(data)
 	local eatingType = data.eatingType
 	self._currentMinigame = eatingType
-	self.minigameModules[eatingType]:start()
+
+    self:stop()
+    
+	self.minigameModules[eatingType]:start(data.combo)
 
 	self.eventBus:fire(self.constants.CLIENT_EVENTS.SPAWN_FOOD, {
 		eatingType = eatingType,
+		combo = data.combo,
 	})
 end
 
 function FoodService:updateMinigame()
-	self.minigameModules[self._currentMinigame]:update()
+	print("updateMinigame", self._currentMinigame)
+	if self.minigameModules[self._currentMinigame].update then
+		self.minigameModules[self._currentMinigame]:update()
+	end
 end
 
 function FoodService:stop()

@@ -5,15 +5,20 @@
 local Food = {}
 Food.__index = Food
 
----@param foodModel Model
----@param eatingType eatingType
----@param id string
+---@class foodEntityData
+---@field foodModel Model
+---@field eatingType eatingType
+---@field id string
+---@field combo table<number, Enum.KeyCode>?
+
+---@param data foodEntityData
 ---@return FoodEntity
-function Food.new(foodModel, eatingType, id)
+function Food.new(data)
 	local self = setmetatable({}, Food)
-	self.foodModel = foodModel
-    self.eatingType = eatingType
-    self.id = id
+	self.foodModel = data.foodModel
+	self.eatingType = data.eatingType
+	self.id = data.id
+	self.combo = data.combo
 	return self
 end
 

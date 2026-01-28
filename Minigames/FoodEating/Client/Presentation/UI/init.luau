@@ -49,6 +49,7 @@ end
 
 ---@class foodMinigameData
 ---@field eatingType eatingType
+---@field combo table<number, Enum.KeyCode>?
 
 ---@param data foodMinigameData
 function UI:showFoodMinigame(data)
@@ -57,7 +58,7 @@ function UI:showFoodMinigame(data)
 	end
 
 	local minigame = self.minigames[data.eatingType]
-	minigame:start()
+	minigame:start(data.combo)
 end
 
 return UI

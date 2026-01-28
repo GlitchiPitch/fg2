@@ -49,6 +49,10 @@ function ChairEntity:setup(data)
 			return
 		end -- make sure the char has a humanoid
 
+		if humanoid.Sit then
+			return
+		end
+
 		self.seat:Sit(humanoid) -- forces the humanoid to sit on the seat
 	end)
 
@@ -61,8 +65,16 @@ function ChairEntity:setup(data)
 		else
 			self.prompt.Enabled = true
 			data.unoccupiedCallback()
+			self:clear()
 		end
 	end)
+end
+
+function ChairEntity:clear()
+	if self.currentFood then
+		self.currentFood:destroy()
+		self.currentFood = nil
+	end
 end
 
 ---@param food FoodEntity

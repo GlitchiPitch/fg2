@@ -16,6 +16,10 @@ function EnemyService:init()
     self.enemyRepository = infrastructure.repositories.enemyRepository
 end
 
+function EnemyService:start()
+    
+end
+
 function EnemyService:spawnEnemy()
     local enemyEntity = self.enemyRepository:createEnemyEntity("Alien")
     

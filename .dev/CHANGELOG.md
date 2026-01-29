@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## \[1.27.0] - 2026-01-29
+
+### Added
+
+* **DungeonCleaning Building Entity**: Implemented Building domain entity with id, model, and score tracking
+* **DungeonCleaning BuildingRepository**: Added repository pattern for building entity management with createBuildingEntity() and getBuildingEntity() methods
+* **DungeonCleaning BuildingService**: Created server-side service for building registration and lifecycle management
+
+### Changed
+
+* **DungeonCleaning Services**: Enhanced Services module to include BuildingService initialization and lifecycle
+* **DungeonCleaning Application**: Updated Application to initialize BuildingService alongside PlayerService and EnemyService
+* **DungeonCleaning Repositories**: Added BuildingRepository to server repositories module initialization
+* **DungeonCleaning Entities**: Integrated Building entity into Shared domain entities module
+* **Sourcemap**: Updated to include new Building entity module
+
 ## \[1.26.0] - 2026-01-29
 
 ### Added

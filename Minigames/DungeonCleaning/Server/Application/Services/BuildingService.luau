@@ -16,4 +16,9 @@ function BuildingService:init()
     self.buildingRepository = infrastructure.repositories.buildingRepository
 end
 
+---@param building Model
+function BuildingService:registerBuilding(building)
+    local buildingEntity = self.buildingRepository:createBuildingEntity(building)
+end
+
 return BuildingService

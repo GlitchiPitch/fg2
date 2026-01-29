@@ -17,7 +17,7 @@ function Application:init()
 end
 
 function Application:start()
-	
+	self.services:start()
 end
 
 function Application:stop()

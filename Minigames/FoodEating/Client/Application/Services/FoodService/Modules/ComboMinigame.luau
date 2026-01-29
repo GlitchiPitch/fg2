@@ -36,15 +36,18 @@ end
 
 ---@param combo table<number, Enum.KeyCode>
 function ComboMinigame:start(combo)
+	self.currentIndex = 1
 	self.combo = combo
 	self.eventBus:fire(self.constants.CLIENT_EVENTS.TOGGLE_COMBO_MINIGAME, {
 		isEnabled = true,
 		combo = self.combo,
 	})
+	self.eventBus:fire(self.constants.CLIENT_EVENTS.SET_FREE_MOUSE, {
+		isEnabled = false,
+	})
 end
 
 function ComboMinigame:stop()
-	warn("stop")
 	self.eventBus:fire(self.constants.CLIENT_EVENTS.TOGGLE_COMBO_MINIGAME, {
 		isEnabled = false,
 	})
@@ -58,7 +61,6 @@ end
 
 ---@param input InputObject
 function ComboMinigame:onInput(input)
-	warn("ComboMinigame")
 	if input.KeyCode ~= self.combo[self.currentIndex] then
 		self.currentIndex = 1
 	else

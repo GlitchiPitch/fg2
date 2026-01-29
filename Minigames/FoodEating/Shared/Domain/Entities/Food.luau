@@ -33,7 +33,7 @@ end
 ---@param spawnPart Part
 function Food:spawn(spawnPart)
 	self.foodModel.Parent = spawnPart
-	self.foodModel:PivotTo(spawnPart.CFrame * CFrame.new(0, 2, 0))
+	self.foodModel:PivotTo(spawnPart.CFrame)
 end
 
 return Food

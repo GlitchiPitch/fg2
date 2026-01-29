@@ -27,9 +27,8 @@ end
 
 function GameService:_setupEventListeners()
 	self.eventBus:connectToEvents({
-		[self.constants.SERVER_EVENTS.UPDATE_TIME] = function(data)
-			warn("update time food eating game", data)
-			self:onUpdateTime(data)
+		[self.constants.SERVER_EVENTS.UPDATE_TIME] = function()
+			self:onUpdateTime()
 		end,
 	})
 end

@@ -35,14 +35,16 @@ function ClickerMinigame:_setupEventListeners()
 end
 
 function ClickerMinigame:start()
-	warn("start")
 	self.eventBus:fire(self.constants.CLIENT_EVENTS.TOGGLE_CLICKER_MINIGAME, {
 		isEnabled = true,
 	})
+	self.eventBus:fire(self.constants.CLIENT_EVENTS.SET_FREE_MOUSE, {
+		isEnabled = true,
+	})
+	self.progress = 0
 end
 
 function ClickerMinigame:stop()
-	warn("stop")
 	self.eventBus:fire(self.constants.CLIENT_EVENTS.TOGGLE_CLICKER_MINIGAME, {
 		isEnabled = false,
 	})
@@ -57,7 +59,6 @@ function ClickerMinigame:update()
 end
 
 function ClickerMinigame:onInput()
-	warn("onInput")
 	self.progress = math.clamp(self.progress + 0.1, 0, self.maxProgress)
 
 	if self.progress >= self.maxProgress then
@@ -71,7 +72,6 @@ function ClickerMinigame:onInput()
 end
 
 function ClickerMinigame:onComplete()
-	warn("onComplete")
 	self.remoteEventService:fireServer({
 		eventName = self.constants.REMOTE_EVENTS.EAT_FOOD,
 		data = {},

@@ -73,8 +73,7 @@ function FoodService:onSpawnFood(data)
 end
 
 function FoodService:updateMinigame()
-	print("updateMinigame", self._currentMinigame)
-	if self.minigameModules[self._currentMinigame].update then
+	if self._currentMinigame and self.minigameModules[self._currentMinigame].update then
 		self.minigameModules[self._currentMinigame]:update()
 	end
 end

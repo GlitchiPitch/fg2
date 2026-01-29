@@ -41,7 +41,6 @@ end
 function FoodService:_setupRemoteEventListener()
 	self.remoteEventService:connectToEvents({
 		[self.constants.REMOTE_EVENTS.EAT_FOOD] = function(player)
-			warn("eatFood")
 			self:_eatFood(player)
 		end,
 	})
@@ -49,12 +48,17 @@ end
 
 function FoodService:_eatFood(player)
 	local chair = self.chairRepository:getChairByPlayer(player)
-	warn("chair", chair)
+	
 	if not chair then
 		return
 	end
-	warn("eating food")
+	
+	if not chair.currentFood then
+		return
+	end
+
 	local score = chair.currentFood.score
+
 	self.eventBus:fire(self.constants.SERVER_EVENTS.ADD_SCORE, {
 		player = player,
 		score = score,

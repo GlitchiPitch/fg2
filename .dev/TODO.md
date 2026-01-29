@@ -171,7 +171,7 @@
 
 * Implemented complete scoring system for target hits
 * Added score display UI with animated updates
-* Enhanced event system with ADD_SCORE events across all layers
+* Enhanced event system with ADD\_SCORE events across all layers
 * Integrated score tracking from target entities to player display
 * Improved target hit detection with player attribution
 
@@ -190,7 +190,7 @@
 * Added GameService on both client and server for game state management
 * Created GameController for periodic time updates with 1-second intervals
 * Integrated timer display in Shooting UI with MM:SS formatting
-* Enhanced event system with UPDATE_TIME events across all layers
+* Enhanced event system with UPDATE\_TIME events across all layers
 * Improved game state synchronization between server and client
 
 ### v1.14.0 - Domain Layer Architecture ✅
@@ -205,7 +205,7 @@
 
 * Created core MiniGamePlayerEntity base class with score tracking
 * Implemented Player entities for all minigames extending core Player entity
-* Added game finishing system with GAME_FINISHED event
+* Added game finishing system with GAME\_FINISHED event
 * Enhanced Application lifecycle with proper cleanup on game finish
 * Standardized Player entity inheritance pattern across all minigames
 * Improved game lifecycle management with finish/stop/cleanup flow
@@ -268,7 +268,7 @@
 * Added GameService on both client and server for game state management
 * Created GameController for periodic time updates with 1-second intervals
 * Added timer display to FoodEating UI with time synchronization
-* Implemented GAME_FINISHED event handling for proper game lifecycle
+* Implemented GAME\_FINISHED event handling for proper game lifecycle
 * Refactored EventBus from directory structure to single consolidated file
 * Enhanced game lifecycle management with finish/stop flow
 
@@ -280,6 +280,16 @@
 * Refactored PlayerServices to use repository pattern for entity-based state management
 * Enhanced score system to use player entity addScore() method through repository
 * Improved code consistency and reusability across FoodEating minigame architecture
+
+### v1.23.0 - FoodEating Periodic Updates and Score Tracking ✅
+
+* Implemented periodic update system for minigames with FoodController firing UPDATE\_MINIGAME events
+* Added automatic progress decay to ClickerMinigame requiring continuous player interaction
+* Enhanced TaperMinigame with periodic taper button creation every 2 seconds
+* Implemented real-time score tracking using player entity score attribute Changed event
+* Integrated score updates into UI presentation layer with UPDATE\_SCORE event handling
+* Enhanced InputService integration with core SET\_FREE\_MOUSE event for coordinated mouse control
+* Established time-based minigame mechanics pattern for continuous player engagement
 
 ### v1.3.0 - Enhanced Features
 

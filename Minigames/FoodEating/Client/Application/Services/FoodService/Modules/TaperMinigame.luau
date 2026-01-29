@@ -1,5 +1,5 @@
 ---@class TaperMinigameServiceModule
----@field remoteEventService RemoteEventService 
+---@field remoteEventService RemoteEventService
 ---@field constants SharedFoodEatingConstants
 ---@field eventBus EventBus
 ---@field diContainer DIContainer
@@ -25,7 +25,7 @@ function TaperMinigame:init()
 	local shared = self.diContainer:resolve("Shared")
 	self.constants = shared.constants
 	self.eventBus = shared.eventBus
-    self.remoteEventService = shared.remoteEventService
+	self.remoteEventService = shared.remoteEventService
 	self:_setupEventListeners()
 end
 
@@ -39,26 +39,22 @@ end
 
 function TaperMinigame:start()
 	self._taps = 0
-    self.eventBus:fire(self.constants.CLIENT_EVENTS.TOGGLE_TAPER_MINIGAME, {
-        isEnabled = true,
-    })
+	self.eventBus:fire(self.constants.CLIENT_EVENTS.SET_FREE_MOUSE, {
+		isEnabled = true,
+	})
 end
 
 function TaperMinigame:stop()
 	self._taps = 0
-    self.eventBus:fire(self.constants.CLIENT_EVENTS.TOGGLE_TAPER_MINIGAME, {
-        isEnabled = false,
-    })
 end
 
 function TaperMinigame:onTaperClicked(data)
-if data.isTap then
-    self._taps += 1
-else
-    self._taps -= 1
-end
+	if data.isTap then
+		self._taps = math.clamp(self._taps + 1, 0, 3)
+	else
+		self._taps = math.clamp(self._taps - 1, 0, 3)
+	end
 
-    warn("onTaperClicked", data.isTap, self._taps)
 	if self._taps >= 3 then
 		self:onComplete()
 	end

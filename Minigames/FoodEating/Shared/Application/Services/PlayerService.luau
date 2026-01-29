@@ -19,7 +19,6 @@ function PlayerService:init()
 	self.remoteEventService = shared.remoteEventService
 	self.constants = shared.constants
 	self.eventBus = shared.eventBus
-	warn(self)
 end
 
 function PlayerService:onPlayerJoinedFoodEating(data)

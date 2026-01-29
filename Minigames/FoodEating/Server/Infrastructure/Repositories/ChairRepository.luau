@@ -48,7 +48,6 @@ end
 ---@param player Player
 ---@return ChairEntity?
 function ChairRepository:getChairByPlayer(player)
-	warn("getChairByPlayer", player)
 	for _, chair in self.chairs do
 		if chair.occupant == player then
 			return chair

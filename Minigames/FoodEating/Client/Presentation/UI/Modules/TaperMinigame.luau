@@ -54,14 +54,12 @@ function TaperMinigame:onCreateTaper()
 	taperButton.Position = UDim2.fromScale(math.random() * 0.8 + 0.1, math.random() * 0.8 + 0.1)
 
 	_connection = taperButton.MouseButton1Click:Connect(function()
-		warn("taperButton.MouseButton1Click")
 		_connection:Disconnect()
 		tween:Cancel()
 		_isTap = true
 	end)
 
 	tween.Completed:Connect(function()
-		warn("tween.Completed")
 		taperButton:Destroy()
 		self.eventBus:fire(self.constants.CLIENT_EVENTS.TAPER_CLICKED, {
 			isTap = _isTap,

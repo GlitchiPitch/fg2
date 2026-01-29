@@ -27,28 +27,23 @@ function PlayerService:init()
 
 	self:_setupEventListeners()
 
-	warn(self)
 end
 
 function PlayerService:_setupEventListeners()
 	self.eventBus:connectToEvents({
 		[self.constants.SERVER_EVENTS.PLAYER_JOINED_FOOD_EATING] = function(data)
-			warn("PLAYER_JOINED_FOOD_EATING", data)
 			self:_onPlayerJoinedFoodEating(data)
 		end,
 		[self.constants.SERVER_EVENTS.PLAYER_LEFT_FOOD_EATING] = function(data)
-			warn("PLAYER_LEFT_FOOD_EATING", data)
 			self:_onPlayerLeftFoodEating(data)
 		end,
 		[self.constants.SERVER_EVENTS.ADD_SCORE] = function(data)
-			warn("ADD_SCORE", data)
 			self:_onAddScore(data)
 		end,
 	})
 end
 
 function PlayerService:_onPlayerJoinedFoodEating(data)
-	warn("onPlayerJoinedFoodEating", data)
 	local player = data.player
 	local cameraCFrame = data.cameraCFrame
 	if not player then
@@ -67,20 +62,6 @@ function PlayerService:_onPlayerJoinedFoodEating(data)
 		eventName = self.constants.REMOTE_EVENTS.PLAYER_JOINED_FOOD_EATING,
 		data = {},
 	})
-
-	self._connections[player.UserId] = {
-		player.Changed:Connect(function(property)
-			if property == "Parent" then
-				self:_onPlayerLeftFoodEating({ player = player })
-			end
-		end),
-
-		player.Character.Changed:Connect(function(property)
-			if property == "Parent" then
-				self:_onPlayerLeftFoodEating({ player = player })
-			end
-		end),
-	}
 end
 
 function PlayerService:_onPlayerLeftFoodEating(data)
@@ -100,12 +81,6 @@ function PlayerService:_onPlayerLeftFoodEating(data)
 		eventName = self.constants.REMOTE_EVENTS.PLAYER_LEFT_FOOD_EATING,
 		data = {},
 	})
-	warn("disconnecting connections", self._connections[player.UserId], player.UserId)
-	for _, connection in self._connections[player.UserId] do
-		connection:Disconnect()
-	end
-
-	self._connections[player.UserId] = nil
 end
 
 function PlayerService:_onAddScore(data)

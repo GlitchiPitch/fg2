@@ -86,6 +86,7 @@ end
 
 ---@param data setModeData
 function CameraController:setCameraMode(data)
+	warn("setCameraMode", data)
 	if data.mode == self.constants.CAMERA_MODES.DEFAULT then
 		self:_setDefaultCameraMode()
 	elseif data.mode == self.constants.CAMERA_MODES.FOLLOWING then
@@ -156,6 +157,7 @@ end
 ---@param state boolean
 function CameraController:_setFreeMouse(state)
 	self._freemouse = state
+	warn("setFreeMouse", self._freemouse)
 	if self._freemouse then
 		UserInputService.MouseBehavior = Enum.MouseBehavior.Default
 		self.mouse.Icon = "" -- replaces mouse icon

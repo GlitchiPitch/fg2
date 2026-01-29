@@ -81,8 +81,22 @@ end
 
 function UI:updateScore(data)
 	local playerEntity = self.playerService:getPlayerEntity()
-	self:_animateScore(data.addedScore)
-	self.scoreLabel.Text = playerEntity.score.Value
+	local _scoreValue = Instance.new("IntValue")
+	local tween = TweenService:Create(_scoreValue, TweenInfo.new(1), { Value = playerEntity.score.Value })
+	local _scoreChangedConnection = nil
+
+	_scoreValue.Value = playerEntity.score.Value - data.addedScore
+
+	_scoreChangedConnection = _scoreValue.Changed:Connect(function(score)
+		self.scoreLabel.Text = score
+	end)
+
+	tween.Completed:Connect(function()
+		_scoreValue:Destroy()
+		_scoreChangedConnection:Disconnect()
+	end)
+
+	tween:Play()
 end
 
 ---@param score number

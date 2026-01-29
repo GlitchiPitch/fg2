@@ -47,7 +47,6 @@ function ComboMinigame:stop()
 end
 
 function ComboMinigame:_clearComboImages()
-	warn("clearComboImages", self._keys)
 	for _, comboImage in self._keys do
 		comboImage:Destroy()
 	end
@@ -69,7 +68,6 @@ function ComboMinigame:_createComboImages()
 end
 
 function ComboMinigame:onInputSuccess(currentIndex)
-	warn("onInputSuccess", currentIndex)
 	for i, comboImage in self._keys do
 		if currentIndex > #self.combo then
 			comboImage.ImageTransparency = 0.5

@@ -34,8 +34,11 @@ end
 
 function UI:init()
 	---@type ClientApp
-	local application = self.diContainer:resolve("CoreApplication")
-	self.foodUI.Parent = application.services.playerService.player.PlayerGui
+	local coreApplication = self.diContainer:resolve("CoreApplication")
+	---@type ClientFoodEatingApp
+	local application = self.diContainer:resolve("Application")
+
+	self.foodUI.Parent = coreApplication.services.playerService.player.PlayerGui
 	self.playerService = application.services.playerService
 	for _, minigame in self.minigames do
 		minigame:init()

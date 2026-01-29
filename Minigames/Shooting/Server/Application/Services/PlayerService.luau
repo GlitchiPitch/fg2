@@ -79,19 +79,6 @@ function PlayerService:onPlayerJoinedBalista(data)
 		data = balista,
 	})
 
-	self._connections[player.UserId] = {
-		player.Changed:Connect(function(property)
-			if property == "Parent" then
-				self:onPlayerLeftBalista({ player = player })
-			end
-		end),
-
-		player.Character.Changed:Connect(function(property)
-			if property == "Parent" then
-				self:onPlayerLeftBalista({ player = player })
-			end
-		end),
-	}
 end
 
 ---@class onPlayerLeftBalistaData
@@ -114,11 +101,6 @@ function PlayerService:onPlayerLeftBalista(data)
 		data = balista,
 	})
 
-	for _, connection in self._connections[player.UserId] do
-		connection:Disconnect()
-	end
-
-	self._connections[player.UserId] = nil
 end
 
 ---@class onAddScoreData

@@ -6,6 +6,8 @@ local UserInputService = game:GetService("UserInputService")
 ---@field eventBus EventBus
 ---@field constants SharedFoodEatingConstants
 ---@field remoteEventService RemoteEventService
+---@field coreConstants SharedConstants
+---@field coreEventBus EventBus
 ---@field _connections table<string, RBXScriptConnection>
 local InputService = {}
 InputService.__index = InputService
@@ -20,6 +22,10 @@ function InputService.new(diContainer)
 end
 
 function InputService:init()
+	---@type Shared
+	local coreShared = self.diContainer:resolve("CoreShared")
+	self.coreConstants = coreShared.constants
+	self.coreEventBus = coreShared.eventBus
 	---@type SharedFoodEating
 	local shared = self.diContainer:resolve("Shared")
 	self.eventBus = shared.eventBus
@@ -37,6 +43,9 @@ function InputService:_setupEventListeners()
 		[self.constants.CLIENT_EVENTS.TOGGLE_COMBO_MINIGAME] = function(data)
 			self:onComboMinigameToggle(data)
 		end,
+		[self.constants.CLIENT_EVENTS.SET_FREE_MOUSE] = function(data)
+			self:_onSetFreeMouse(data)
+		end,
 	})
 end
 
@@ -46,13 +55,11 @@ end
 ---@param data minigameToggleData
 function InputService:onClickerMinigameToggle(data)
 	if data.isEnabled then
-		warn("onClickerMinigameToggle")
 		ContextActionService:BindAction("ClickerMinigame", function(_, inputState, _)
 			if inputState ~= Enum.UserInputState.Begin then
 				return
 			end
 
-			warn("onClickerMinigameInput")
 			self:_onClickerMinigameInput()
 		end, false, Enum.UserInputType.MouseButton1)
 	else
@@ -86,6 +93,10 @@ end
 
 function InputService:_onClickerMinigameInput()
 	self.eventBus:fire(self.constants.CLIENT_EVENTS.CLICKER_MINIGAME_INPUT, {})
+end
+
+function InputService:_onSetFreeMouse(data)
+	self.coreEventBus:fire(self.coreConstants.CLIENT_EVENTS.SET_FREE_MOUSE, data)
 end
 
 return InputService

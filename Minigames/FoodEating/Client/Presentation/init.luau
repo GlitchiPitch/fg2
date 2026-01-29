@@ -1,7 +1,7 @@
 local UI = require(script.UI)
 
 ---@class FoodEatingClientPresentation
----@field ui UI
+---@field ui FoodEatingClientUI
 local Presentation = {}
 Presentation.__index = Presentation
 

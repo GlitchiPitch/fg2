@@ -5,7 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.22.0] - 2026-01-28
+## \[1.23.0] - 2026-01-29
+
+### Added
+
+* **FoodEating Periodic Minigame Updates**: Implemented periodic update system for minigames with FoodController firing UPDATE\_MINIGAME events every second
+* **FoodEating ClickerMinigame Decay**: Added automatic progress decay system (0.1 per second) requiring continuous player interaction
+* **FoodEating TaperMinigame Periodic Spawning**: Implemented periodic taper button creation every 2 seconds for time-based challenge
+* **FoodEating Score Tracking System**: Added real-time score change tracking using player entity score attribute Changed event
+* **FoodEating Score Display Integration**: Integrated score updates into UI presentation layer with UPDATE\_SCORE event handling
+* **FoodEating Core Mouse Control Integration**: Enhanced InputService integration with core SET\_FREE\_MOUSE event for coordinated mouse control
+
+### Changed
+
+* **FoodEating FoodController**: Enhanced with periodic update system firing UPDATE\_MINIGAME events at 1-second intervals
+* **FoodEating FoodService**: Added UPDATE\_MINIGAME event listener to trigger update() method on active minigame modules
+* **FoodEating ClickerMinigame**: Enhanced with update() method implementing automatic progress decay over time
+* **FoodEating TaperMinigame**: Enhanced with update() method for periodic taper button creation with 2-second intervals
+* **FoodEating Client PlayerService**: Refactored to track score changes using player entity score attribute Changed event and fire UPDATE\_SCORE events
+* **FoodEating Presentation Layer**: Enhanced with UPDATE\_SCORE event listener for real-time score display updates
+* **FoodEating InputService**: Improved integration with core event system for SET\_FREE\_MOUSE coordination
+* **FoodEating Constants**: Added UPDATE\_MINIGAME and UPDATE\_SCORE events to CLIENT\_EVENTS
+
+### Infrastructure
+
+* **Time-Based Minigame Mechanics**: Established periodic update pattern for minigames requiring continuous player engagement
+* **Score Synchronization**: Enhanced score tracking with real-time updates through player entity attribute changes
+* **Event-Driven UI Updates**: Improved UI responsiveness with event-driven score and minigame state updates
+* **Mouse Control Coordination**: Better integration between minigame input handling and core camera/mouse control systems
+
+## \[1.22.0] - 2026-01-28
 
 ### Added
 
@@ -32,7 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **Entity Lifecycle Management**: Improved player entity lifecycle with proper creation, retrieval, and cleanup through repository
 * **State Management**: Enhanced state management with entity-based approach instead of event-only communication
 
-## [1.21.0] - 2026-01-28
+## \[1.21.0] - 2026-01-28
 
 ### Added
 
@@ -41,16 +70,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **FoodEating Client GameService**: Added client-side GameService for game entity management and time synchronization
 * **FoodEating GameController**: Created server controller for periodic game time updates with 1-second interval countdown
 * **FoodEating Timer UI Display**: Added timer label to FoodEating UI showing game time countdown
-* **FoodEating Game Lifecycle**: Implemented GAME_FINISHED event handling for proper game end and cleanup flow
-* **FoodEating Time Events**: Added UPDATE_TIME and GAME_FINISHED events to SERVER_EVENTS and CLIENT_EVENTS constants
+* **FoodEating Game Lifecycle**: Implemented GAME\_FINISHED event handling for proper game end and cleanup flow
+* **FoodEating Time Events**: Added UPDATE\_TIME and GAME\_FINISHED events to SERVER\_EVENTS and CLIENT\_EVENTS constants
 
 ### Changed
 
 * **EventBus Infrastructure**: Refactored EventBus from directory structure (EventBus/init.luau and EventBus/Event.model.json) to single consolidated file (EventBus.luau) for simpler structure
-* **FoodEating Application**: Enhanced Application with GAME_FINISHED event listener for automatic game stop on time expiration
+* **FoodEating Application**: Enhanced Application with GAME\_FINISHED event listener for automatic game stop on time expiration
 * **FoodEating Controllers**: Integrated GameController into Controllers heartbeat update loop alongside FoodController
 * **FoodEating Services**: Added GameService to both client and server service initialization
-* **FoodEating Presentation**: Added UPDATE_TIME event listener for timer display updates in UI
+* **FoodEating Presentation**: Added UPDATE\_TIME event listener for timer display updates in UI
 
 ### Infrastructure
 
@@ -59,7 +88,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **Game Lifecycle Management**: Enhanced game lifecycle with proper finish/stop flow matching Shooting minigame pattern
 * **Time Synchronization**: Implemented time synchronization between server and client with event-driven updates
 
-## [1.20.0] - 2026-01-28
+## \[1.20.0] - 2026-01-28
 
 ### Added
 
@@ -67,7 +96,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **FoodEating Food Data System**: Created comprehensive Food.luau data module with all food definitions including eatingType and combo sequences
 * **FoodEating KeyImages Data**: Added KeyImages.luau module with UI image asset IDs for arrow keys (Left, Right, Up, Down) used in combo minigame
 * **FoodEating ComboMinigame UI**: Implemented key image display system showing combo sequence with visual feedback for completed keys
-* **FoodEating ComboMinigame Input Success Event**: Added COMBO_MINIGAME_INPUT_SUCCESS event to constants for UI synchronization
+* **FoodEating ComboMinigame Input Success Event**: Added COMBO\_MINIGAME\_INPUT\_SUCCESS event to constants for UI synchronization
 
 ### Changed
 
@@ -83,14 +112,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **Combo Sequence Visualization**: Implemented visual feedback system showing combo progress through key image transparency
 * **Food Data Centralization**: Centralized all food definitions in Shared/Data/Food.luau for easier maintenance and expansion
 
-## [1.19.0] - 2026-01-28
+## \[1.19.0] - 2026-01-28
 
 ### Added
 
 * **FoodEating ClickerMinigame Logic**: Implemented complete clicker minigame mechanics with progress tracking (0-1 range), input handling, and automatic decay over time
-* **FoodEating ClickerMinigame Completion**: Added food eating completion logic that fires EAT_FOOD remote event when progress reaches maximum
+* **FoodEating ClickerMinigame Completion**: Added food eating completion logic that fires EAT\_FOOD remote event when progress reaches maximum
 * **FoodEating ComboMinigame Toggle**: Implemented toggle events for enabling/disabling combo minigame input handling
-* **FoodEating Input Service Events**: Added CLICKER_MINIGAME_INPUT and COMBO_MINIGAME_INPUT events to constants for minigame input coordination
+* **FoodEating Input Service Events**: Added CLICKER\_MINIGAME\_INPUT and COMBO\_MINIGAME\_INPUT events to constants for minigame input coordination
 * **FoodEating UI Progress Tracking**: Implemented progress bar updates for ClickerMinigame UI module with real-time progress synchronization
 * **FoodEating UI Lifecycle**: Added init() methods to all UI modules (ClickerMinigame, ComboMinigame, TaperMinigame) for proper event listener setup
 * **FoodEating Application Stop Flow**: Enhanced Application stop() method to properly cleanup services and minigame modules
@@ -104,7 +133,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **FoodEating Services**: Enhanced Services module with stop() method for proper lifecycle management
 * **FoodEating PlayerService**: Fixed application lifecycle order - application start/stop now fires before/after events
 * **FoodEating UI Modules**: Refactored to accept diContainer parameter for dependency injection and event bus access
-* **FoodEating Presentation**: Enhanced with PLAYER_JOINED_FOOD_EATING and PLAYER_LEFT_FOOD_EATING event listeners for UI toggle
+* **FoodEating Presentation**: Enhanced with PLAYER\_JOINED\_FOOD\_EATING and PLAYER\_LEFT\_FOOD\_EATING event listeners for UI toggle
 * **FoodEating UI**: Changed setup() to init() method for consistency with service initialization pattern
 * **FoodEating UI**: Added Enabled property control for UI visibility management
 
@@ -115,7 +144,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **Progress Synchronization**: Established event-driven progress synchronization between minigame logic and UI presentation
 * **Service Cleanup Pattern**: Standardized service cleanup pattern with stop() methods throughout application lifecycle
 
-## [1.18.0] - 2026-01-28
+## \[1.18.0] - 2026-01-28
 
 ### Added
 
@@ -133,7 +162,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **FoodEating InputService**: Enhanced with player join/leave event handling for proper input binding lifecycle
 * **FoodEating PlayerService**: Added application start/stop integration for proper lifecycle management
 * **FoodEating UI**: Refactored to support multiple minigame UI modules with dynamic activation based on eatingType
-* **FoodEating Presentation**: Enhanced with SPAWN_FOOD event listener for minigame UI activation
+* **FoodEating Presentation**: Enhanced with SPAWN\_FOOD event listener for minigame UI activation
 
 ### Infrastructure
 
@@ -142,7 +171,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **Controller Lifecycle Management**: Enhanced application lifecycle with proper start/stop flow for controllers
 * **UI Module Pattern**: Standardized UI module pattern with setup/start/stop methods for consistent minigame UI management
 
-## [1.17.0] - 2026-01-27
+## \[1.17.0] - 2026-01-27
 
 ### Added
 
@@ -160,7 +189,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * **Chair Entity**: Enhanced with foodSpawnPart field, currentFood tracking, spawnFood() method, and eatFood() method for food lifecycle management
 * **ChairRepository**: Added getChairByPlayer() method for finding chairs by occupant player
-* **FoodEating Constants**: Added SPAWN_FOOD server event and EAT_FOOD remote event for food system coordination
+* **FoodEating Constants**: Added SPAWN\_FOOD server event and EAT\_FOOD remote event for food system coordination
 * **FoodEating Architecture**: Reorganized services into Application/Services directory structure for better organization
 * **FoodEating Infrastructure**: Added Infrastructure layer with ItemsRepository for shared asset access
 
@@ -172,7 +201,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **Repository Pattern Consistency**: FoodRepository follows same pattern as ChairRepository for code consistency
 * **Asset Management**: Centralized food asset management through ItemsRepository with shared infrastructure
 
-## [1.16.0] - 2026-01-27
+## \[1.16.0] - 2026-01-27
 
 ### Added
 
@@ -180,14 +209,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **FoodEating ChairService**: Server-side service for managing chair entities and player seating mechanics
 * **FoodEating ChairRepository**: Repository pattern implementation for chair entity management following established patterns
 * **FoodEating PlayerService**: Server-side player service with camera mode switching for seated players
-* **FoodEating Constants**: Added shared constants module with PLAYER_JOINED_FOOD_EATING and PLAYER_LEFT_FOOD_EATING events
+* **FoodEating Constants**: Added shared constants module with PLAYER\_JOINED\_FOOD\_EATING and PLAYER\_LEFT\_FOOD\_EATING events
 * **Fixed Camera Mode**: Added FIXED camera mode to camera system for static camera positioning (used by FoodEating minigame)
 * **FoodEating Infrastructure**: Added Infrastructure layer with Repositories module for FoodEating minigame
 
 ### Changed
 
 * **CameraController**: Enhanced with `_setFixedCameraMode()` method for static camera positioning based on CFrame
-* **Core Constants**: Added FIXED camera mode to CAMERA_MODES and updated cameraMode type alias
+* **Core Constants**: Added FIXED camera mode to CAMERA\_MODES and updated cameraMode type alias
 * **FoodEating Map Assets**: Added Workspace/Maps/FoodEating/ directory with chair assets
 * **Shooting PlayerService**: Updated with reward calculation method for game completion
 
@@ -198,20 +227,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **Repository Pattern Consistency**: FoodEating ChairRepository follows same pattern as other minigame repositories
 * **Event-Driven Architecture**: FoodEating minigame integrated with event bus for player join/leave notifications
 
-## [1.15.0] - 2026-01-27
+## \[1.15.0] - 2026-01-27
 
 ### Added
 
 * **Core Player Entity**: Created MiniGamePlayerEntity base class in Core/Shared/Domain/MiniGameEntities/Player.luau with score tracking and lifecycle management
 * **Minigame Player Entities**: Implemented Player entities for all minigames (DungeonCleaning, FoodEating, ItemSearch, Racing, Shooting) extending core Player entity
-* **Game Finishing System**: Added GAME_FINISHED event to Shooting minigame constants for game end detection
+* **Game Finishing System**: Added GAME\_FINISHED event to Shooting minigame constants for game end detection
 * **Application Lifecycle**: Enhanced Application stop() method to properly cleanup services (gameService, playerService, targetService) on game finish
 
 ### Changed
 
 * **Game Entity Location**: Moved Game entity from Core/Shared/Domain/Entities/Game.luau to Core/Shared/Domain/MiniGameEntities/Game.luau for better organization
-* **GameService**: Enhanced GameService to fire GAME_FINISHED event when game time expires
-* **Application Event Handling**: Added GAME_FINISHED event listener in Application init() to trigger game stop and cleanup
+* **GameService**: Enhanced GameService to fire GAME\_FINISHED event when game time expires
+* **Application Event Handling**: Added GAME\_FINISHED event listener in Application init() to trigger game stop and cleanup
 * **Player Entity Pattern**: Standardized Player entity inheritance pattern across all minigames matching Game entity pattern
 
 ### Infrastructure
@@ -220,7 +249,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **Lifecycle Management**: Improved game lifecycle with proper finish/stop/cleanup flow
 * **Code Organization**: Better separation of core entities (MiniGameEntities) from domain-specific entities
 
-## [1.14.0] - 2026-01-27
+## \[1.14.0] - 2026-01-27
 
 ### Added
 
@@ -243,7 +272,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **Dependency Injection**: Standardized DI container usage across all minigame Shared modules
 * **Event System Integration**: Consistent event bus initialization pattern across all minigames
 
-## [1.13.0] - 2026-01-27
+## \[1.13.0] - 2026-01-27
 
 ### Added
 
@@ -252,13 +281,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **Client GameService**: Client-side service for game entity management and time synchronization
 * **GameController**: Server controller for periodic game time updates with 1-second interval countdown
 * **Timer UI Display**: Added timer label to Shooting UI showing formatted time (MM:SS)
-* **Time Events**: Added UPDATE_TIME events to SERVER_EVENTS, REMOTE_EVENTS, and CLIENT_EVENTS constants
+* **Time Events**: Added UPDATE\_TIME events to SERVER\_EVENTS, REMOTE\_EVENTS, and CLIENT\_EVENTS constants
 * **Time Synchronization**: Implemented time synchronization between server and client with event-driven updates
 
 ### Changed
 
 * **Controllers Module**: Enhanced to include GameController in heartbeat update loop alongside TargetController
-* **UI Presentation**: Added UPDATE_TIME event listener for timer display updates
+* **UI Presentation**: Added UPDATE\_TIME event listener for timer display updates
 * **Game Entity Lifecycle**: Game entity created when player joins balista and synchronized to client
 * **Application Services**: Added GameService to both client and server service initialization
 
@@ -269,7 +298,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **Event Flow**: Enhanced event-driven architecture for game time synchronization across all layers
 * **UI Integration**: Timer display integrated into existing Shooting UI with proper formatting
 
-## [1.12.0] - 2026-01-26
+## \[1.12.0] - 2026-01-26
 
 ### Added
 
@@ -296,21 +325,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **State Management**: Improved state management with entity-based approach instead of event-only communication
 * **Code Reuse**: Shared repository pattern reduces code duplication between client and server player management
 
-## [1.11.0] - 2026-01-26
+## \[1.11.0] - 2026-01-26
 
 ### Added
 
 * **Score System**: Implemented complete scoring system for target hits with score tracking and display
 * **Score Display UI**: Added score label and animated score updates in Shooting UI
-* **Score Events**: Added ADD_SCORE events to SERVER_EVENTS, REMOTE_EVENTS, and CLIENT_EVENTS constants
+* **Score Events**: Added ADD\_SCORE events to SERVER\_EVENTS, REMOTE\_EVENTS, and CLIENT\_EVENTS constants
 * **Target Score Integration**: Target entities now include score values from item data
 * **Score Animation**: Implemented smooth score transition animation using TweenService
 
 ### Changed
 
-* **TargetService**: Enhanced to fire ADD_SCORE events when targets are hit with player tracking
-* **Server PlayerService**: Added score handling to forward ADD_SCORE events to clients
-* **Client PlayerService**: Added ADD_SCORE remote event handling and client event firing
+* **TargetService**: Enhanced to fire ADD\_SCORE events when targets are hit with player tracking
+* **Server PlayerService**: Added score handling to forward ADD\_SCORE events to clients
+* **Client PlayerService**: Added ADD\_SCORE remote event handling and client event firing
 * **UI Presentation**: Integrated score update handling in Presentation layer event connections
 * **Shooting UI**: Added updateScore method with score label display and animation support
 * **Target Hit Flow**: Improved target hit detection flow with score calculation and player attribution
@@ -321,7 +350,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **Event Flow**: Enhanced event-driven architecture for score updates across all layers
 * **UI Integration**: Better integration between game logic and UI presentation for score display
 
-## [1.10.0] - 2026-01-26
+## \[1.10.0] - 2026-01-26
 
 ### Added
 
@@ -345,7 +374,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **State Communication**: Improved state synchronization between server and client with string-based result codes
 * **Asset Management**: Better separation between ammo data (indexes) and ammo assets (models)
 
-## [1.9.0] - 2026-01-26
+## \[1.9.0] - 2026-01-26
 
 ### Added
 
@@ -373,7 +402,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **Event Architecture**: Enhanced event-driven communication with structured data passing
 * **Client-Server Sync**: Improved synchronization of balista entities between client and server
 
-## [1.8.0] - 2026-01-25
+## \[1.8.0] - 2026-01-25
 
 ### Added
 
@@ -399,18 +428,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **Event Integration**: Enhanced event-driven architecture for target spawning coordination
 * **Code Organization**: Better separation between domain entities, repositories, and services
 
-## [1.7.0] - 2026-01-24
+## \[1.7.0] - 2026-01-24
 
 ### Added
 
 * **Target Spawner System**: Implemented spawner location system for flying and ground targets
 * **Target Type Categorization**: Added support for flying (Starship, BigStarship) and ground (Tank, LightTank) target types
 * **Controller Lifecycle Management**: Added start/stop methods to Controllers for proper lifecycle management
-* **Server Events**: Added SPAWN_TARGET and TARGET_SPAWNED events to constants for target spawning coordination
+* **Server Events**: Added SPAWN\_TARGET and TARGET\_SPAWNED events to constants for target spawning coordination
 
 ### Changed
 
-* **TargetController**: Refactored spawnTarget to private method (_spawnTarget) for better encapsulation
+* **TargetController**: Refactored spawnTarget to private method (\_spawnTarget) for better encapsulation
 * **Controllers Module**: Separated initialization and runtime logic with init/start/stop methods
 * **TargetService**: Enhanced with spawner-based target placement and target type selection logic
 * **Application Architecture**: Added controllers field to Application class type definition
@@ -421,7 +450,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **Event-Driven Architecture**: Improved event bus integration for target spawning workflow
 * **Code Organization**: Better separation between initialization and runtime execution phases
 
-## [1.6.0] - 2026-01-24
+## \[1.6.0] - 2026-01-24
 
 ### Added
 
@@ -445,7 +474,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **Code Cleanup**: Removed unused imports and debug code from BalistaService
 * **Architecture**: Improved separation between data access and business logic layers
 
-## [1.5.0] - 2026-01-24
+## \[1.5.0] - 2026-01-24
 
 ### Changed
 
@@ -461,7 +490,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **Server Optimization**: Presentation layer is now properly excluded from server-side initialization
 * **Build System**: Updated build configuration to match new minigame structure
 
-## [1.4.0] - 2026-01-24
+## \[1.4.0] - 2026-01-24
 
 ### Added
 
@@ -470,14 +499,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **CrossbowShooting InputService**: Client-side service for handling mouse click shooting input
 * **Shoot Event Handling**: Server-side shoot event processing with balista owner validation
 * **Assets Module**: Created shared Assets module for CrossbowShooting minigame resources
-* **Client Events**: Added CLIENT_EVENTS constants for player joined/left balista notifications
+* **Client Events**: Added CLIENT\_EVENTS constants for player joined/left balista notifications
 
 ### Changed
 
 * **BalistasService**: Enhanced with shooting mechanics, projectile spawning, and parabolic trajectory physics
 * **CrossbowShooting PlayerService**: Added event bus firing for player joined/left balista events
 * **CrossbowShooting Services**: Integrated InputService into client services initialization
-* **Constants**: Added SHOOT remote event and CLIENT_EVENTS definitions
+* **Constants**: Added SHOOT remote event and CLIENT\_EVENTS definitions
 * **Shared Module**: Added Assets module integration for shared resource access
 * **Core InputService**: Added ContextActionService import for action binding support
 

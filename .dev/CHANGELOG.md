@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## \[1.25.0] - 2026-01-29
+
+### Added
+
+* **Core Minigame Base Services**: Introduced shared base services for minigame game and player lifecycles (client/server)
+* **Core Minigame Base Repository**: Added shared base player repository for minigame player entity management
+
+### Changed
+
+* **FoodEating & Shooting Services**: Refactored game and player services to extend core minigame base services
+* **Minigame Player Repositories**: Simplified shared player repositories to inherit from base repository
+* **FoodEating Result Emission**: Aligned game result event to use core minigame constants
+* **Sourcemap**: Updated to include new Core/Shared/Minigame modules
+
 ## \[1.24.0] - 2026-01-29
 
 ### Added

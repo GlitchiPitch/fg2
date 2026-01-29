@@ -1,135 +1,48 @@
+-- Minigames/Shooting/Server/Application/Services/PlayerService.luau
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local SharedShootingPlayerService = require(ReplicatedStorage.Minigames.Shooting.Application.Services.PlayerService)
+local BaseServerPlayerService = require(ReplicatedStorage.Shared.Minigame.Application.Services.BaseServerPlayerService)
 
----@class ServerShootingPlayerService : SharedShootingPlayerService
----@field diContainer DIContainer
----@field constants ShootingConstants
----@field eventBus EventBus
----@field coreEventBus EventBus
-local PlayerService = setmetatable({}, SharedShootingPlayerService)
+---@class ServerShootingPlayerService : BaseMinigameServerPlayerService
+local PlayerService = setmetatable({}, BaseServerPlayerService)
 PlayerService.__index = PlayerService
 
----@param diContainer DIContainer
----@return ServerShootingPlayerService
 function PlayerService.new(diContainer)
-	local self = setmetatable(SharedShootingPlayerService.new(diContainer), PlayerService)
-	self._connections = {}
+	local self = setmetatable(
+		BaseServerPlayerService.new(diContainer, {
+			playerJoinedServerEvent = "PLAYER_JOINED_BALISTA",
+			playerLeftServerEvent = "PLAYER_LEFT_BALISTA",
+			playerJoinedRemoteEvent = "PLAYER_JOINED_BALISTA",
+			playerLeftRemoteEvent = "PLAYER_LEFT_BALISTA",
+		}),
+		PlayerService
+	)
 	return self
 end
 
-function PlayerService:init()
-	SharedShootingPlayerService.init(self)
-
-	---@type SharedShooting
-	local shared = self.diContainer:resolve("Shared")
-
-	self.coreConstants = shared.coreConstants
-	self.coreEventBus = shared.coreEventBus
-
-	self:_setupEventListeners()
-	self:_setupRemoteEventListeners()
+function PlayerService:getCameraMode(data)
+	return self.coreConstants.CAMERA_MODES.FOLLOWING, nil
 end
 
-function PlayerService:_setupEventListeners()
-	self.eventBus:connectToEvents({
-		[self.constants.SERVER_EVENTS.PLAYER_JOINED_BALISTA] = function(data)
-			self:onPlayerJoinedBalista(data)
-		end,
-		[self.constants.SERVER_EVENTS.PLAYER_LEFT_BALISTA] = function(data)
-			self:onPlayerLeftBalista(data)
-		end,
-		[self.constants.SERVER_EVENTS.ADD_SCORE] = function(data)
-			self:onAddScore(data)
-		end,
-	})
+function PlayerService:getPlayerJoinedData(data)
+	return data.balista
+end
+
+function PlayerService:getPlayerLeftData(data)
+	return data.balista
 end
 
 function PlayerService:_setupRemoteEventListeners()
-
 	self.remoteEventService:connectToEvents({
 		[self.constants.REMOTE_EVENTS.SEND_CAMERA_CFRAME] = function(player, eventData)
-			self:onSendCameraCFrame({ player = player, cameraCFrame = eventData.data.cameraCFrame })
+			player:SetAttribute("CameraCFrame", eventData.data.cameraCFrame)
 		end,
 	})
 end
 
-function PlayerService:onSendCameraCFrame(data)
-	local player = data.player
-	local cameraCFrame = data.cameraCFrame
-	player:SetAttribute("CameraCFrame", cameraCFrame)
-end
-
----@class onPlayerJoinedBalistaData
----@field player Player
----@field balista BalistaEntity
-
----@param data onPlayerJoinedBalistaData
-function PlayerService:onPlayerJoinedBalista(data)
-	local player = data.player
-	local balista = data.balista
-
-	self.playerRepository:createPlayerEntity(player)
-
-	self.coreEventBus:fire(self.coreConstants.SERVER_EVENTS.SET_PLAYER_CAMERA_MODE, {
-		player = player,
-		mode = self.coreConstants.CAMERA_MODES.FOLLOWING,
-	})
-	self.remoteEventService:fireClient(player, {
-		eventName = self.constants.REMOTE_EVENTS.PLAYER_JOINED_BALISTA,
-		data = balista,
-	})
-
-end
-
----@class onPlayerLeftBalistaData
----@field player Player
-
----@param data onPlayerLeftBalistaData
-function PlayerService:onPlayerLeftBalista(data)
-	local player = data.player
-	local balista = data.balista
-
-	self.playerRepository:removePlayerEntity(player)
-
-	self.coreEventBus:fire(self.coreConstants.SERVER_EVENTS.SET_PLAYER_CAMERA_MODE, {
-		player = player,
-		mode = self.coreConstants.CAMERA_MODES.DEFAULT,
-	})
-
-	self.remoteEventService:fireClient(player, {
-		eventName = self.constants.REMOTE_EVENTS.PLAYER_LEFT_BALISTA,
-		data = balista,
-	})
-
-end
-
----@class onAddScoreData
----@field player Player
----@field score number
-
----@param data onAddScoreData
-function PlayerService:onAddScore(data)
-	local player = data.player
-	local score = data.score
-	local playerEntity = self.playerRepository:getPlayerEntity(player)
-	playerEntity:addScore(score)
-end
-
-function PlayerService:finish() end
-
-function PlayerService:_calculateReward()
-	local players = self.playerRepository:getPlayers()
-	---@param player ShootingPlayerEntity
-	for _, playerEntity in players do
-		local score = playerEntity.score.Value
-		local reward = {
-			points = score * self.constants.SCORE_REWARD_MULTIPLIER,
-		}
-		self.coreEventBus:fire(self.coreConstants.SERVER_EVENTS.REWARD_PLAYER, {
-			player = playerEntity.player,
-			reward = reward,
-		})
-	end
+function PlayerService:calculatePlayerReward(playerEntity, score)
+	return {
+		points = score * self.constants.SCORE_REWARD_MULTIPLIER,
+	}
 end
 
 return PlayerService

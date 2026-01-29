@@ -1,36 +1,19 @@
----@class SharedFoodEatingPlayerService
-local PlayerService = {}
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local BasePlayerService = require(ReplicatedStorage.Shared.Minigame.Application.Services.BasePlayerService)
+
+---@class SharedFoodEatingPlayerService : BaseMinigamePlayerService
+local PlayerService = setmetatable({}, BasePlayerService)
 PlayerService.__index = PlayerService
 
 ---@param diContainer DIContainer
 ---@return SharedFoodEatingPlayerService
 function PlayerService.new(diContainer)
-	local self = setmetatable({}, PlayerService)
-	self.diContainer = diContainer
+	local self = setmetatable(BasePlayerService.new(diContainer), PlayerService)
 	return self
 end
 
 function PlayerService:init()
-	---@type SharedFoodEating
-	local shared = self.diContainer:resolve("Shared")
-	---@type ServerFoodEatingInfrastructure | ClientFoodEatingInfrastructure
-	local infrastructure = self.diContainer:resolve("Infrastructure")
-	self.playerRepository = infrastructure.repositories.playerRepository
-	self.remoteEventService = shared.remoteEventService
-	self.constants = shared.constants
-	self.eventBus = shared.eventBus
-end
-
-function PlayerService:onPlayerJoinedFoodEating(data)
-	error("Not implemented")
-end
-
-function PlayerService:onPlayerLeftFoodEating(data)
-	error("Not implemented")
-end
-
-function PlayerService:_onAddScore(data)
-	error("Not implemented")
+	BasePlayerService.init(self)
 end
 
 return PlayerService

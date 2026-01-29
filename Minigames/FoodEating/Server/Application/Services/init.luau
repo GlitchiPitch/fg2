@@ -28,4 +28,9 @@ function Services:init()
 	self.gameService:init()
 end
 
+function Services:stop()
+	self.gameService:finish()
+	
+end
+
 return Services

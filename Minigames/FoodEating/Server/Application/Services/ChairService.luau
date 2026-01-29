@@ -117,7 +117,7 @@ function ChairService:_onGameFinished()
 	end)
 
 	self.coreEventBus:fire(self.coreConstants.SERVER_EVENTS.SHOW_GAME_RESULT, {
-		gameName = self.constants.MINIGAMES.FOOD_EATING,
+		gameName = self.coreConstants.MINIGAMES.FOOD_EATING,
 		playerResults = playerResults,
 	})
 end

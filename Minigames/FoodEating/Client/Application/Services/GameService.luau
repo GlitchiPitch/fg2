@@ -1,52 +1,25 @@
----@class ClientFoodEatingGameService
-local GameService = {}
+-- Minigames/FoodEating/Client/Application/Services/GameService.luau
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local BaseClientGameService = require(ReplicatedStorage.Shared.Minigame.Application.Services.BaseClientGameService)
+
+---@class ClientFoodEatingGameService : BaseMinigameClientGameService
+local GameService = setmetatable({}, BaseClientGameService)
 GameService.__index = GameService
 
----@param diContainer DIContainer
----@return ClientFoodEatingGameService
 function GameService.new(diContainer)
-	local self = setmetatable({}, GameService)
-	self.diContainer = diContainer
-	self._connections = {}
+	local self = setmetatable(BaseClientGameService.new(diContainer), GameService)
 	return self
-end
-
-function GameService:init()
-	---@type SharedFoodEating
-	local shared = self.diContainer:resolve("Shared")
-	self.constants = shared.constants
-	self.eventBus = shared.eventBus
-
-	self.gameEntity = shared.domain.Entities.Game.new()
-
-    self:_setupEventListeners()
 end
 
 function GameService:_setupEventListeners()
 	self.eventBus:connectToEvents({
-		[self.constants.CLIENT_EVENTS.PLAYER_JOINED_FOOD_EATING] = function()
-			self:onPlayerJoinedFoodEating()
+		[self.constants.CLIENT_EVENTS.PLAYER_JOINED_FOOD_EATING] = function(data)
+			self:_onPlayerJoined(data)
 		end,
-		[self.constants.CLIENT_EVENTS.PLAYER_LEFT_FOOD_EATING] = function()
-			self:onPlayerLeftFoodEating()
+		[self.constants.CLIENT_EVENTS.PLAYER_LEFT_FOOD_EATING] = function(data)
+			self:_onPlayerLeft(data)
 		end,
 	})
 end
-
-function GameService:onPlayerJoinedFoodEating()
-	self._connections.timeChanged = self.gameEntity.time.Changed:Connect(function()
-		self.eventBus:fire(self.constants.CLIENT_EVENTS.UPDATE_TIME, { time = self.gameEntity.time.Value })
-	end)
-
-	self.eventBus:fire(self.constants.CLIENT_EVENTS.UPDATE_TIME, { time = self.gameEntity.time.Value })
-end
-
-function GameService:onPlayerLeftFoodEating()
-	if self._connections.timeChanged then
-		self._connections.timeChanged:Disconnect()
-		self._connections.timeChanged = nil
-	end
-end
-
 
 return GameService

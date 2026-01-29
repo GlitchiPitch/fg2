@@ -41,6 +41,7 @@ end
 
 function Application:stop()
 	self.controllers:stop()
+	self.services:stop()
 end
 
 return Application

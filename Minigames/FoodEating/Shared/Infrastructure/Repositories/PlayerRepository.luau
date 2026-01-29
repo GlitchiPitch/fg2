@@ -1,50 +1,20 @@
----@class SharedFoodEatingPlayerRepository
----@field playerEntities table<number, FoodEatingPlayerEntity>
-local PlayerRepository = {}
+-- Minigames/FoodEating/Shared/Infrastructure/Repositories/PlayerRepository.luau
+-- BACKUP: Rename old file to PlayerRepository.backup.luau first!
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local BasePlayerRepository = require(ReplicatedStorage.Shared.Minigame.Infrastruture.Repositories.BasePlayerRepository)
+
+---@class SharedFoodEatingPlayerRepository : BaseMinigamePlayerRepository
+local PlayerRepository = setmetatable({}, BasePlayerRepository)
 PlayerRepository.__index = PlayerRepository
 
----@param diContainer DIContainer
----@return SharedFoodEatingPlayerRepository
 function PlayerRepository.new(diContainer)
-	local self = setmetatable({}, PlayerRepository)
-	self.diContainer = diContainer
-	self.playerEntities = {}
+	local self = setmetatable(BasePlayerRepository.new(diContainer, { sharedKey = "Shared" }), PlayerRepository)
 	return self
 end
 
 function PlayerRepository:init()
-	---@type SharedFoodEating
-	local shared = self.diContainer:resolve("Shared")
-	self.playerEntity = shared.domain.Entities.Player
-end
-
-function PlayerRepository:createPlayerEntity(player)
-	local playerEntity = self.playerEntity.new(player)
-	self.playerEntities[player.UserId] = playerEntity
-	return playerEntity
-end
-
----@param player Player
----@return FoodEatingPlayerEntity
-function PlayerRepository:getPlayerEntity(player)
-	if not self.playerEntities[player.UserId] then
-		self.playerEntities[player.UserId] = self:createPlayerEntity(player)
-	end
-
-	return self.playerEntities[player.UserId]
-end
-
----@param player Player
-function PlayerRepository:removePlayerEntity(player)
-	local playerEntity = self.playerEntities[player.UserId]
-	if playerEntity then
-		playerEntity:destroy()
-	end
-	self.playerEntities[player.UserId] = nil
-end
-
-function PlayerRepository:getPlayers()
-	return self.playerEntities
+	BasePlayerRepository.init(self)
 end
 
 return PlayerRepository

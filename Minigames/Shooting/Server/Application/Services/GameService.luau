@@ -1,49 +1,20 @@
----@class ServerShootingGameService
-local GameService = {}
+-- Minigames/Shooting/Server/Application/Services/GameService.luau
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local BaseGameService = require(ReplicatedStorage.Shared.Minigame.Application.Services.BaseGameService)
+
+---@class ServerShootingGameService : BaseMinigameGameService
+local GameService = setmetatable({}, BaseGameService)
 GameService.__index = GameService
 
----@param diContainer DIContainer
----@return ServerShootingGameService
 function GameService.new(diContainer)
-	local self = setmetatable({}, GameService)
-	self.diContainer = diContainer
-
+	local self = setmetatable(
+		BaseGameService.new(diContainer, {
+			defaultTime = 45,
+			gameName = "Shooting",
+		}),
+		GameService
+	)
 	return self
-end
-
-function GameService:init()
-	---@type SharedShooting
-	local shared = self.diContainer:resolve("Shared")
-	self.constants = shared.constants
-	self.eventBus = shared.eventBus
-
-	self.gameEntity = shared.domain.Entities.Game.new()
-	self.gameEntity:fromData({
-		defaultTime = 15,
-	})
-
-	self:_setupEventListeners()
-end
-
-function GameService:_setupEventListeners()
-	self.eventBus:connectToEvents({
-		[self.constants.SERVER_EVENTS.UPDATE_TIME] = function(data)
-			warn("update time shooting game", data)
-			self:onUpdateTime(data)
-		end,
-	})
-end
-
-function GameService:onUpdateTime()
-	self.gameEntity:updateTime(-1)
-	if not self.gameEntity:hasTime() then
-		warn("shooting game finished")
-		self.eventBus:fire(self.constants.SERVER_EVENTS.GAME_FINISHED)
-	end
-end
-
-function GameService:finish()
-	self.gameEntity:finish()
 end
 
 return GameService

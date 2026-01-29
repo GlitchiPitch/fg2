@@ -26,6 +26,7 @@
 
 * \[ ] **Player Data Persistence**: Implement actual data storage and retrieval for player entities
 * \[ ] **Player Service Logic**: Complete PlayerService with business logic for client and server
+* \[x] **Minigame Base Services**: Shared base services and repositories for minigame lifecycles
 * \[~] **Camera Controller**: Implement full camera control logic with different modes (Following mode implemented, Default mode working, Fixed mode added for static camera positioning)
 * \[ ] **UI Framework**: Build basic UI components and screen management system
 

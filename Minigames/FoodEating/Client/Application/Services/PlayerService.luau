@@ -1,4 +1,3 @@
--- Minigames/FoodEating/Client/Application/Services/PlayerService.luau
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local BaseClientPlayerService = require(ReplicatedStorage.Shared.Minigame.Application.Services.BaseClientPlayerService)
 

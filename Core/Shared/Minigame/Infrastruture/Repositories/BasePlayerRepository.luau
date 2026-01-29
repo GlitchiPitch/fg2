@@ -1,5 +1,3 @@
--- Core/Shared/Minigame/Infrastructure/Repositories/BasePlayerRepository.luau
-
 ---@class BaseMinigamePlayerRepositoryConfig
 ---@field sharedKey string?
 

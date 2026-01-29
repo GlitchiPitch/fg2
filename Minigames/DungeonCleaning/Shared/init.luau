@@ -1,7 +1,9 @@
 local Domain = require(script.Domain)
+local Data = require(script.Data)
 
 ---@class SharedDungeonCleaning
 ---@field domain SharedDungeonCleaningDomain
+---@field data SharedDungeonCleaningData
 ---@field eventBus EventBus
 ---@field coreEventBus EventBus
 ---@field coreConstants SharedConstants
@@ -17,6 +19,7 @@ function Shared.new(globalDIContainer)
 	self.diContainer = globalDIContainer.new()
 
 	self.domain = Domain.new()
+	self.data = Data
 	return self
 end
 

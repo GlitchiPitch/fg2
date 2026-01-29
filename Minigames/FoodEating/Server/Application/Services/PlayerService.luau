@@ -1,4 +1,3 @@
--- Minigames/FoodEating/Server/Application/Services/PlayerService.luau
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local BaseServerPlayerService = require(ReplicatedStorage.Shared.Minigame.Application.Services.BaseServerPlayerService)
 
@@ -19,7 +18,6 @@ function PlayerService.new(diContainer)
 	return self
 end
 
--- Override camera mode for fixed camera
 function PlayerService:getCameraMode(data)
 	return self.coreConstants.CAMERA_MODES.FIXED, data.cameraCFrame
 end

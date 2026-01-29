@@ -1,5 +1,3 @@
--- Core/Shared/Minigame/Application/Services/BaseClientPlayerService.luau
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local BasePlayerService = require(script.Parent.BasePlayerService)
 
 ---@class BaseClientPlayerServiceConfig : BasePlayerServiceConfig

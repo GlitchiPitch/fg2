@@ -1,5 +1,3 @@
--- Core/Shared/Minigame/Application/Services/BasePlayerService.luau
-
 ---@class BasePlayerServiceConfig
 ---@field sharedKey string?
 ---@field infrastructureKey string?

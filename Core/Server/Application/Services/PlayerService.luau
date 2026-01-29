@@ -26,6 +26,9 @@ function PlayerService:init()
         [self.constants.SERVER_EVENTS.SET_PLAYER_CAMERA_MODE] = function(data)
             self:onSetPlayerCameraMode(data)
         end,
+        [self.constants.SERVER_EVENTS.SHOW_GAME_RESULT] = function(data)
+            self:onShowGameResult(data)
+        end,
     })
 end
 
@@ -58,6 +61,16 @@ function PlayerService:onSetPlayerCameraMode(data)
 			cameraCFrame = cameraCFrame,
 		},
 	})
+end
+
+function PlayerService:onShowGameResult(data)
+	local gameName = data.gameName
+	local playerResults = data.playerResults
+	for _, playerResult in playerResults do
+		-- local player = playerResult.player
+		-- local playerEntity = self.playerRepository:getPlayerEntity(player)
+		-- playerEntity.score = playerResult.score
+	end
 end
 
 return PlayerService

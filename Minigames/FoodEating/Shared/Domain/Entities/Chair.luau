@@ -75,6 +75,10 @@ function ChairEntity:clear()
 		self.currentFood:destroy()
 		self.currentFood = nil
 	end
+
+	if self.occupant then
+		self.seat.Occupant.Jump = true
+	end
 end
 
 ---@param food FoodEntity

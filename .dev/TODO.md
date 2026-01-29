@@ -291,6 +291,15 @@
 * Enhanced InputService integration with core SET\_FREE\_MOUSE event for coordinated mouse control
 * Established time-based minigame mechanics pattern for continuous player engagement
 
+### v1.24.0 - Game Result Display System ✅
+
+* Implemented Core ResultUI component with player scores and rankings display
+* Added SHOW\_GAME\_RESULT server event and OPEN\_RESULT\_UI client event for result flow
+* Enhanced FoodEating ChairService with game finished handling and result collection
+* Integrated score-based player ranking in game results
+* Enhanced Chair entity with occupant ejection on game finish
+* Established pattern for minigame result display through core UI components
+
 ### v1.3.0 - Enhanced Features
 
 * Advanced UI components

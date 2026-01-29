@@ -2,9 +2,12 @@ local Players = game:GetService("Players")
 ---@class ServerFoodEatingChairService
 ---@field diContainer DIContainer
 ---@field chairRepository ServerFoodEatingChairRepository
+---@field playerRepository ServerFoodEatingPlayerRepository
 ---@field eventBus EventBus
 ---@field constants SharedFoodEatingConstants
 ---@field application ServerFoodEatingApp
+---@field coreConstants SharedConstants
+---@field coreEventBus EventBus
 local ChairService = {}
 ChairService.__index = ChairService
 
@@ -21,15 +24,31 @@ function ChairService:init()
 	---@type ServerFoodEatingInfrastructure
 	local infrastructure = self.diContainer:resolve("Infrastructure")
 	self.chairRepository = infrastructure.repositories.chairRepository
+	self.playerRepository = infrastructure.repositories.playerRepository
 	---@type SharedFoodEating
 	local shared = self.diContainer:resolve("Shared")
 	self.constants = shared.constants
 	self.eventBus = shared.eventBus
 
+	---@type Shared
+	local coreShared = self.diContainer:resolve("CoreShared")
+	self.coreConstants = coreShared.constants
+	self.coreEventBus = coreShared.eventBus
+
 	self.application = self.diContainer:resolve("Application")
 
 	self.chairs = workspace.Workspace.Maps.FoodEating.Chairs:GetChildren()
+
 	self:_setup()
+	self:_setupEventListeners()
+end
+
+function ChairService:_setupEventListeners()
+	self.eventBus:connectToEvents({
+		[self.constants.SERVER_EVENTS.GAME_FINISHED] = function()
+			self:_onGameFinished()
+		end,
+	})
 end
 
 function ChairService:_setup()
@@ -74,6 +93,33 @@ function ChairService:_onChairUnoccupied(player)
 	end
 
 	self.eventBus:fire(self.constants.SERVER_EVENTS.PLAYER_LEFT_FOOD_EATING, { player = player })
+end
+
+function ChairService:_onGameFinished()
+	local chairEntities = self.chairRepository:getChairs()
+	local playerResults = {}
+	---@param chair ChairEntity
+	for _, chair in chairEntities do
+		local player = chair.occupant
+		if player then
+			local playerEntity = self.playerRepository:getPlayerEntity(player)
+			table.insert(playerResults, {
+				player = player,
+				score = playerEntity.score and playerEntity.score.value or 0,
+			})
+		end
+
+		chair:clear()
+	end
+
+	table.sort(playerResults, function(a, b)
+		return a.score > b.score
+	end)
+
+	self.coreEventBus:fire(self.coreConstants.SERVER_EVENTS.SHOW_GAME_RESULT, {
+		gameName = self.constants.MINIGAMES.FOOD_EATING,
+		playerResults = playerResults,
+	})
 end
 
 return ChairService

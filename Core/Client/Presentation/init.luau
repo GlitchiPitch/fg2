@@ -1,6 +1,9 @@
 local UI = require(script.UI)
 
 ---@class Presentation
+---@field ui UI
+---@field constants SharedConstants
+---@field eventBus EventBus
 local Presentation = {}
 Presentation.__index = Presentation
 
@@ -14,7 +17,22 @@ function Presentation.new(diContainer)
 end
 
 function Presentation:init()
+	---@type Shared
+	local shared = self.diContainer:resolve("Shared")
+	self.constants = shared.constants
+	self.eventBus = shared.eventBus
+
 	self.ui:init()
+
+	self:_setupEventListeners()
+end
+
+function Presentation:_setupEventListeners()
+	self.eventBus:connectToEvents({
+		[self.constants.CLIENT_EVENTS.OPEN_RESULT_UI] = function(data)
+			self.ui:openResultUI(data)
+		end,
+	})
 end
 
 return Presentation

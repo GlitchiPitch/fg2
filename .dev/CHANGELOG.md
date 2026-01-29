@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## \[1.24.0] - 2026-01-29
+
+### Added
+
+* **Core ResultUI Component**: Implemented game result display UI with player scores, rankings, and scrollable player list
+* **SHOW\_GAME\_RESULT Event**: Added server event for triggering game result display across all players
+* **OPEN\_RESULT\_UI Event**: Added client event for opening the result UI with game data
+* **FoodEating Game Finished Flow**: Implemented complete game finish flow collecting player scores and displaying results
+
+### Changed
+
+* **Core Client UI**: Enhanced with ResultUI ScreenGui containing close button, game name label, and player result template system
+* **Core Presentation Layer**: Added event listener for OPEN\_RESULT\_UI to show game results
+* **Core Server PlayerService**: Added SHOW\_GAME\_RESULT event handler for processing and forwarding game results
+* **Core Shared Constants**: Added OPEN\_RESULT\_UI to CLIENT\_EVENTS and SHOW\_GAME\_RESULT to SERVER\_EVENTS
+* **FoodEating ChairService**: Enhanced with core event bus integration, GAME\_FINISHED listener, and result collection logic
+* **FoodEating Chair Entity**: Enhanced clear() method to eject occupants by triggering jump
+
+### Infrastructure
+
+* **Result Display System**: Established pattern for minigame result display through core UI components
+* **Event Flow Integration**: Connected minigame finish events to core result display system
+* **Player Result Sorting**: Implemented score-based ranking for game result presentation
+
 ## \[1.23.0] - 2026-01-29
 
 ### Added

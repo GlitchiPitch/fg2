@@ -4,6 +4,10 @@ local Assets = {
     RedAlien = script.RedAlien,
     PurpleAlien = script.PurpleAlien,
     AlienLeader = script.AlienLeader,
+
+    Animations = require(script.Animations),
+    Hitbox = script.Hitbox,
+    HitEnemyVFX = script.HitEnemyVFX,
 }
 
 return Assets

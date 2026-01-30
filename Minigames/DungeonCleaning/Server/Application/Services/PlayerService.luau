@@ -1,4 +1,3 @@
-local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local BaseServerPlayerService = require(ReplicatedStorage.Shared.Minigame.Application.Services.BaseServerPlayerService)
 
@@ -22,31 +21,13 @@ function PlayerService.new(diContainer)
 	return self
 end
 
-function PlayerService:_onInit()
-	self.triggerZone = workspace.Workspace.Maps.DungeonCleaning.TriggerZone
-end
-
-function PlayerService:_setup()
-	self.triggerZone.Touched:Connect(function(touchedPart)
-		local player = Players:GetPlayerFromCharacter(touchedPart.Parent)
-		if player and not self.playerRepository:getPlayer(player) then
-			self:onPlayerJoined({ player = player })
-		end
-	end)
-end
-
-function PlayerService:getCameraMode(data)
-	return self.coreConstants.CAMERA_MODES.FOLLOWING, nil
-end
-
 ---@class playerJoinedData
 ---@field player Player
 
 ---@param data playerJoinedData
 function PlayerService:onPlayerJoined(data)
+	BaseServerPlayerService.onPlayerJoined(self, data)
 	local player = data.player
-	local playerEntity = self.playerRepository:getPlayerEntity(player)
-	
 	player.Changed:Connect(function(property)
 		if property == "Parent" then
 			self:onPlayerLeft({ player = player })
@@ -59,8 +40,13 @@ end
 
 ---@param data playerLeftData
 function PlayerService:onPlayerLeft(data)
+	BaseServerPlayerService.onPlayerLeft(self, data)
+
 	local player = data.player
-	self.playerRepository:removePlayerEntity(player)
+end
+
+function PlayerService:getCameraMode(data)
+	return self.coreConstants.CAMERA_MODES.FOLLOWING, nil
 end
 
 -- function PlayerService:getPlayerJoinedData(data)

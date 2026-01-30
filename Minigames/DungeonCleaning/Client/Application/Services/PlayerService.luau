@@ -21,5 +21,16 @@ function PlayerService.new(diContainer)
 	return self
 end
 
+function PlayerService:_onInit()
+	
+	---@type DungeonCleaningClientApp
+	local application = self.diContainer:resolve("Application")
+	self.toolService = application.services.toolService
+end
+
+function PlayerService:_afterPlayerJoined()
+	self.toolService:checkCharacterTool()
+end
+
 
 return PlayerService

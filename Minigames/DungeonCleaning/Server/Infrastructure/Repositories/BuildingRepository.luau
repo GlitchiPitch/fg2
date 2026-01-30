@@ -46,3 +46,5 @@ function BuildingRepository:createBuildingEntity(building)
     self.buildings[buildingEntity.id] = buildingEntity
     return buildingEntity
 end
+
+return BuildingRepository

@@ -16,6 +16,7 @@ end
 ---@param data any
 function EventBus:fire(eventName, data)
 	if not self._connects[eventName] then
+		
 		warn(`{eventName} is not connected`)
 		return
 	end

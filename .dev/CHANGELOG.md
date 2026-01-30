@@ -5,6 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## \[1.28.0] - 2026-01-30
+
+### Added
+
+* **DungeonCleaning Tool/Weapon System**: Implemented complete weapon system with client and server ToolServices for weapon management, attack handling, and hitbox detection
+* **DungeonCleaning Client ToolService**: Added client-side service for managing weapon tools, animation playback, combo system, and weapon equipping/unequipping
+* **DungeonCleaning Server ToolService**: Created server-side service for handling weapon attacks, hitbox detection, enemy damage application, gate attacks, and visual effects
+* **DungeonCleaning InputService**: Implemented client-side input service for binding weapon usage to mouse clicks with ContextActionService integration
+* **DungeonCleaning AnimationService**: Added client-side animation service for managing weapon animations including one-handed idle and combo slash animations (1-4)
+* **DungeonCleaning GameService**: Created server-side GameService extending BaseGameService with trigger zone system for detecting player entry into dungeon
+* **DungeonCleaning Animations Assets**: Added comprehensive animations module with OneHandedIdle, OneHandednSlash1-4, and other weapon animations
+* **DungeonCleaning Weapon Constants**: Added USE_WEAPON, ENEMY_ATTACKED, and GATE_ATTACKED events to constants for weapon system coordination
+* **DungeonCleaning Hitbox Assets**: Added Hitbox and HitEnemyVFX assets to shared assets module
+
+### Changed
+
+* **DungeonCleaning Client Services**: Enhanced Services module to include AnimationService, ToolService, and InputService initialization
+* **DungeonCleaning Server Services**: Updated Services module to include GameService and ToolService with proper lifecycle management
+* **DungeonCleaning Shared Assets**: Enhanced Assets module to include Animations, Hitbox, and HitEnemyVFX assets
+* **DungeonCleaning Constants**: Added weapon-related events (USE_WEAPON, ENEMY_ATTACKED) to SERVER_EVENTS, CLIENT_EVENTS, and REMOTE_EVENTS
+* **DungeonCleaning Client Infrastructure**: Added Repositories directory structure for future repository implementations
+* **CameraController**: Enhanced camera controller with improved mouse control integration
+* **EventBus**: Updated EventBus infrastructure for better event handling
+* **Sourcemap**: Updated to include new DungeonCleaning service modules and assets
+
+### Infrastructure
+
+* **Weapon System Architecture**: Established complete weapon system pattern with client-server synchronization for attack handling
+* **Animation Management**: Implemented animation service pattern for weapon animations with combo system support
+* **Input Binding**: Enhanced input handling with ContextActionService integration for weapon usage
+* **Hitbox Detection**: Implemented server-side hitbox detection system using GetPartBoundsInBox for enemy and gate attacks
+* **Game Entry System**: Added trigger zone pattern for detecting player entry into minigame areas
+
 ## \[1.27.0] - 2026-01-29
 
 ### Added

@@ -1,13 +1,16 @@
 local Domain = require(script.Domain)
+local Constants = require(script.Constants)
 local Data = require(script.Data)
-
+local Assets = require(script.Assets)
 ---@class SharedDungeonCleaning
 ---@field domain SharedDungeonCleaningDomain
 ---@field data SharedDungeonCleaningData
+---@field constants SharedDungeonCleaningConstants
 ---@field eventBus EventBus
 ---@field coreEventBus EventBus
 ---@field coreConstants SharedConstants
 ---@field remoteEventService RemoteEventService
+---@field assets SharedDungeonCleaningAssets
 local Shared = {}
 Shared.__index = Shared
 
@@ -19,7 +22,9 @@ function Shared.new(globalDIContainer)
 	self.diContainer = globalDIContainer.new()
 
 	self.domain = Domain.new()
+	self.constants = Constants
 	self.data = Data
+	self.assets = Assets
 	return self
 end
 

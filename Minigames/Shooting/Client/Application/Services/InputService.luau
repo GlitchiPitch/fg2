@@ -37,7 +37,7 @@ function InputService:_setupEventListeners()
 end
 
 function InputService:onPlayerJoinedBalista()
-	ContextActionService:BindAction("Shooting:Shoot", function(actionName, inputState, inputObject)
+	ContextActionService:BindAction("Shooting:Shoot", function(_, inputState, _)
 		if inputState ~= Enum.UserInputState.Begin then
 			return
 		end

@@ -15,9 +15,12 @@ end
 function ToolService:init()
     ---@type SharedDungeonCleaning
 	local shared = self.diContainer:resolve("Shared")
+	---@type DungeonCleaningServerApp
+	local application = self.diContainer:resolve("Application")
 	self.eventBus = shared.eventBus
 	self.constants = shared.constants
 	self.remoteEventService = shared.remoteEventService
+	self.lootService = application.services.lootService
     self.hitbox = shared.assets.Hitbox
     self.hitEnemyVFX = shared.assets.HitEnemyVFX
 
@@ -92,6 +95,7 @@ function ToolService:_createHitbox(data)
                 p:ApplyImpulse((hitboxCF.LookVector * 1000 + Vector3.new(0, 5000, 0)))
                 Debris:AddItem(vfx, 1)
                 Debris:AddItem(p.Parent, 2)
+                self.lootService:_dropFromCharacter(humanoid.Parent)
 				-- if player has one handed use break for one damaged person
 				-- if two handed not use break
 

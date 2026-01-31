@@ -1,7 +1,9 @@
 local Assets = require(script.Parent.Assets)
-
+local Items = require(script.Items)
 ---@class SharedDungeonCleaningData
 local Data = {
+    Items = Items,
+    
 	Alien = {
         model = Assets.Alien,
         score = 100,

@@ -8,6 +8,8 @@ local Assets = {
     Animations = require(script.Animations),
     Hitbox = script.Hitbox,
     HitEnemyVFX = script.HitEnemyVFX,
+    LootVFX = script.LootVFX,
+    Poop = script.Poop,
 }
 
 return Assets

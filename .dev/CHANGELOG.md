@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## \[1.29.0] - 2026-01-31
+
+### Added
+
+* **DungeonCleaning Loot System**: Implemented complete loot drop system for enemies with chance-based loot tables and visual effects
+* **DungeonCleaning LootService**: Created server-side service for managing loot drops from defeated enemies with character-based loot configuration
+* **DungeonCleaning Items Data**: Added Items.luau data module with item definitions including Poop item with score values
+* **DungeonCleaning ItemsRepository**: Implemented repository pattern for accessing item data and assets following established repository architecture
+* **DungeonCleaning Loot Assets**: Added LootVFX and Poop assets to shared assets module for loot drop visual feedback
+* **Loot Drop Mechanics**: Implemented loot spawning system with physics-based positioning, pickup detection, and automatic cleanup
+
+### Changed
+
+* **DungeonCleaning ToolService**: Enhanced to integrate with LootService for dropping loot when enemies are defeated during weapon attacks
+* **DungeonCleaning Server Services**: Added LootService to Services module initialization and lifecycle management
+* **DungeonCleaning Shared Data**: Enhanced Data module to include Items data for centralized item definitions
+* **DungeonCleaning Shared Infrastructure**: Added ItemsRepository to Repositories module for item data access
+* **DungeonCleaning Shared Assets**: Enhanced Assets module to include LootVFX and Poop assets
+* **Sourcemap**: Updated to include new LootService, Items data, and ItemsRepository modules
+
+### Infrastructure
+
+* **Loot System Architecture**: Established complete loot drop pattern with character-based loot tables and chance-based drop mechanics
+* **Item Data Management**: Implemented data-driven item system with centralized item definitions and asset access
+* **Repository Pattern Consistency**: ItemsRepository follows same repository pattern as other minigame repositories for code consistency
+* **Loot Lifecycle Management**: Proper loot spawning, pickup detection, and cleanup flow with visual effects integration
+
 ## \[1.28.0] - 2026-01-30
 
 ### Added

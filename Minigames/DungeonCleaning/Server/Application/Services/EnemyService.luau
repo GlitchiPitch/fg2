@@ -26,9 +26,11 @@ function EnemyService:init()
 	local shared = self.diContainer:resolve("Shared")
 	self.eventBus = shared.eventBus
 	self.constants = shared.constants
-	---@type ServerDungeonCleaningAppServices
+	---@type DungeonCleaningServerApp
 	local application = self.diContainer:resolve("Application")
 	self.playerService = application.services.playerService
+
+	self.lootService = application.services.lootService
 
 	self.dungeonMap = workspace.Workspace.Maps.DungeonCleaning
 	self.enemiesFolder = self.dungeonMap.Enemies
@@ -48,6 +50,7 @@ function EnemyService:onEnemyAttacked(data)
 	warn("onEnemyAttacked", data)
 	local enemyEntity = self.enemyRepository:getEnemyEntity(data.enemyId)
 	if enemyEntity then
+		self.lootService:_dropFromCharacter(enemyEntity.model)
 		enemyEntity:destroy()
 	end
 	

@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## \[1.30.0] - 2026-02-02
+
+### Added
+
+* **DungeonCleaning UI System**: Implemented complete UI module for DungeonCleaning minigame with score display, timer display, and toggle functionality following Shooting minigame UI pattern
+* **DungeonCleaning Score Display**: Added animated score display system with smooth transitions using TweenService for score updates
+* **DungeonCleaning Timer Display**: Implemented timer display with MM:SS formatting matching other minigame timer implementations
+* **BaseUI Placeholder**: Created BaseUI.luau file in Core/Shared/Minigame/Presentation/ for future shared UI base class
+
+### Changed
+
+* **DungeonCleaning ToolService**: Enhanced with score system integration - now fires ADD_SCORE events when hitting enemies (100 points), gates (150 points), buildings (200 points), or boxes (50 points)
+* **DungeonCleaning EnemyService**: Enhanced with loot service integration - enemies now drop loot when attacked and defeated through weapon system
+* **DungeonCleaning Client Presentation**: Refactored to use new UI module following Presentation layer pattern with proper dependency injection
+* **Sourcemap**: Updated to include new DungeonCleaning UI module and BaseUI placeholder
+
+### Infrastructure
+
+* **UI Pattern Consistency**: DungeonCleaning UI now follows same pattern as Shooting minigame UI for consistency across minigames
+* **Score System Integration**: Complete score system integration between ToolService hit detection and UI display with event-driven updates
+* **Loot Integration**: Enhanced enemy defeat flow to automatically trigger loot drops through integrated LootService
+
 ## \[1.29.0] - 2026-01-31
 
 ### Added

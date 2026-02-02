@@ -17,10 +17,10 @@ function ToolService:init()
 	local shared = self.diContainer:resolve("Shared")
 	---@type DungeonCleaningServerApp
 	local application = self.diContainer:resolve("Application")
+
 	self.eventBus = shared.eventBus
 	self.constants = shared.constants
 	self.remoteEventService = shared.remoteEventService
-	self.lootService = application.services.lootService
     self.hitbox = shared.assets.Hitbox
     self.hitEnemyVFX = shared.assets.HitEnemyVFX
 
@@ -73,44 +73,49 @@ function ToolService:_createHitbox(data)
 	for _, part in partsInRadius do
 		local humanoid = part.Parent:FindFirstChild("Humanoid")
         local isGate = part.Parent.Name == "Gate"
+		local isBuildinq	 = part.Parent:HasTag("Building")
+		local isBox = part.Parent.Name == "Box"
+
+		local canAddScore = false
+		local score = 0
 
 		if humanoid then
             local enemyId = humanoid.Parent:GetAttribute("Id")
 			local isPlayer = humanoid == character.Humanoid
 			if not isPlayer then
-				-- humanoid:TakeDamage(damage)
                 local p = humanoid.Parent.PrimaryPart :: Part
                 local vfx = self.hitEnemyVFX:Clone()
                 vfx.Parent = p
                 vfx.CFrame = p.CFrame
-                -- local tween = TweenService:Create(p, TweenInfo.new(10), {
-                --     Position = p.Position + hitboxCF.LookVector * 10,
-                -- })
-                -- tween.Completed:Connect(function()
-                --     humanoid.Parent:Destroy()
-                -- end)
-
-                -- tween:Play()
 
                 p:ApplyImpulse((hitboxCF.LookVector * 1000 + Vector3.new(0, 5000, 0)))
                 Debris:AddItem(vfx, 1)
-                Debris:AddItem(p.Parent, 2)
-                self.lootService:_dropFromCharacter(humanoid.Parent)
-				-- if player has one handed use break for one damaged person
-				-- if two handed not use break
-
-				-- self.eventBus:fire(self.constants.SERVER_EVENTS.ENEMY_ATTACKED, {
-				-- 	enemyId = enemyId,
-				-- 	damage = damage,
-				-- })
-
+                
+				task.delay(0.1, function()
+					self.eventBus:fire(self.constants.SERVER_EVENTS.ENEMY_ATTACKED, {
+						enemyId = enemyId,
+					})
+				end)
+				canAddScore = true
+				score = 100
 				break
 			end
         elseif isGate then
-            self.eventBus:fire(self.constants.SERVER_EVENTS.GATE_ATTACKED, {
-                gateId = part.Parent.Name,
-                damage = damage,
-            })
+            score = 150
+            canAddScore = true
+		elseif isBuildinq then
+			
+			score = 200
+			canAddScore = true
+		elseif isBox then
+			score = 50
+			canAddScore = true
+		end
+
+		if canAddScore then
+		self.eventBus:fire(self.constants.SERVER_EVENTS.ADD_SCORE, {
+				score = score,
+			})
 		end
 	end
 
